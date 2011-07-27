@@ -1,0 +1,48 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1066
+
+ [CECUTIL V15 OR LATER REQUIRES VIMBALL V18 OR LATER FOR UNPACKING]
+
+These routines are used by several of my utilities.  I'm loading them onto vim.sf.net to make it easier for GetLatestVimScripts to automate updates with them.
+
+Marks:
+     call SaveMark(markname)       let savemark= SaveMark(markname)
+     call RestoreMark(markname)    call RestoreMark(savemark)
+     call DestroyMark(markname)
+     commands: SM RM DM
+
+Window Position:
+     call SaveWinPosn()        let winposn= SaveWinPosn()
+     call RestoreWinPosn()     call RestoreWinPosn(winposn)
+    \swp : save current window/buffer's position
+    \rwp : restore current window/buffer's previous position
+     commands: SWP RWP
+
+User Maps:
+    call SaveUserMaps(mapmode,maplead,mapchx,suffix)
+
+    This function sets up a script-variable (ie. a variable that can generally be accessed only from within cecutil's own functions; see |s:|) called s:restoremap.  The selected user's maps are appended to this variable; the RestoreUserMaps() (|cecutil-restoreusermaps|) function uses the contents of this variable to restore user maps.
+
+    Some examples follow:
+
+        call SaveUserMaps("n","","webWEBjklh$0%;,nN","HiMtchBrkt")
+            normal mode maps for w, e, b, W, E, B, j, k, l, etc
+            (if any) are all saved in the variable
+            s:restoremaps_HiMtchBrkt >
+
+        call SaveUserMaps("n","","<up>","DrawIt")
+            the normal mode map (if any) for the <up> key is saved in
+            the variable s:restoremaps_DrawIt >
+
+        call SaveUserMaps("n","",":F(","HiMtchBrkt")
+            the normal mode map for F( (if any) is saved in the
+            variable s:restoremaps_HiMtchBrkt
+
+    call RestoreUserMaps(suffix)
+
+        The usermaps saved by SaveUserMaps() with the given suffix will be restored (ie. s:restoremaps_{suffix}).  Example:
+
+        call RestoreUserMaps("HiMtchBrkt")
+            will restore all user maps redefined for the HiMtchBrkt plugin
+
+(alpha/beta version available at http://mysite.verizon.net/astronaut/vim/index.html#CECUTIL)
+

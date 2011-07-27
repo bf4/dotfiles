@@ -1,0 +1,95 @@
+# ADD LOCAL CONFIGURATION HERE
+[user]
+	email = bfleischer1@metromix.com
+	name = benjamin fleischer
+
+#[alias]
+#  st = status
+#  ci = commit
+#  br = branch
+#  co = checkout
+#  df = diff
+#  lg = log -p
+#  #lol = log --graph --decorate --pretty=oneline --abbrev-commit
+#  #lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+#
+#[color "branch"]
+#  current = yellow reverse
+#  local = yellow
+#  remote = green
+#[color "diff"]
+#  meta = yellow bold
+#  frag = magenta bold
+#  old = red bold
+#  new = green bold
+#[color "status"]
+#  added = yellow
+#  changed = green
+#  untracked = cyan
+#
+#
+#[color]
+#  ui = true
+#[color "diff"]
+#  whitespace = red reverse
+#[core]
+#  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+#
+#
+## DO NOT EDIT BELOW THIS LINE
+#[push]
+#  default = tracking
+#[color]
+#	diff = auto
+#	status = auto
+#	branch = auto
+#[core]
+#	excludesfile = ~/.gitignore
+#[format]
+#  pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
+#[alias]
+#  c = commit -m
+#  a = add
+#  di = diff
+#  dic = diff --cached
+#  pl = pull
+#  ps = push
+#  plre = pull --rebase
+#  st = status
+#  out = log origin..HEAD
+#  qpl = log --pretty=\"%Cblue%h%Creset %Cgreen[%cr]%Creset %s\" origin/production..origin/master
+#  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+#  ci = commit
+#  ca = commit --amend
+#  pr = remote prune origin
+#  up = !git fetch origin && git rebase origin/master
+#  rbc = rebase --continue
+#  rbi = rebase -i
+#  mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
+[color]
+	diff = auto
+	status = auto
+  branch = auto
+
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = cyan bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[rerere]
+	enabled = 1
+	autoupdate = 1
+[alias]
+	human = name-rev --name-only --refs=refs/heads/*
+	humin = name-rev --refs=refs/heads/* --stdin
+[push]
+	default = current

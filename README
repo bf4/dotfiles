@@ -1,0 +1,4 @@
+Here's my dotfiles
+
+each file here goes in home as a dotfile with a symlink
+e.g. cd; ln -s dotfiles/vim .vim
