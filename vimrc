@@ -450,7 +450,7 @@ cmap w% <c-r>=expand("<cword>")<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " Folding stuff """""""""""""""""""""""""""""" 
-set foldmethod=syntax " use the syntax file to create folds
+"set foldmethod=syntax " use the syntax file to create folds
 
 " Set a nicer foldtext function via http://vim.wikia.com/wiki/Customize_text_for_closed_folds
 set foldtext=MyFoldText()

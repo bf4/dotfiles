@@ -1,5 +1,4 @@
 export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin:/usr/local/zend/mysql/bin:$PATH
-source /Users/benjo/.pythonbrew/etc/bashrc
 source ~/.git-completion.sh
 #set rvm_trust_rvmrcs_flag=1
 export MMX_MYSQL_GEM_VERSION=2.7
@@ -18,4 +17,7 @@ alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
 alias models2svg="~/bin/models2svg"
 alias controllers2svg="~/bin/controllers2svg"
 fortune
+# use macvim binary if present (it has ruby compiled)
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+# [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && . alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
