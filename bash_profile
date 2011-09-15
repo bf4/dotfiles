@@ -1,5 +1,6 @@
 export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin:/usr/local/zend/mysql/bin:$PATH
 source /Users/benjo/.pythonbrew/etc/bashrc
+source "`brew --prefix grc`/etc/grc.bashrc"
 source ~/.git-completion.sh
 #set rvm_trust_rvmrcs_flag=1
 export MMX_MYSQL_GEM_VERSION=2.7
