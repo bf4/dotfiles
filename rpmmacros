@@ -1,0 +1,5 @@
+%_query_all_fmt %%{name}-%%{version}-%%{release}.%%{arch}
+# link to ~/.rpmmacros
+# allows 
+# rpm -qa | grep apr | xargs rpm -e --nodeps
+# will remove all the apr installations (long story why I had to clean up)
