@@ -2,6 +2,7 @@
 [user]
 	name = Benjamin Fleischer
 	email = github@benjaminfleischer.com
+	# email = bfleischer@skintertainment.com
 [core]
 	editor = vim
 
@@ -14,6 +15,8 @@
 #  lg = log -p
 #  #lol = log --graph --decorate --pretty=oneline --abbrev-commit
 #  #lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+#  #prettygraph = log --pretty=format:'%h %s' --graph
+#
 #
 #[color "branch"]
 #  current = yellow reverse
@@ -93,5 +96,6 @@
 [alias]
 	human = name-rev --name-only --refs=refs/heads/*
 	humin = name-rev --refs=refs/heads/* --stdin
+	wdiff = diff
 [push]
 	default = current

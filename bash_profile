@@ -1,18 +1,16 @@
 export MOD_PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin
 export MOD_PATH=/usr/local/zend/mysql/bin:$MOD_PATH
-export MOD_PATH=/Users/bfleischer/.cabal/bin:$MOD_PATH
+export MOD_PATH=$HOME/.cabal/bin:$MOD_PATH
 export PATH=$MOD_PATH:$PATH
-alias aff="cd $HOME/workspace/affiliate/"
+
 source "`brew --prefix grc`/etc/grc.bashrc"
 source ~/.git-completion.sh
 #set rvm_trust_rvmrcs_flag=1
-export MMX_MYSQL_GEM_VERSION=2.7
-#export MMX_GEMS_DIR=$HOME/workspace
+
 export NODE_PATH="/usr/local/lib/node"
 export PATH=$PATH:/usr/local/share/npm/bin
 #alias ls='ls --color=auto'
 #PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h \W$(__git_ps1 " (%s)")]\$> "
-alias mmx='cd ~/workspace'
 function __git_dirty {
   git diff --quiet HEAD &>/dev/null 
   [ $? == 1 ] && echo "!"
@@ -73,6 +71,7 @@ bash_prompt
 # PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"
 # PS1='[\W$(__git_ps1 " (%s)")]\$ '
 # source "$rvm_path/contrib/ps1_functions"
+
 #ps1_set
 function wgets()
 {
@@ -86,6 +85,7 @@ function wgets()
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 export rvm_pretty_print_flag=1
 alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
+
 fortune
 # use vi mode in terminal
 set -o vi
@@ -98,10 +98,12 @@ alias bsc='bundle exec script/console'
 alias bounce='touch tmp/restart.txt'
 alias be='bundle exec'
 # 
-alias nerdlounge='cd /Users/bfleischer/mine/stuff/Dropbox/code/campfirebackup/campfire/nerdlounge'
+# use macvim binary if present (it has ruby compiled)
+# alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+# [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && . alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 alias gitreset="git reset --hard origin/$(git branch | grep '*' | cut -d' ' -f2)"
 alias gitpullr="git pull --rebase origin $(git branch | grep '*' | cut -d' ' -f2)"
 export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
+alias tmux="TERM=screen-256color-bce tmux"
 [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
-[[ -s "/Users/bfleischer/.rvm/scripts/rvm" ]] && source "/Users/bfleischer/.rvm/scripts/rvm"  # This loads RVM into a shell session.
-
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
