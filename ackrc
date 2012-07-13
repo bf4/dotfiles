@@ -1,2 +1,2 @@
---type-add=ruby=.haml,.rake,.rsel,.erb,.yml,.yaml
+--type-add=ruby=.haml,.rake,.rsel,.erb,.yml,.yaml,.feature,.rhtml
 --smart-case
