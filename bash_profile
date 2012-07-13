@@ -1,5 +1,6 @@
 # export PATH=/usr/local/bin:$HOME/bin:$PATH
-export PATH=$PATH:/usr/local/bin:$HOME/bin
+export PATH=$HOME/bin:$PATH
+export PATH=$PATH:/usr/local/bin
 # /usr/bin:/usr/local/sbin:
 export PATH=$PATH:$HOME/.cabal/bin
 
