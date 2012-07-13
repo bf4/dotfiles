@@ -1,10 +1,11 @@
-ls Library/LaunchAgents/
-ls Library/Application\ Support/
-ls /Library/LaunchAgents/
-ls /Library/LaunchDaemons/
-ls /Library/StartupItems/
-ls /Library/Internet\ Plug-Ins/
-ls /Library/Application\ Support/
-ls /Applications/
-ls /Developer/Applications/
+find '$HOME/Library/LaunchAgents/' \( -name '*.app' -o -name '*.plist' \)
+find '$HOME/Library/Application Support/' \( -name '*.app' -o -name '*.plist' \)
+find '$HOME/Applications/' \( -name '*.app' -o -name '*.plist' \)
+find '/Library/LaunchAgents/' \( -name '*.app' -o -name '*.plist' \)
+find '/Library/LaunchDaemons' \( -name '*.app' -o -name '*.plist' \)
+find '/Library/StartupItems/' \( -name '*.app' -o -name '*.plist' \)
+find '/Library/Internet Plug-Ins/' \( -name '*.app' -o -name '*.plist' \)
+find '/Library/Application Support/' \( -name '*.app' -o -name '*.plist' \)
+find '/Applications/' \( -name '*.app' -o -name '*.plist' \)
+find '/Developer/Applications/' \( -name '*.app' -o -name '*.plist' \)
 
