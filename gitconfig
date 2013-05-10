@@ -5,6 +5,7 @@
 	# email = bfleischer@skintertainment.com
 [core]
 	editor = vim
+	excludesfile = /Users/bfleischer/.gitignore_global
 
 #[alias]
 #  st = status
