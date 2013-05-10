@@ -3,7 +3,8 @@ export MOD_PATH=/usr/local/zend/mysql/bin:$MOD_PATH
 export MOD_PATH=$HOME/.cabal/bin:$MOD_PATH
 export PATH=$MOD_PATH:$PATH
 
-source "`brew --prefix grc`/etc/grc.bashrc"
+# source "`brew --prefix grc`/etc/grc.bashrc"
+# brew install grc
 source ~/.git-completion.sh
 #set rvm_trust_rvmrcs_flag=1
 
@@ -12,13 +13,17 @@ export PATH=$PATH:/usr/local/share/npm/bin
 #alias ls='ls --color=auto'
 #PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h \W$(__git_ps1 " (%s)")]\$> "
 function __git_dirty {
-  git diff --quiet HEAD &>/dev/null 
+  git diff --quiet HEAD &>/dev/null
   [ $? == 1 ] && echo "!"
 }
 
 function __git_branch {
   __git_ps1 " %s"
 }
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^\*]/d' -e 's/^\*\ \(.*\)/(\1) /'
+}
+
 
 function __my_rvm_ruby_version {
   local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
@@ -65,10 +70,12 @@ bash_prompt() {
   local UC=$W                 # user's color
   [ $UID -eq "0" ] && UC=$R   # root's color
 
-  PS1="$B\$(__my_rvm_ruby_version)$Y\h$W:$EMY\w$EMW\$(__git_branch)$EMY\$(__git_dirty)${NONE} $ "
+  PS1='\[\e[36m\]$(parse_git_branch)$(__git_dirty)\[\e[0m\]\w\$ '
+  # PS1="$B\$(__my_rvm_ruby_version)$Y\h$W:$EMY\w$EMW\$(__git_branch)$EMY\$(__git_dirty)${NONE} $ "
+  # PS1="$B\$(__my_rvm_ruby_version)$Y\h$W:$EMY\w$EMW\$EMY\${NONE} $ "
 }
 bash_prompt
-# PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"
+PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"
 # PS1='[\W$(__git_ps1 " (%s)")]\$ '
 # source "$rvm_path/contrib/ps1_functions"
 
@@ -82,8 +89,8 @@ function wgets()
   --header="Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" \
   --header="Keep-Alive: 300" "$@"
 }
-export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
-export rvm_pretty_print_flag=1
+# export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+# export rvm_pretty_print_flag=1
 alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
 
 fortune
@@ -91,19 +98,19 @@ fortune
 set -o vi
 alias ber='bundle exec rake'
 alias bes='bundle exec spec -fs'
-alias 'gembes'="MMX_GEMS_DIR=~/workspace ber"
-alias 'gember'="MMX_GEMS_DIR=~/workspace bes"
 alias bec='bundle exec cucumber -r features'
 alias bsc='bundle exec script/console'
 alias bounce='touch tmp/restart.txt'
 alias be='bundle exec'
-# 
+#
 # use macvim binary if present (it has ruby compiled)
 # alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 # [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && . alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 alias gitreset="git reset --hard origin/$(git branch | grep '*' | cut -d' ' -f2)"
 alias gitpullr="git pull --rebase origin $(git branch | grep '*' | cut -d' ' -f2)"
-export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
+# export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
 alias tmux="TERM=screen-256color-bce tmux"
-[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
+alias last_tag=$(git for-each-ref --sort='*authordate' --format='%(tag)' refs/tags | egrep "^${branch}\.[0-9]+$" | tail -n1)
+# [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
+source ~/.profile
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
