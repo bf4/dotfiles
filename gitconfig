@@ -98,5 +98,7 @@
 	human = name-rev --name-only --refs=refs/heads/*
 	humin = name-rev --refs=refs/heads/* --stdin
 	wdiff = diff
+[pull]
+	rebase = true
 [push]
 	default = current
