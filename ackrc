@@ -1,2 +1,6 @@
---type-add=ruby=.haml,.rake,.rsel,.erb,.yml,.yaml,.feature,.rhtml
+--type-add=ruby=.haml,.rake,.rsel,.erb,.yml,.yaml,.feature,.rhtml,.arb
+--type-add=php=.skhtml
 --smart-case
+--ignore-dir=doc
+--ignore-dir=tmp
+--nosql
