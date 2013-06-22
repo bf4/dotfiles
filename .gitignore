@@ -30,3 +30,13 @@ Public/
 Sites/
 files/
 rubies/
+.fontconfig/
+fontconfig/
+.fonts/
+.local/
+.mysql_history
+.pry_history
+.vagrant.d/
+.xinitrc.d/
+CloneSpy/
+VirtualBox\ VMs/
