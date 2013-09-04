@@ -7,7 +7,6 @@ export PATH=$MOD_PATH:$PATH
 # source "`brew --prefix grc`/etc/grc.bashrc"
 # brew install grc
 source ~/.git-completion.sh
-#set rvm_trust_rvmrcs_flag=1
 
 export NODE_PATH="/usr/local/lib/node"
 export PATH=$PATH:/usr/local/share/npm/bin
@@ -94,7 +93,6 @@ function wgets()
 # export rvm_pretty_print_flag=1
 alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
 
-fortune
 # use vi mode in terminal
 set -o vi
 alias ber='bundle exec rake'
