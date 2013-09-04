@@ -1,3 +1,4 @@
+export RUBYOPT=-w
 export MOD_PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin
 export MOD_PATH=/usr/local/zend/mysql/bin:$MOD_PATH
 export MOD_PATH=$HOME/.cabal/bin:$MOD_PATH
