@@ -102,10 +102,9 @@
 	rebase = true
 [push]
 	default = current
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
 [github]
 	user = bf4
 [ghi]
 	token = wouldntyouliketoknow
+[credential]
+	helper = osxkeychain
