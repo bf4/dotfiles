@@ -1,7 +1,10 @@
 # /usr/local/etc/bash_completion.d
-#PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h \W$(__git_ps1 " (%s)")]\$> "
+source ~/.git-completion.sh
+[[ -s "`brew --prefix grc`/etc/grc.bashrc" ]] && source "`brew --prefix grc`/etc/grc.bashrc"
+# brew install grc
+
 function __git_dirty {
-  git diff --quiet HEAD &>/dev/null
+  git diff --quiet head &>/dev/null
   [ $? == 1 ] && echo "!"
 }
 
@@ -12,14 +15,21 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^\*]/d' -e 's/^\*\ \(.*\)/(\1) /'
 }
 
+function __my_git_prompt {
+  __git_ps1 " %s"
+  # "$(parse_git_branch)$(__git_dirty)"
+  # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
+}
 
-function __my_rvm_ruby_version {
-  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
-  [ "$gemset" != "" ] && gemset="@$gemset"
-  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
-  [ "$version" == "1.8.7" ] && version=""
-  local full="$version$gemset"
-  [ "$full" != "" ] && echo "$full "
+function __my_rvm_prompt {
+  # PS1='[\W$(__git_ps1 " (%s)")]\$ '
+  # source "$rvm_path/contrib/ps1_functions"
+  eval ~/.rvm/bin/rvm-prompt
+}
+
+function ps1_set {
+  PS1="\$(__my_rvm_prompt) \[\e[36m\]$(__my_git_prompt)\[\e[0m\]\w\n📝 $ "
+  # export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 }
 
 bash_prompt() {
@@ -58,21 +68,7 @@ bash_prompt() {
   local UC=$W                 # user's color
   [ $UID -eq "0" ] && UC=$R   # root's color
 
-  PS1='\[\e[36m\]$(parse_git_branch)$(__git_dirty)\[\e[0m\]\w\$ '
-  # PS1="$B\$(__my_rvm_ruby_version)$Y\h$W:$EMY\w$EMW\$(__git_branch)$EMY\$(__git_dirty)${NONE} $ "
-  # PS1="$B\$(__my_rvm_ruby_version)$Y\h$W:$EMY\w$EMW\$EMY\${NONE} $ "
+  ps1_set
 }
+
 bash_prompt
-PS1="\$(~/.rvm/bin/rvm-prompt) $PS1"
-# PS1='[\W$(__git_ps1 " (%s)")]\$ '
-# source "$rvm_path/contrib/ps1_functions"
-
-#ps1_set
-# export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
-# export rvm_pretty_print_flag=1
-
-[[ -s "`brew --prefix grc`/etc/grc.bashrc" ]] && source "`brew --prefix grc`/etc/grc.bashrc"
-# brew install grc
-
-source ~/.git-completion.sh
-
