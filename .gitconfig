@@ -1,11 +1,9 @@
-# ADD LOCAL CONFIGURATION HERE
 [user]
 	name = Benjamin Fleischer
 	email = github@benjaminfleischer.com
-	# email = bfleischer@skintertainment.com
 [core]
 	editor = vim
-	excludesfile = /Users/bfleischer/.gitignore_global
+	excludesfile = ~/.gitignore_global
 
 #[alias]
 #  st = status
