@@ -103,7 +103,6 @@ function ps1_set {
   # CYAN="\[\033[0;36m\]"
   PS1="\$(__my_rvm_prompt)\[\e[36m\]$(__my_git_prompt)\[\e[0m\]\w\n📝 $ "
     # PS1="`_git_prompt`${CYAN}[\u@\h ${PURPLE}`~/.rvm/bin/rvm-prompt` ${GREEN}\w${CYAN}]\n\$${LIGHT_GRAY} "
-  # export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
   # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
   # PS1='[\W$(__git_ps1 " (%s)")]\$ '
 }
@@ -147,4 +146,5 @@ bash_prompt() {
   ps1_set
 }
 
-PROMPT_COMMAND=bash_prompt
+# see https://github.com/revans/bash-it/pull/257
+PROMPT_COMMAND="bash_prompt;update_terminal_cwd;"
