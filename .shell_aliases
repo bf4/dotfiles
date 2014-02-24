@@ -19,3 +19,5 @@ alias gitpullr="git pull --rebase origin $(git branch | grep '*' | cut -d' ' -f2
 alias tmux="TERM=screen-256color-bce tmux"
 alias last_tag=$(git for-each-ref --sort='*authordate' --format='%(tag)' refs/tags | egrep "^${branch}\.[0-9]+$" | tail -n1)
 alias git="hub"
+
+alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log"
