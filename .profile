@@ -1,4 +1,8 @@
 export MOD_PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin
+export MOD_PATH=/usr/local/zend/mysql/bin:$MOD_PATH
+export MOD_PATH=$HOME/.cabal/bin:$MOD_PATH
+export NODE_PATH=/usr/local/lib/node_modules
+export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
 export PATH=$MOD_PATH:$PATH
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
