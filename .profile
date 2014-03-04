@@ -29,4 +29,4 @@ export GHI_TOKEN="wouldntyouliketoknow"
 # [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-[[ -s `overcommit --template-dir` ]] && export GIT_TEMPLATE_DIR=`overcommit --template-dir`
+# [[ -s `overcommit --template-dir` ]] && export GIT_TEMPLATE_DIR=`overcommit --template-dir`
