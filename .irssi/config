@@ -18,7 +18,14 @@ chatnets = {
 };
 
 channels = (
-  { name = "#ruby-lang"; chatnet = "freenode"; autojoin = "yes"; }
+  { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
+  { name = "silc"; chatnet = "silc"; autojoin = "No"; },
+  { name = "#ruby-lang"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#rails-contrib"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#rom-rb"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#jruby"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#yaml"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#railsrumble"; chatnet = "freenode"; }
 );
 
 aliases = {
@@ -211,5 +218,7 @@ logs = { };
 ignores = (
   { mask = "*quit*"; level = "NICKS"; },
   { mask = "*away*"; level = "NICKS"; },
-  { level = "JOINS PARTS QUITS NICKS"; }
+  {
+    level = "CRAP NOTICES SNOTES CTCPS JOINS PARTS QUITS KICKS MODES TOPICS WALLOPS NICKS DCC DCCMSGS CLIENTNOTICES CLIENTCRAP CLIENTERRORS";
+  }
 );
