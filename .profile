@@ -18,6 +18,8 @@ then
   #  NODE_PATH="/usr/local/lib/node_modules"
 fi
 
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 # PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
 # export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
 
