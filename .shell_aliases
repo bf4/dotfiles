@@ -11,13 +11,19 @@ alias be='bundle exec'
 # use macvim binary if present (it has ruby compiled)
 # alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 # [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && . alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
-alias gitreset="git reset --hard origin/$(git branch | grep '*' | cut -d' ' -f2)"
+function gitreset {
+  git reset --hard origin/$(git branch | grep '*' | cut -d' ' -f2)
+}
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^\*]/d' -e 's/^\*\ \(.*\)/(\1) /'
 }
-alias gitpullr="git pull --rebase origin $(git branch | grep '*' | cut -d' ' -f2)"
+function gitpullr {
+  git pull --rebase origin $(git branch | grep '*' | cut -d' ' -f2)
+}
 alias tmux="TERM=screen-256color-bce tmux"
-alias last_tag=$(git for-each-ref --sort='*authordate' --format='%(tag)' refs/tags | egrep "^${branch}\.[0-9]+$" | tail -n1)
+function git_last_tag {
+  git for-each-ref --sort='*authordate' --format='%(tag)' refs/tags | egrep "^${branch}\.[0-9]+$" | tail -n1
+}
 alias git="hub"
 # Like less but outputs colors instead of raw ansi escape codes
 # brew install source-highlight
