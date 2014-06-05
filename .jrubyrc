@@ -1,3 +1,24 @@
+# https://github.com/jruby/jruby/wiki/ConfiguringJRuby
 compat.version=1.9
-cext.enabled=true
-errno.backtrace=true
+# errno.backtrace=true
+server
+compile.invokedynamic=true
+compile.mode=JIT
+backtrace.color=true
+backtrace.mask=true
+backtrace.style=mri
+fiber.coroutines=true
+# profile.max.methods=100000
+# objectspace.enabled=false
+#cli.encoding.external=
+#
+## Encoding name to use internally.
+## Options: [String], Default: null.
+#
+#cli.encoding.internal=
+#cli.load.gemfile=false
+# #cli.verbose=false
+#
+# launch.inproc=false
+# cli.debug=true
+# debug
