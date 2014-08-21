@@ -103,7 +103,9 @@
 [github]
 	user = bf4
 [ghi]
-	token = wouldntyouliketoknow
+	token = !security find-internet-password -a bf4 -s github.com -l 'ghi token' -w
+[include]
+    path = ~/.gitconfig.user
 [credential]
 	helper = osxkeychain
 [filter "media"]
