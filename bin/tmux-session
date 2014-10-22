@@ -4,13 +4,34 @@
 # https://github.com/mislav/dotfiles/blob/d2af5900fce38238d1202aa43e7332b20add6205/bin/tmux-session
 set -e
 
+# SAVE
+save() {
+  dump > "$HOME/.tmux-session"
+}
+
 dump() {
   local d=$'\t'
   tmux list-windows -a -F "#S${d}#W${d}#{pane_current_path}"
 }
 
-save() {
-  dump > ~/.tmux-session
+# RESTORE
+restore() {
+  tmux start-server
+  local count=0
+  local dimensions="$(terminal_size)"
+
+  while IFS=$'\t' read session_name window_name dir; do
+    if [[ -d "$dir" && $window_name != "log" && $window_name != "man" ]]; then
+      if session_exists "$session_name"; then
+        add_window "$session_name" "$window_name" "$dir"
+      else
+        new_session "$session_name" "$window_name" "$dir" "$dimensions"
+        count=$(( count + 1 ))
+      fi
+    fi
+  done < "$HOME/.tmux-session"
+
+  echo "restored $count sessions"
 }
 
 terminal_size() {
@@ -28,25 +49,6 @@ add_window() {
 new_session() {
   cd "$3" &&
   tmux new-session -d -s "$1" -n "$2" $4
-}
-
-restore() {
-  tmux start-server
-  local count=0
-  local dimensions="$(terminal_size)"
-
-  while IFS=$'\t' read session_name window_name dir; do
-    if [[ -d "$dir" && $window_name != "log" && $window_name != "man" ]]; then
-      if session_exists "$session_name"; then
-        add_window "$session_name" "$window_name" "$dir"
-      else
-        new_session "$session_name" "$window_name" "$dir" "$dimensions"
-        count=$(( count + 1 ))
-      fi
-    fi
-  done < ~/.tmux-session
-
-  echo "restored $count sessions"
 }
 
 case "$1" in
