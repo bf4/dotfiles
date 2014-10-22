@@ -145,16 +145,19 @@ bash_prompt() {
 
   ps1_set
 }
-type update_terminal_cwd | grep -q 'shell function'
-if [[ $? -ne 0 ]]
-then
-  update_terminal_cwd ()
-  {
+function _prompt_command () {
+
+  type update_terminal_cwd 2>&1 | grep -q 'shell function'
+  if [[ $? -ne 0 ]]
+  then
     local SEARCH=' ';
     local REPLACE='%20';
     local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}";
     printf '\e]7;%s\a' "$PWD_URL"
-  }
-fi
+  else
+    update_terminal_cwd;
+  fi
+  bash_prompt;
+}
 # see https://github.com/revans/bash-it/pull/257
-PROMPT_COMMAND="update_terminal_cwd;bash_prompt;"
+PROMPT_COMMAND="_prompt_command;"
