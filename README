@@ -1,4 +1,6 @@
 Here's my dotfiles
 
-each file here goes in home as a dotfile with a symlink
-e.g. cd; ln -s dotfiles/vim .vim
+cd ~
+git clone git@github.com:bf4/dotfiles.git dotextras
+cd dotextras
+env WORKSTATION_UPDATE=true ./workstation

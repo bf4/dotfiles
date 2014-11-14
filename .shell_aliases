@@ -27,7 +27,7 @@ function git_last_tag {
 alias git="hub"
 # Like less but outputs colors instead of raw ansi escape codes
 # brew install source-highlight
-export LESSOPEN="| `brew --prefix`/bin/src-hilite-lesspipe.sh %s"
+# export LESSOPEN="| `brew --prefix`/bin/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
 export LESSCHARSET=utf-8 # don't print out unicode as e.g. <E2><80><99>
 # alias vless='vim -u /usr/share/vim/vim71/macros/less.vim'

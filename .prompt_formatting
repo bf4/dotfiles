@@ -1,7 +1,6 @@
-# /usr/local/etc/bash_completion.d
-if [ -f ~/.git-completion.sh ]; then
-  . ~/.git-completion.sh
-fi
+for file in /usr/local/etc/bash_completion.d/* ; do
+  source $file
+done
 [[ -s "`brew --prefix grc`/etc/grc.bashrc" ]] && source "`brew --prefix grc`/etc/grc.bashrc"
 # brew install grc
 
@@ -101,7 +100,7 @@ function ps1_set {
   # GREEN="\[\033[0;32m\]"
   # LIGHT_GRAY="\[\033[0;37;00m\]"
   # CYAN="\[\033[0;36m\]"
-  PS1="\$(__my_rvm_prompt)\[\e[36m\]$(__my_git_prompt)\[\e[0m\]\w\n📝 $ "
+  export PS1="\$(__my_rvm_prompt)\[\e[36m\]$(__my_git_prompt)\[\e[0m\]\w\n📝 $ "
     # PS1="`_git_prompt`${CYAN}[\u@\h ${PURPLE}`~/.rvm/bin/rvm-prompt` ${GREEN}\w${CYAN}]\n\$${LIGHT_GRAY} "
   # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
   # PS1='[\W$(__git_ps1 " (%s)")]\$ '
@@ -145,8 +144,10 @@ bash_prompt() {
 
   ps1_set
 }
-function _prompt_command () {
-
+bash_prompt
+# function _prompt_command () {
+#
+function ensure_update_terminal_cwd {
   type update_terminal_cwd 2>&1 | grep -q 'shell function'
   if [[ $? -ne 0 ]]
   then
@@ -154,10 +155,10 @@ function _prompt_command () {
     local REPLACE='%20';
     local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}";
     printf '\e]7;%s\a' "$PWD_URL"
-  else
-    update_terminal_cwd;
   fi
-  bash_prompt;
 }
+ensure_update_terminal_cwd
+#   bash_prompt;
+# }
 # see https://github.com/revans/bash-it/pull/257
-PROMPT_COMMAND="_prompt_command;"
+# PROMPT_COMMAND="_prompt_command;"

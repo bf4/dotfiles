@@ -1,7 +1,13 @@
-[[ -s "$HOME/.prompt_formatting" ]] && source "$HOME/.prompt_formatting"
-[[ -s "$HOME/.shell_functions" ]] && source "$HOME/.shell_functions"
-source ~/.profile
-source `brew --repository`/Library/Contributions/brew_bash_completion.sh
-[[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
-# use vi mode in terminal
+[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
+
+for src in \
+  "$HOME/.prompt_formatting" \
+  "$HOME/.shell_aliases" \
+  "$HOME/.shell_functions"
+do
+  source "$src"
+done
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# vim in shell
 set -o vi

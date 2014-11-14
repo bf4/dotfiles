@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+args = ARGV.to_a
+
+def workstation_cmd(cmd)
+  puts "Running workstation: #{cmd}"
+  puts `$HOME/dotextras/#{cmd}`
+end
+cmds = Hash.new do |h,cmd|
+  puts "I am a workstation tool. I don't know about #{cmd.inspect}"
+  puts "I only know about:\n\t#{cmds.keys.join("\n\t")}"
+end
+cmds["setup"] = ->{ workstation_cmd("workstation") }
+cmds["update"] = ->{ puts `cd $HOME/dotextras && git pull --rebase origin master; cd -` }
+cmds.fetch(args.shift) { cmds.default_proc }.call
