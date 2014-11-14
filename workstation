@@ -16,6 +16,13 @@ then
   cd ~
   git clone https://github.com/bf4/vimfiles.git vimfiles
   cd -
+  mkdir -p ~/bin
+  for file in bin/*; do
+    file_path="$HOME/bin/$file"
+    if not_file_exists "$file_path"; then
+      ln -s "$HOME/dotextras/bin/$file" "$HOME/bin/$file"
+    fi
+  done
 fi
 
 source "$HOME/dotextras/functions.bash"
@@ -91,12 +98,6 @@ else
     fi
   fi
   ssh -T git@github.com
-fi
-
-if not_file_exists /usr/local/bin/workstation
-then
-  echo "Linking 'workstation' executable"
-  ln -s $HOME/dotextras/bin/workstation /usr/local/bin/workstation
 fi
 
 ## Homebrew Cask (for binaries)
