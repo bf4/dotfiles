@@ -7,25 +7,28 @@ MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
 
 # set -e
 
+source "$HOME/dotextras/functions.bash"
+
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
   ls -al | \
     awk '{ print $9 }' | \
     ruby -e 'STDIN.readlines.each{|line| puts(line) if line =~ /^\.[a-z_-]+/  }' | \
-    while read x ; do ./copy_and_link.sh "$x" ; done
+    while read file ; do
+      ./copy_and_link.sh "$file"
+    done
   cd ~
   git clone https://github.com/bf4/vimfiles.git vimfiles
-  cd -
+  cd ~/dotextras
   mkdir -p ~/bin
   for file in bin/*; do
-    file_path="$HOME/bin/$file"
+    file_path="$HOME/$file"
     if not_file_exists "$file_path"; then
-      ln -s "$HOME/dotextras/bin/$file" "$HOME/bin/$file"
+      ln -s "$HOME/dotextras/$file" "$HOME/$file"
     fi
   done
 fi
 
-source "$HOME/dotextras/functions.bash"
 
 # http://brew.sh/ Homebrew
 if fn_exists "brew"

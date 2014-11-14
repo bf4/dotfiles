@@ -14,13 +14,12 @@ for file; do
     pwd_file="$pwd/$file"
     if test -s $home_file
     then
-        echo "Copying and linking $file"
-        cp -Rp "$home_file" . && rm -rf "$home_file" && ln -s "$pwd_file" "$home_file"
+        echo "$home_file already exists"
     elif test -s "$pwd_file"
     then
         echo "Linking $file"
         ln -s "$pwd_file" "$home_file"
     else
-        echo "Could not find $file in $homeor $pwd"
+        echo "Could not find $file in $home or $pwd"
     fi
 done 
