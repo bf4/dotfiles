@@ -1,67 +1,29 @@
 for file in /usr/local/etc/bash_completion.d/* ; do
   source $file
 done
-[[ -s "`brew --prefix grc`/etc/grc.bashrc" ]] && source "`brew --prefix grc`/etc/grc.bashrc"
+if [ `which brew` ] && [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
+   # source "$(brew --repository)/Library/Contributions/brew_$(echo $0 | cut -d- -f2)_completion.sh"
+fi
 # brew install grc
+[[ -s "`brew --prefix grc`/etc/grc.bashrc" ]] && source "`brew --prefix grc`/etc/grc.bashrc"
+[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 
-function __git_dirty {
-  # git diff-index --quiet --name-only HEAD &>/dev/null
-  git diff --quiet head &>/dev/null
-  [ $? == 1 ] && echo "!"
-}
-
-# function __git_branch {
-#   __git_ps1 " %s"
-# }
-function parse_git_branch {
-  # GIT_DIR
-  cat .git/HEAD | sed -e 's/^.*refs\/heads\///'
-  # git branch --list --no-color 2> /dev/null | sed -e '/^[^\*]/d' -e 's/^\*\ \(.*\)/(\1) /'
-}
-
+# Set git autocompletion and PS1 integration for showing git info in terminal
 # https://github.com/iambowen/dotfiles/blob/master/bash_profile
-# export GIT_PS1_SHOWDIRTYSTAT=true
-# export PS1='\[\033[01;32m\]\u\[\033[01;34m\]@\[\033[01;31m\]Heaven\[\e[0;33m\](\@)\[\e[0;33m\]\[\033[00;34m\]{\[\033[01;34m\]\w\[\033[00;34m\]}\[\033[0;32m\]$(parse_git_branch) \n ~> \[\033[00m\]'
-# [[ -s "$HOME/.rvm/contrib/ps1_functions" ]] && source "$HOME/.rvm/contrib/ps1_functions"
-# set -o vi
-# alias vi="vim"
-# export EDITOR="vim"
-# export GIT_EDITOR=vim
-#
-#  #Set git autocompletion and PS1 integration
-# export AUTO_TOGGLE=true # for local build #
-# export ENABLE_TOGGLES=false # it will turn all feature toggles on when
-#
-# #for showing git info in terminal
-# #function parse_git_branch {
-# # ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-# # echo "("${ref#refs/heads/}")"
-# #}
-# function parse_git_branch {
-#   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
-# }
-# function parse_git_dirty {
-#   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
-# }
-# top-ten ()
-# {
-# history | tr -s ' ' | cut -d ' ' -f 5 | sort | uniq -c | sort | tail -n 10
-# }
-# ##
-#
-# if [ -f ~/.bashrc ]; then
-# source ~/.bashrc
-# fi
-# export LOAD_PATH=$HOME/.rvm/lib:$LOAD_PATH
 # https://gist.github.com/ryknow/3303462/raw/2e2f9dd271f3caa83a435965664e59f0dd4626dc/.bashrc
-function __my_git_prompt {
-  # GIT_PS1_SHOWCOLORHINTS=1
-  # GIT_PS1_SHOWUPSTREAM="auto git"
 
+ps1_set() {
+  export PS1="\$(__my_rvm_prompt)\[\e[36m\]$(__my_git_prompt)\[\e[0m\]\w\n📝 $ "
+}
+__my_rvm_prompt() {
+  eval ~/.rvm/bin/rvm-prompt
+}
+__my_git_prompt() {
+  _prompt_colors
   GIT_PS1_SHOWDIRTYSTAT=true
   GIT_PS1_SHOWSTASHSTATE=true
   GIT_PS1_SHOWUNTRACKEDFILES=true
-  # __git_ps1 "(%s)"
   local git_status="`git status -unormal 2>&1`"
   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
     if [[ "$git_status" =~ nothing\ to\ commit ]]; then
@@ -78,35 +40,20 @@ function __my_git_prompt {
     fi
     if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
       branch=${BASH_REMATCH[1]}
-      # test "$branch" != master || branch=' '
     else
       branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null || echo HEAD`)"
-      # echo "$(parse_git_branch)$(__git_dirty)"
     fi
     echo -n "$ansi($branch`__git_dirty`)$NONE"
-    # echo -n '\e[0;37;'"$ansi"';1m'"($branch$(__git_dirty)"'\e[0m) '
   fi
 }
-
-function __my_rvm_prompt {
-  # source "$rvm_path/contrib/ps1_functions"
-  eval ~/.rvm/bin/rvm-prompt
+__git_dirty() {
+  git diff --quiet head &>/dev/null
+  [ $? == 1 ] && echo "!"
 }
-
-function ps1_set {
-  # YELLOW="\[\033[0;33m\]"
-  # PURPLE="\[\033[0;35m\]"
-  # RED="\[\033[0;31m\]"
-  # GREEN="\[\033[0;32m\]"
-  # LIGHT_GRAY="\[\033[0;37;00m\]"
-  # CYAN="\[\033[0;36m\]"
-  export PS1="\$(__my_rvm_prompt)\[\e[36m\]$(__my_git_prompt)\[\e[0m\]\w\n📝 $ "
-    # PS1="`_git_prompt`${CYAN}[\u@\h ${PURPLE}`~/.rvm/bin/rvm-prompt` ${GREEN}\w${CYAN}]\n\$${LIGHT_GRAY} "
-  # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
-  # PS1='[\W$(__git_ps1 " (%s)")]\$ '
+parse_git_branch() {
+  cat .git/HEAD | sed -e 's/^.*refs\/heads\///'
 }
-
-bash_prompt() {
+_prompt_colors() {
   local NONE="\[\033[0m\]"    # unsets color to term's fg color
 
   # regular colors
@@ -141,10 +88,62 @@ bash_prompt() {
 
   local UC=$W                 # user's color
   [ $UID -eq "0" ] && UC=$R   # root's color
-
-  ps1_set
 }
-bash_prompt
+
+#   # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
+#   # PS1='[\W$(__git_ps1 " (%s)")]\$ '
+#   # __git_ps1 "(%s)"
+#PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+# export GIT_PS1_SHOWDIRTYSTAT=true
+# export AUTO_TOGGLE=true # for local build #
+# export ENABLE_TOGGLES=false # it will turn all feature toggles on when
+#
+# function __git_dirty {
+#   # git diff-index --quiet --name-only HEAD &>/dev/null
+#   # [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+# }
+# function parse_git_branch {
+#   # GIT_DIR
+#   # git branch --list --no-color 2> /dev/null | sed -e '/^[^\*]/d' -e 's/^\*\ \(.*\)/(\1) /'
+#   # git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+#   # git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#   # ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+#   ## echo "("${ref#refs/heads/}")"
+# }
+# function __git_branch {
+#   __git_ps1 " %s"
+# }
+# function __my_git_prompt {
+#   # GIT_PS1_SHOWCOLORHINTS=1
+#   # GIT_PS1_SHOWUPSTREAM="auto git"
+#   # __git_ps1 "(%s)"
+#   local git_status="`git status -unormal 2>&1`"
+#   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
+#     if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
+#       # test "$branch" != master || branch=' '
+#     else
+#       # echo "$(parse_git_branch)$(__git_dirty)"
+#     fi
+#     # echo -n '\e[0;37;'"$ansi"';1m'"($branch$(__git_dirty)"'\e[0m) '
+#   fi
+# }
+# function __my_rvm_prompt {
+#   # source "$rvm_path/contrib/ps1_functions"
+#   # [[ -s "$HOME/.rvm/contrib/ps1_functions" ]] && source "$HOME/.rvm/contrib/ps1_functions"
+# }
+# function ps1_set {
+#   # YELLOW="\[\033[0;33m\]"
+#   # PURPLE="\[\033[0;35m\]"
+#   # RED="\[\033[0;31m\]"
+#   # GREEN="\[\033[0;32m\]"
+#   # LIGHT_GRAY="\[\033[0;37;00m\]"
+#   # CYAN="\[\033[0;36m\]"
+#     # PS1="`_git_prompt`${CYAN}[\u@\h ${PURPLE}`~/.rvm/bin/rvm-prompt` ${GREEN}\w${CYAN}]\n\$${LIGHT_GRAY} "
+#   # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
+#   # PS1='[\W$(__git_ps1 " (%s)")]\$ '
+# }
+# export PS1='\[\033[01;32m\]\u\[\033[01;34m\]@\[\033[01;31m\]Heaven\[\e[0;33m\](\@)\[\e[0;33m\]\[\033[00;34m\]{\[\033[01;34m\]\w\[\033[00;34m\]}\[\033[0;32m\]$(parse_git_branch) \n ~> \[\033[00m\]'
+# export PS1='\[\033[01;32m\]\u@\h:\[\033[01;34m\]\w\[\033[00m\]\[\033[01;32m\]$(parse_git_branch)\[\033[00m\] \$ '
 # function _prompt_command () {
 #
 function ensure_update_terminal_cwd {
@@ -155,10 +154,14 @@ function ensure_update_terminal_cwd {
     local REPLACE='%20';
     local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}";
     printf '\e]7;%s\a' "$PWD_URL"
+  else
+    update_terminal_cwd;
   fi
 }
-ensure_update_terminal_cwd
-#   bash_prompt;
+# ensure_update_terminal_cwd
+# ps1_set
+PROMPT_COMMAND='ps1_set;ensure_update_terminal_cwd;'
+#   ps1_set;
 # }
 # see https://github.com/revans/bash-it/pull/257
 # PROMPT_COMMAND="_prompt_command;"
