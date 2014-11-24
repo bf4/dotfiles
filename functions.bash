@@ -30,8 +30,8 @@ function brew_install {
     echo "already installed $1"
     false
   else
-    echo "installing $1"
-    brew install $1
+    echo "installing $@"
+    brew install "$@"
   fi
 }
 
@@ -52,8 +52,8 @@ function brew_cask {
     echo "OMG, the app exists for $1"
     false
   else
-    echo "installing  $1"
-    brew cask install $1
+    echo "installing $@"
+    brew cask install "$@"
   fi
 }
 
@@ -63,19 +63,19 @@ function brew_tap {
     echo "already tapped $1"
     false
   else
-    echo "tapping  $1"
-    brew tap $1
+    echo "tapping $@"
+    brew tap "$@"
   fi
 }
 
 function app_cmd {
   if [ "$platform" = "vagrant" ]
   then
-    echo "running command on vagrant: $1"
-    vagrant ssh -c "cd /vagrant && $1"
+    echo "running command on vagrant: $@"
+    vagrant ssh -c "cd /vagrant && $@"
   else
-    echo "running command locally: $1"
-    eval $1
+    echo "running command locally: $@"
+    eval $@
   fi
 
 }
@@ -85,7 +85,7 @@ function install_rvm {
     echo "we have rvm; you are using $(ruby --version) from $(which ruby)"
   else
     echo "we don't have rvm installing"
-    \curl -sSL https://get.rvm.io | bash -s $1 --auto-dotfiles
+    \curl -sSL https://get.rvm.io | bash -s $@ --auto-dotfiles
   fi
 }
 function install_ruby {

@@ -157,8 +157,8 @@ brew_install macvim
 
 brew_install ctags
 brew_install tmux
-brew_install the_silver_searcher # aka 'ag'
-brew_cask sequel-pro
+brew_install the_platinum_searcher # aka 'pt'
+brew_cask sequel-pro --app-dir="/Applications"
 
 ## Repos Directory
 if file_exists $HOME/projects
@@ -169,7 +169,7 @@ else
   mkdir -p $HOME/projects
 fi
 
-brew_cask "alfred"
+brew_cask "alfred" --app-dir="/Applications"
 echo "open alfred from '/opt/hombrew-cask/Caskroom'"
 if cmd_success
 then
@@ -182,18 +182,18 @@ then
   # TODO: add to login items
 fi
 
-brew_cask "caffeine"
+brew_cask "caffeine" --app-dir="/Applications"
 # TODO: add to login items
 
-brew_cask "cd-to"
+brew_cask "cd-to" --app-dir="/Applications"
 # TODO: add instructions for dragging link to finder
-brew_cask "nvalt"
+brew_cask "nvalt" --app-dir="/Applications"
 # brew_cask "vmware-fusion"
 # brew_cask "hipchat"
 # brew_cask "pgadmin3"
 
-brew_install "tree"
-brew_install "trash"
+brew_install "tree" --app-dir="/Applications"
+brew_install "trash" --app-dir="/Applications"
 
 # see https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 
