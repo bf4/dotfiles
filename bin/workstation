@@ -2,14 +2,46 @@
 
 args = ARGV.to_a
 
+require 'pty'
+# should consider trapping SIGINT in here
+def run(cmd)
+  puts cmd
+  child_process = ''
+  result = ''
+  # http://stackoverflow.com/a/1162850
+  # stream output of subprocess
+  begin
+    PTY.spawn( cmd ) do |stdin, stdout, pid|
+      begin
+        # Do stuff with the output here. Just printing to show it works
+        stdin.each do |line|
+          print line
+          result << line
+        end
+        child_process = PTY.check(pid)
+      rescue Errno::EIO
+        puts "Errno:EIO error, but this probably just means " +
+              "that the process has finished giving output"
+      end
+    end
+  rescue PTY::ChildExited
+    puts "The child process exited!"
+  end
+  unless child_process.success?
+    exitstatus = child_process.exitstatus
+    puts "FAILED: #{child_process.pid} exited with status #{exitstatus.inspect} due to failed command #{cmd}"
+    exit exitstatus || 1
+  end
+  result
+end
 def workstation_cmd(cmd)
   puts "Running workstation: #{cmd}"
-  puts `$HOME/dotextras/#{cmd}`
+  run %{cd "$HOME/dotextras" && #{cmd}; cd -}
 end
 cmds = Hash.new do |h,cmd|
   puts "I am a workstation tool. I don't know about #{cmd.inspect}"
   puts "I only know about:\n\t#{cmds.keys.join("\n\t")}"
 end
-cmds["setup"] = ->{ workstation_cmd("workstation") }
-cmds["update"] = ->{ puts `cd $HOME/dotextras && git pull --rebase origin master; cd -` }
+cmds["setup"] = ->{ workstation_cmd("./workstation") }
+cmds["update"] = ->{ workstation_cmd("git pull --rebase origin master") }
 cmds.fetch(args.shift) { cmds.default_proc }.call
