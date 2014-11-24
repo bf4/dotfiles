@@ -4,6 +4,7 @@
 # HACK_MY_OSX=true
 # http://stackoverflow.com/questions/2013547/assigning-default-values-to-shell-variables-with-a-single-command-in-bash
 MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
+# DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
 
 # set -e
 
@@ -11,22 +12,33 @@ source "$HOME/dotextras/functions.bash"
 
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
-  ls -al | \
-    awk '{ print $9 }' | \
-    ruby -e 'STDIN.readlines.each{|line| puts(line) if line =~ /^\.[a-z_-]+/  }' | \
-    while read file ; do
-      ./copy_and_link.sh "$file"
-    done
-  cd ~
-  git clone https://github.com/bf4/vimfiles.git vimfiles
-  cd ~/dotextras
-  mkdir -p ~/bin
-  for file in bin/*; do
-    file_path="$HOME/$file"
-    if not_file_exists "$file_path"; then
-      ln -s "$HOME/dotextras/$file" "$HOME/$file"
-    fi
-  done
+  # copy existing files over from home
+  # cd ~ && \
+  # ls -al | awk '{ print $9 }' | ruby -e 'STDIN.readlines.each{|line| puts(line) \
+  #   if line =~ /^\.[a-z_-]+/  \
+  #   && File.file?(File.join(File.expand_path("~"),line.chomp)) }' | \
+  #   while read "x" ; do cp "$x" "dotextras/$x" ; done
+
+  mkdir -p "$HOME/bin"
+  cd "$HOME/dotextras" && \
+    # hard link bin files
+    git  ls-files bin | \
+    ruby -rfileutils -e 'STDIN.readlines.each{|line| \
+    FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
+    :verbose => true, :force => true) }'  &&
+
+    # hard link dotfiles
+    git ls-files | \
+    ruby -rfileutils -e 'STDIN.readlines.each{|line| \
+    FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
+    :verbose => true, :force => true) \
+    if line =~ /^\.[a-z_-]+/  \
+    }'
+  if not_file_exists "$HOME/vimfiles"
+  then
+    cd ~ &&
+      git clone https://github.com/bf4/vimfiles.git vimfiles
+  fi
 fi
 
 
