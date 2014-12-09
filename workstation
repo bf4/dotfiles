@@ -4,11 +4,11 @@
 # HACK_MY_OSX=true
 # http://stackoverflow.com/questions/2013547/assigning-default-values-to-shell-variables-with-a-single-command-in-bash
 MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
-# DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
+export DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
 
 # set -e
 
-source "$HOME/dotextras/functions.bash"
+source "$HOME/${DOTFILES_HOME}/functions.bash"
 
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
@@ -17,10 +17,10 @@ then
   # ls -al | awk '{ print $9 }' | ruby -e 'STDIN.readlines.each{|line| puts(line) \
   #   if line =~ /^\.[a-z_-]+/  \
   #   && File.file?(File.join(File.expand_path("~"),line.chomp)) }' | \
-  #   while read "x" ; do cp "$x" "dotextras/$x" ; done
+  #   while read "x" ; do cp "$x" "${DOTFILES_HOME}/$x" ; done
 
   mkdir -p "$HOME/bin"
-  cd "$HOME/dotextras" && \
+  cd "$HOME/${DOTFILES_HOME}" && \
     # hard link bin files
     git  ls-files bin | \
     ruby -rfileutils -e 'STDIN.readlines.each{|line| \
@@ -135,7 +135,7 @@ else
   echo "Installing FireFox"
   # need specific firefox version for selenium tests
   # and need the appdir to be /Applications
-  brew cask install ~/dotextras/brews/firefox.rb --appdir="/Applications"
+  brew cask install ~/${DOTFILES_HOME}/brews/firefox.rb --appdir="/Applications"
   echo "------"
   echo "------ Selenium Compatible FIREFOX INSTALLED"
   echo "------ Automatic updates are disabled."

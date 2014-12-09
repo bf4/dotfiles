@@ -1,5 +1,5 @@
 # For selenium compatibility
-# brew cask install ~/dotextras/firefox.rb --appdir="/Applications"
+# brew cask install ~/${DOTFILES_HOME}/firefox.rb --appdir="/Applications"
 class Firefox < Cask
   version '29.0'
   #  cat ~/Downloads/Firefox\ 29.0.dmg | openssl dgst -sha256

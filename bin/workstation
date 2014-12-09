@@ -36,7 +36,7 @@ def run(cmd)
 end
 def workstation_cmd(cmd)
   puts "Running workstation: #{cmd}"
-  run %{cd "$HOME/dotextras" && #{cmd}; cd -}
+  run %{cd "$HOME/${DOTFILES_HOME:-dotextras}" && #{cmd}; cd -}
 end
 cmds = Hash.new do |h,cmd|
   puts "I am a workstation tool. I don't know about #{cmd.inspect}"

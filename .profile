@@ -1,12 +1,14 @@
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=vim
+export GIT_EDITOR=vim
 export VISUAL=vim
 export PAGER=less
 export PROJECTS_DIR="$HOME/projects"
 [[ -s '/usr/local/bin/hub' ]] && eval "$(hub alias -s)"
 export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin:$PATH
-[[ -s "$HOME/dotfiles/ssh_agent.bash" ]] && source "$HOME/dotfiles/ssh_agent.bash"
+export DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
+[[ -s "$HOME/${DOTFILES_HOME}/ssh_agent.bash" ]] && source "$HOME/${DOTFILES_HOME}/ssh_agent.bash"
 shell_name=$(echo $0 | cut -d- -f2)
 if [ $shell_name == "bash" ]
 then

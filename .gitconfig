@@ -1,6 +1,6 @@
 [user]
 	name = Benjamin Fleischer
-	email = github@benjaminfleischer.com
+	email = work@benjaminfleischer.com
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
@@ -109,5 +109,6 @@
 [credential]
 	helper = osxkeychain
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
