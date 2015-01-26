@@ -10,7 +10,7 @@ fi
 if [ -s `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
   echo "using homebrew git completion"
 elif [ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]; then
-  echo "using apple git completion for /usr/bin/git"
+  # echo "using apple git completion for /usr/bin/git"
   source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
 else
   # fall back to local (linked) copy
@@ -104,78 +104,5 @@ _prompt_colors() {
   [ $UID -eq "0" ] && UC=$R   # root's color
 }
 
-#   # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
-#   # PS1='[\W$(__git_ps1 " (%s)")]\$ '
-#   # __git_ps1 "(%s)"
-#PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
-# export GIT_PS1_SHOWDIRTYSTAT=true
-# export AUTO_TOGGLE=true # for local build #
-# export ENABLE_TOGGLES=false # it will turn all feature toggles on when
-#
-# function __git_dirty {
-#   # git diff-index --quiet --name-only HEAD &>/dev/null
-#   # [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
-# }
-# function parse_git_branch {
-#   # GIT_DIR
-#   # git branch --list --no-color 2> /dev/null | sed -e '/^[^\*]/d' -e 's/^\*\ \(.*\)/(\1) /'
-#   # git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
-#   # git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-#   # ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-#   ## echo "("${ref#refs/heads/}")"
-# }
-# function __git_branch {
-#   __git_ps1 " %s"
-# }
-# function __my_git_prompt {
-#   # GIT_PS1_SHOWCOLORHINTS=1
-#   # GIT_PS1_SHOWUPSTREAM="auto git"
-#   # __git_ps1 "(%s)"
-#   local git_status="`git status -unormal 2>&1`"
-#   if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
-#     if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
-#       # test "$branch" != master || branch=' '
-#     else
-#       # echo "$(parse_git_branch)$(__git_dirty)"
-#     fi
-#     # echo -n '\e[0;37;'"$ansi"';1m'"($branch$(__git_dirty)"'\e[0m) '
-#   fi
-# }
-# function __my_rvm_prompt {
-#   # source "$rvm_path/contrib/ps1_functions"
-#   # [[ -s "$HOME/.rvm/contrib/ps1_functions" ]] && source "$HOME/.rvm/contrib/ps1_functions"
-# }
-# function ps1_set {
-#   # YELLOW="\[\033[0;33m\]"
-#   # PURPLE="\[\033[0;35m\]"
-#   # RED="\[\033[0;31m\]"
-#   # GREEN="\[\033[0;32m\]"
-#   # LIGHT_GRAY="\[\033[0;37;00m\]"
-#   # CYAN="\[\033[0;36m\]"
-#     # PS1="`_git_prompt`${CYAN}[\u@\h ${PURPLE}`~/.rvm/bin/rvm-prompt` ${GREEN}\w${CYAN}]\n\$${LIGHT_GRAY} "
-#   # PS1="\e[32;40m\u@\w\[\e[0m\]\n[\h\W$(__git_ps1 " (%s)")]\$> "
-#   # PS1='[\W$(__git_ps1 " (%s)")]\$ '
-# }
-# export PS1='\[\033[01;32m\]\u\[\033[01;34m\]@\[\033[01;31m\]Heaven\[\e[0;33m\](\@)\[\e[0;33m\]\[\033[00;34m\]{\[\033[01;34m\]\w\[\033[00;34m\]}\[\033[0;32m\]$(parse_git_branch) \n ~> \[\033[00m\]'
-# export PS1='\[\033[01;32m\]\u@\h:\[\033[01;34m\]\w\[\033[00m\]\[\033[01;32m\]$(parse_git_branch)\[\033[00m\] \$ '
-# function _prompt_command () {
-#
-function ensure_update_terminal_cwd {
-  type update_terminal_cwd 2>&1 | grep -q 'shell function'
-  if [ $? -ne 0 ]
-  then
-    local SEARCH=' ';
-    local REPLACE='%20';
-    local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}";
-    printf '\e]7;%s\a' "$PWD_URL"
-  else
-    update_terminal_cwd;
-  fi
-}
 ps1_set
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD##/*/}\007"'
-# PROMPT_COMMAND='ps1_set;ensure_update_terminal_cwd;'
-#   ps1_set;
-# }
-# see https://github.com/revans/bash-it/pull/257
-# PROMPT_COMMAND="_prompt_command;"

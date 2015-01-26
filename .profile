@@ -8,8 +8,13 @@ export GIT_EDITOR=vim
 export VISUAL=vim
 export PAGER=less
 export PROJECTS_DIR="$HOME/projects"
-[[ -s '/usr/local/bin/hub' ]] && eval "$(hub alias -s)"
-export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin:$PATH
+[ -s /usr/local/bin ] && PATH="/usr/local/bin:$PATH"
+[ -s "$HOME/bin"    ] && PATH="$HOME/bin:$PATH"
+[ -s /opt/bin       ] && PATH="/opt/bin:$PATH"
+[ -s /opt/local/bin ] && PATH="/opt/local/bin:$PATH"
+[ -s $HOME/.cabal   ] && PATH="$HOME/.cabal/bin:$PATH"
+[ -s /usr/local/lib/python ] && export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
+[ -s '/usr/local/bin/hub' ] && eval "$(hub alias -s)"
 export DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
 [[ -s "$HOME/${DOTFILES_HOME}/ssh_agent.bash" ]] && source "$HOME/${DOTFILES_HOME}/ssh_agent.bash"
 shell_name=$(echo $0 | cut -d- -f2)
@@ -40,28 +45,6 @@ fi
 source "$(brew --repository)/Library/Contributions/brew_$(echo $0 | cut -d- -f2)_completion.sh"
 
 
-# export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
-# MOD_PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:$HOME/bin
-# function add_to_mod_path {
-#   [[ -s $1 ]] &&
-#       export MOD_PATH="$MOD_PATH:$1"
-# }
-# add_to_mod_path "/usr/local/zend/mysql/bin"
-# add_to_mod_path "$HOME/.cabal/bin"
-# add_to_mod_path "$HOME/.pollev/bin"
-# export PATH=$MOD_PATH:$PATH
-# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-# which git-jk &> /dev/null
-# if [ $? -eq 0 ]
-# then
-#   alias gitjk="history 10 | tail -r | gitjk_cmd"
-#   # echo "Node is at $(npm config get prefix)"
-#   #  NODE_PATH="/usr/local/lib/node_modules"
-# fi
-#
-# PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
-# export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
-
 # export RUBYOPT=-w
 # do not check GHI_TOKEN into source control
 export GHI_TOKEN="wouldntyouliketoknow"
@@ -80,4 +63,4 @@ export GHI_TOKEN="wouldntyouliketoknow"
 # source $(brew --prefix nvm)/nvm.sh
 [ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
