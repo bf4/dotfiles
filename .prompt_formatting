@@ -104,5 +104,17 @@ _prompt_colors() {
   [ $UID -eq "0" ] && UC=$R   # root's color
 }
 
-ps1_set
-export PROMPT_COMMAND='echo -ne "\033]0;${PWD##/*/}\007"'
+function ensure_update_terminal_cwd {
+  # echo -ne "\033]0;${PWD##/*/}\007"
+  type update_terminal_cwd 2>&1 | grep -q 'shell function'
+  if [ $? -ne 0 ]
+  then
+    local SEARCH=' ';
+    local REPLACE='%20';
+    local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}";
+    printf '\e]7;%s\a' "$PWD_URL"
+  else
+    update_terminal_cwd;
+  fi
+}
+export PROMPT_COMMAND='ps1_set;ensure_update_terminal_cwd;'
