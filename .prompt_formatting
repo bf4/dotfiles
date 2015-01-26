@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 for file in `brew --prefix`/etc/bash_completion.d/* ; do
   source $file
 done
@@ -8,7 +9,7 @@ fi
 # handle various places git completion may be
 if [ -s `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
   echo "using homebrew git completion"
-elif [[ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]]; then
+elif [ -f /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash ]; then
   echo "using apple git completion for /usr/bin/git"
   source /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash
 else
@@ -19,8 +20,8 @@ else
   # source $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
 fi
 # brew install grc
-[[ -s "`brew --prefix grc`/etc/grc.bashrc" ]] && source "`brew --prefix grc`/etc/grc.bashrc"
-[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
+[ -s "`brew --prefix grc`/etc/grc.bashrc" ] && source "`brew --prefix grc`/etc/grc.bashrc"
+[ -s $HOME/.pythonbrew/etc/bashrc ] && source $HOME/.pythonbrew/etc/bashrc
 
 # Set git autocompletion and PS1 integration for showing git info in terminal
 # https://github.com/iambowen/dotfiles/blob/master/bash_profile
@@ -161,7 +162,7 @@ _prompt_colors() {
 #
 function ensure_update_terminal_cwd {
   type update_terminal_cwd 2>&1 | grep -q 'shell function'
-  if [[ $? -ne 0 ]]
+  if [ $? -ne 0 ]
   then
     local SEARCH=' ';
     local REPLACE='%20';
@@ -171,9 +172,9 @@ function ensure_update_terminal_cwd {
     update_terminal_cwd;
   fi
 }
-# ensure_update_terminal_cwd
-# ps1_set
-PROMPT_COMMAND='ps1_set;ensure_update_terminal_cwd;'
+ps1_set
+export PROMPT_COMMAND='echo -ne "\033]0;${PWD##/*/}\007"'
+# PROMPT_COMMAND='ps1_set;ensure_update_terminal_cwd;'
 #   ps1_set;
 # }
 # see https://github.com/revans/bash-it/pull/257

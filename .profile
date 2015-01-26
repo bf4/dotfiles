@@ -1,3 +1,6 @@
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=vim
@@ -16,13 +19,19 @@ then
   # http://stackoverflow.com/questions/338285/prevent-duplicates-from-being-saved-in-bash-history#answer-7449399
   # http://unix.stackexchange.com/questions/1288/preserve-bash-history-in-multiple-terminal-windows
   # avoid duplicates..
+  # https://github.com/companygardener/dotfiles/blob/b76d3a83f46b3d70e7d75573e2fc5728730f9c38/home/bashrc
+  export HISTFILESIZE=300000
+  export HISTIGNORE="&:ls:[bf]g:exit:history"
+  # export HISTCONTROL=ignoreboth
   export HISTCONTROL=ignoredups:erasedups
+  export HISTSIZE=100000
   # append history entries..
   shopt -s histappend
+  shopt -s checkwinsize
 
   # After each command, save and reload history
-  export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a;
-  history -c; history -r"
+  # export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a;
+  # history -c; history -r"
 elif [ $shell_name == "zsh" ]
 then
   # http://superuser.com/questions/519596/share-history-in-multiple-zsh-shell
@@ -69,5 +78,6 @@ export GHI_TOKEN="wouldntyouliketoknow"
 # [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 # Node Version Manager
 # source $(brew --prefix nvm)/nvm.sh
+[ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

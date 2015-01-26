@@ -1,4 +1,4 @@
-
+#!/usr/bin/env sh
 #alias ls='ls --color=auto'
 alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
 alias ber='bundle exec rake'

@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 # http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
 # cd to the path of the front Finder window
 # with some modifications
