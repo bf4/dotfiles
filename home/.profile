@@ -64,4 +64,6 @@ source "$(brew --repository)/Library/Contributions/brew_$(echo $0 | cut -d- -f2)
 # source $(brew --prefix nvm)/nvm.sh
 [ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
