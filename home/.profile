@@ -1,12 +1,18 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+export MY_EMAIL=${MY_EMAIL:-githu@benjaminfleischer.com}
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 export DISABLE_SPRING=1
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=vim
+# http://git-scm.com/book/en/v2/Git-Internals-Environment-Variables
 export GIT_EDITOR=vim
+# EMAIL is the fallback email address in case the user.email configuration value isn’t set.
+# If this isn’t set, Git falls back to the system user and host names.
+export EMAIL=${EMAIL:-$MY_EMAIL}
+
 export VISUAL=vim
 export PAGER=less
 export PROJECTS_DIR="$HOME/projects"

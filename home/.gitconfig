@@ -1,6 +1,5 @@
 [user]
 	name = Benjamin Fleischer
-	email = work@benjaminfleischer.com
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
