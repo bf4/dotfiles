@@ -104,7 +104,7 @@ _prompt_colors() {
   [ $UID -eq "0" ] && UC=$R   # root's color
 }
 
-function ensure_update_terminal_cwd {
+ensure_update_terminal_cwd() {
   # echo -ne "\033]0;${PWD##/*/}\007"
   type update_terminal_cwd 2>&1 | grep -q 'shell function'
   if [ $? -ne 0 ]

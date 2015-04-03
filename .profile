@@ -1,6 +1,8 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+export DISABLE_SPRING=1
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=vim
@@ -44,10 +46,9 @@ then
 fi
 source "$(brew --repository)/Library/Contributions/brew_$(echo $0 | cut -d- -f2)_completion.sh"
 
-
 # export RUBYOPT=-w
 # do not check GHI_TOKEN into source control
-export GHI_TOKEN="wouldntyouliketoknow"
+# export GHI_TOKEN="wouldntyouliketoknow"
 # chruby init
 # source /usr/local/opt/chruby/share/chruby/chruby.sh
 # export RUBIES=(

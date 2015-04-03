@@ -11,7 +11,8 @@ alias be='bundle exec'
 # use macvim binary if present (it has ruby compiled)
 # alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 # [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && . alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
-function gitreset {
+gitreset() {
+  git fetch;
   git reset --hard origin/$(git branch | grep '*' | cut -d' ' -f2)
 }
 function parse_git_branch {

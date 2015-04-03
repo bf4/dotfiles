@@ -157,6 +157,7 @@ brew_install macvim
 
 brew_install ctags
 brew_install tmux
+brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl && echo "Run tmux kill-server"
 brew_install the_platinum_searcher # aka 'pt'
 brew_cask sequel-pro --app-dir="/Applications"
 
