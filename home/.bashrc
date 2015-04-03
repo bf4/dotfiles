@@ -7,3 +7,5 @@ export JRUBY_OPTS='--1.9'
 [ -f "$HOME/$DOTFILES_HOME/.travis/travis.sh" ] && source "$HOME/$DOTFILES_HOME/.travis/travis.sh"
 
 [[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"

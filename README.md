@@ -1,5 +1,18 @@
 Here's my dotfiles
 
+## With shell (preferred)
+
+https://github.com/andsens/homeshick
+
+```sh
+git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
+$HOME/.homesick/repos/homeshick/bin/homeshick clone bf4/dotfiles
+source $HOME/.bashrc # needed to get source homeshick path
+homeshick cd dotfiles &&
+  env WORKSTATION_UPDATE=true ./workstation
+cd -
+```
+
 ## With Ruby
 
 https://github.com/technicalpickles/homesick
@@ -11,25 +24,6 @@ homesick symlink dotfiles
 homesick exec dotfiles env WORKSTATION_UPDATE=true ./workstation
 ```
 
-## With shell
-
-https://github.com/andsens/homeshick
-
-```sh
-git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-# from sh and its derivates (bash, zsh etc.)
-printf '\nsource "$HOME/.homesick/repos/homeshick/homeshick.sh"' >> $HOME/.bashrc
-# csh and derivatives (i.e. tcsh)
-printf '\nalias homeshick source "$HOME/.homesick/repos/homeshick/bin/homeshick.csh"' >> $HOME/.cshrc
-# fish shell
-echo \n'source "$HOME/.homesick/repos/homeshick/homeshick.fish"' >> "$HOME/.config/fish/config.fish"
-
-$HOME/.homesick/repos/homeshick/bin/homeshick clone bf4/dotfiles
-source $HOME/.bashrc
-homeshick cd dotfiles &&
-  env WORKSTATION_UPDATE=true ./workstation
-cd -
-```
 
 Optionally configure `MY_EMAIL`
 
