@@ -17,8 +17,8 @@ export PROJECTS_DIR="$HOME/projects"
 [ -s $HOME/.cabal   ] && PATH="$HOME/.cabal/bin:$PATH"
 [ -s /usr/local/lib/python ] && export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
 [ -s '/usr/local/bin/hub' ] && eval "$(hub alias -s)"
-export DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
-[[ -s "$HOME/${DOTFILES_HOME}/ssh_agent.bash" ]] && source "$HOME/${DOTFILES_HOME}/ssh_agent.bash"
+export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
+[[ -s "$HOME/${DOTFILES_HOME}/../ssh_agent.bash" ]] && source "$HOME/${DOTFILES_HOME}/../ssh_agent.bash"
 shell_name=$(echo $0 | cut -d- -f2)
 if [ $shell_name == "bash" ]
 then

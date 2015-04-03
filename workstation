@@ -4,11 +4,11 @@
 # HACK_MY_OSX=true
 # http://stackoverflow.com/questions/2013547/assigning-default-values-to-shell-variables-with-a-single-command-in-bash
 MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
-export DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
+export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 
 # set -e
 
-source "$HOME/${DOTFILES_HOME}/functions.bash"
+source "$HOME/${DOTFILES_HOME}/../functions.bash"
 
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
@@ -28,12 +28,13 @@ then
     :verbose => true, :force => true) }'  &&
 
     # hard link dotfiles
-    git ls-files | \
-    ruby -rfileutils -e 'STDIN.readlines.each{|line| \
-    FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
-    :verbose => true, :force => true) \
-    if line =~ /^\.[a-z_-]+/  \
-    }'
+    # prefer homesick
+    # git ls-files | \
+    # ruby -rfileutils -e 'STDIN.readlines.each{|line| \
+    # FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
+    # :verbose => true, :force => true) \
+    # if line =~ /^\.[a-z_-]+/  \
+    # }'
   if not_file_exists "$HOME/vimfiles"
   then
     cd ~ &&
@@ -135,7 +136,7 @@ else
   echo "Installing FireFox"
   # need specific firefox version for selenium tests
   # and need the appdir to be /Applications
-  brew cask install ~/${DOTFILES_HOME}/brews/firefox.rb --appdir="/Applications"
+  brew cask install ~/${DOTFILES_HOME}/../brews/firefox.rb --appdir="/Applications"
   echo "------"
   echo "------ Selenium Compatible FIREFOX INSTALLED"
   echo "------ Automatic updates are disabled."
