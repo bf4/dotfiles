@@ -1,6 +1,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-[ -s "$HOME/$DOTFILES_HOME/.profile" ] && source "$HOME/$DOTFILES_HOME/.profile" # Load the default .profile
+[ -f "$HOME/$DOTFILES_HOME/.bashrc" ] && source "$HOME/$DOTFILES_HOME/.bashrc"
+[ -f "$HOME/$DOTFILES_HOME/.profile" ] && source "$HOME/$DOTFILES_HOME/.profile" # Load the default .profile
 
 for src in \
   "$HOME/$DOTFILES_HOME/.prompt_formatting" \
