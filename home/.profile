@@ -16,7 +16,7 @@ export EMAIL=${EMAIL:-$MY_EMAIL}
 export VISUAL=vim
 export PAGER=less
 export PROJECTS_DIR="$HOME/projects"
-export DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
+export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 [ -s "$HOME/${DOTFILES_HOME}/ssh_agent.bash" ] && source "$HOME/${DOTFILES_HOME}/ssh_agent.bash"
 
 [ -s /usr/local/bin ] && PATH="/usr/local/bin:$PATH"
