@@ -68,7 +68,6 @@ source "$(brew --repository)/Library/Contributions/brew_$(echo $0 | cut -d- -f2)
 # [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 # Node Version Manager
 # source $(brew --prefix nvm)/nvm.sh
-[ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
