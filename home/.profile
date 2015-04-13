@@ -1,8 +1,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-export MY_EMAIL=${MY_EMAIL:-githu@benjaminfleischer.com}
+export MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+# Die spring die!
 export DISABLE_SPRING=1
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -76,5 +77,3 @@ source "$(brew --repository)/Library/Contributions/brew_$(echo $0 | cut -d- -f2)
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-# Die spring die!
-export DISABLE_SPRING=1
