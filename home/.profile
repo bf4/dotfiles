@@ -16,8 +16,12 @@ export EMAIL=${EMAIL:-$MY_EMAIL}
 export VISUAL=vim
 export PAGER=less
 export PROJECTS_DIR="$HOME/projects"
+export DOTFILES_HOME=${DOTFILES_HOME:-dotextras}
+[ -s "$HOME/${DOTFILES_HOME}/ssh_agent.bash" ] && source "$HOME/${DOTFILES_HOME}/ssh_agent.bash"
+
 [ -s /usr/local/bin ] && PATH="/usr/local/bin:$PATH"
 [ -s "$HOME/bin"    ] && PATH="$HOME/bin:$PATH"
+[ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 [ -s /opt/bin       ] && PATH="/opt/bin:$PATH"
 [ -s /opt/local/bin ] && PATH="/opt/local/bin:$PATH"
 [ -s $HOME/.cabal   ] && PATH="$HOME/.cabal/bin:$PATH"
