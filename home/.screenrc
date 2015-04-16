@@ -2,4 +2,9 @@ shell -${SHELL}
 # see http://robotsrule.us/vim/
 attrcolor b ".I"
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E38;5;%dm'
+# Sane scrolling
+# # http://superuser.com/questions/310251/use-terminal-scrollbar-with-tmux?lq=1
+# This is possible in both GNU screen and in tmux and the workaround is similar: to fool the multiplexers into thinking that the terminal has no "alternate screen" mode (such as that used by pico, mutt, etc). This is accomplished by setting termcap commands for the session.
+# For GNU screen, put this in your .screenrc:
+# termcapinfo xterm*|xs|rxvt|terminal ti@:te@
 defbce "on"
