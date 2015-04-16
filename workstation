@@ -116,9 +116,87 @@ else
   ssh -T git@github.com
 fi
 
+## BREWS
+if cmd_success brew_install "hub"
+then
+  echo "See https://github.com/github/hub for what hub adds to git"
+fi
+
+# get the nice vim that macvim comes with
+echo "This may fail if you haven't installed the full XCode."
+brew_install macvim
+
+brew_install ctags
+brew_install tmux
+
+brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl && echo "Run tmux kill-server"
+brew_install the_platinum_searcher # aka 'pt'
+
+brew_install "tree" --app-dir="/Applications"
+brew_install "trash" --app-dir="/Applications"
+
+# cabextract
+# cmake
+# elasticsearch
+# erlang
+# exercism
+# ghi
+# graphviz
+# imagemagick
+# libevent
+# libgit2
+# maven
+# node
+# openssl
+# ossp-uuid
+# pcre
+# pkg-config
+# postgresql
+# readline
+# redis
+# scala
+brew_install terminal-notifier
+# the_silver_searcher
+# wget
+# wine
+# winetricks
+# youtube-dl
+
 ## Homebrew Cask (for binaries)
 brew_tap caskroom/cask
 brew_install "brew-cask"
+
+brew_cask "google-chrome" --appdir="/Applications"
+# brew_cask sequel-pro --app-dir="/Applications"
+brew_cask lunchy
+
+brew_cask "caffeine" --app-dir="/Applications"
+# TODO: add to login items
+
+brew_cask "cd-to" --app-dir="/Applications"
+# TODO: add instructions for dragging link to finder
+brew_cask "nvalt" --app-dir="/Applications"
+# brew_cask "vmware-fusion" --app-dir="/Applications"
+# brew_cask "hipchat" --app-dir="/Applications"
+# brew_cask "pgadmin3" --app-dir="/Applications"
+# brew_cask "adium"" --app-dir="/Applications"
+# brew_cask "atom" --app-dir="/Applications"
+# brew_cask "cyberduck" --app-dir="/Applications"
+# brew_cask "fluid" --app-dir="/Applications"
+# brew_cask "github" --app-dir="/Applications"
+# brew_cask "google-drive" --app-dir="/Applications"
+# brew_cask "iterm2" --app-dir="/Applications"
+# brew_cask "java" --app-dir="/Applications"
+# brew_cask "keka" --app-dir="/Applications"
+# brew_cask "netnewswire" --app-dir="/Applications"
+# brew_cask "racket" --app-dir="/Applications"
+# brew_cask "slack" --app-dir="/Applications"
+# brew_cask "sqlitebrowser" --app-dir="/Applications"
+# brew_cask "sublime-text" --app-dir="/Applications"
+# brew_cask "tunnelblick" --app-dir="/Applications"
+# brew_cask "vagrant" --app-dir="/Applications"
+# brew_cask "virtualbox" --app-dir="/Applications"
+# brew_cask "xquartz" --app-dir="/Applications"
 
 if brew cask list | grep "firefox" &> /dev/null
 then
@@ -145,31 +223,6 @@ else
   echo "------"
 fi
 
-brew_cask "google-chrome" --appdir="/Applications"
-
-if cmd_success brew_install "hub"
-then
-  echo "See https://github.com/github/hub for what hub adds to git"
-fi
-
-# get the nice vim that macvim comes with
-echo "This may fail if you haven't installed the full XCode."
-brew_install macvim
-
-brew_install ctags
-brew_install tmux
-brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl && echo "Run tmux kill-server"
-brew_install the_platinum_searcher # aka 'pt'
-brew_cask sequel-pro --app-dir="/Applications"
-
-## Repos Directory
-if file_exists $HOME/projects
-then
-  echo "$HOME/projects exists"
-else
-  echo "Creating $HOME/projects"
-  mkdir -p $HOME/projects
-fi
 
 brew_cask "alfred" --app-dir="/Applications"
 echo "open alfred from '/opt/hombrew-cask/Caskroom'"
@@ -184,18 +237,15 @@ then
   # TODO: add to login items
 fi
 
-brew_cask "caffeine" --app-dir="/Applications"
-# TODO: add to login items
 
-brew_cask "cd-to" --app-dir="/Applications"
-# TODO: add instructions for dragging link to finder
-brew_cask "nvalt" --app-dir="/Applications"
-# brew_cask "vmware-fusion"
-# brew_cask "hipchat"
-# brew_cask "pgadmin3"
-
-brew_install "tree" --app-dir="/Applications"
-brew_install "trash" --app-dir="/Applications"
+## Repos Directory
+if file_exists $HOME/projects
+then
+  echo "$HOME/projects exists"
+else
+  echo "Creating $HOME/projects"
+  mkdir -p $HOME/projects
+fi
 
 # see https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 
