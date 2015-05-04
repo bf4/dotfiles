@@ -162,12 +162,92 @@ brew_install terminal-notifier
 # winetricks
 # youtube-dl
 
+# ack
+# apple-gcc42
+# bazaar
+# beanstalk
+# brew-cask
+# cabal-install
+# chruby
+# cscope
+# curl
+# curl-ca-bundle
+# cvs
+# d-bus
+# doxygen
+# dvdbackup
+# elinks
+# emacs
+# faac
+# ffmpeg
+# flasm
+# flex
+# fortune
+# freetype
+# fswatch
+# gcc
+# gdbm
+# gdk-pixbuf
+# geoip
+# gettext
+# ghc
+# git
+# glew
+# glib
+# gnupg
+# gnutls
+# go
+# gobject-introspection
+# gource
+# gtk+
+# harfbuzz
+# htmldoc
+# htop-osx
+# icu4c
+# intltool
+# irssi
+# jp2a
+# jpeg
+# lame
+# leiningen
+# libevent
+# libffi
+# lynx
+# nettle
+# nginx
+# nvm
+# openjpeg
+# phantomjs
+# poppler
+# ppl011
+# pv
+# python
+# python3
+# qt
+# rbenv
+# rtmpdump
+# ruby-build
+# source-highlight
+# sqlite
+# texi2html
+# the_platinum_searcher
+# tmate
+# tor
+# unixodbc
+# wemux
+# wxmac
+# x264
+# xvid
+# xz
+# yasm
+
 ## Homebrew Cask (for binaries)
 brew_tap caskroom/cask
 brew_install "brew-cask"
 
 brew_cask "google-chrome" --appdir="/Applications"
 # brew_cask sequel-pro --app-dir="/Applications"
+# lunchy-go
 brew_cask lunchy
 
 brew_cask "caffeine" --app-dir="/Applications"
@@ -176,26 +256,40 @@ brew_cask "caffeine" --app-dir="/Applications"
 brew_cask "cd-to" --app-dir="/Applications"
 # TODO: add instructions for dragging link to finder
 brew_cask "nvalt" --app-dir="/Applications"
-# brew_cask "vmware-fusion" --app-dir="/Applications"
-# brew_cask "hipchat" --app-dir="/Applications"
-# brew_cask "pgadmin3" --app-dir="/Applications"
 # brew_cask "adium"" --app-dir="/Applications"
 # brew_cask "atom" --app-dir="/Applications"
+# brew_cask "audacity" --app-dir="/Applications"
+# brew_cask "boot2docker" --app-dir="/Applications"
+# brew_cask "calibre" --app-dir="/Applications"
 # brew_cask "cyberduck" --app-dir="/Applications"
 # brew_cask "fluid" --app-dir="/Applications"
 # brew_cask "github" --app-dir="/Applications"
 # brew_cask "google-drive" --app-dir="/Applications"
+# brew_cask "hipchat" --app-dir="/Applications"
+# brew_cask "istat-menus" --app-dir="/Applications"
 # brew_cask "iterm2" --app-dir="/Applications"
 # brew_cask "java" --app-dir="/Applications"
 # brew_cask "keka" --app-dir="/Applications"
+# brew_cask "launchrocket" --app-dir="/Applications"
+# brew_cask "libreoffice" --app-dir="/Applications"
+# brew_cask "minecraft" --app-dir="/Applications"
 # brew_cask "netnewswire" --app-dir="/Applications"
+# brew_cask "onyx" --app-dir="/Applications"
+# brew_cask "osxfuse" --app-dir="/Applications"
+# brew_cask "pgadmin3" --app-dir="/Applications"
+# brew_cask "picasa" --app-dir="/Applications"
+# brew_cask "postgres" --app-dir="/Applications"
+# brew_cask "quiterss" --app-dir="/Applications"
 # brew_cask "racket" --app-dir="/Applications"
 # brew_cask "slack" --app-dir="/Applications"
 # brew_cask "sqlitebrowser" --app-dir="/Applications"
 # brew_cask "sublime-text" --app-dir="/Applications"
+# brew_cask "tcpblock" --app-dir="/Applications"
 # brew_cask "tunnelblick" --app-dir="/Applications"
 # brew_cask "vagrant" --app-dir="/Applications"
 # brew_cask "virtualbox" --app-dir="/Applications"
+# brew_cask "vmware-fusion" --app-dir="/Applications"
+# brew_cask "wireshark" --app-dir="/Applications"
 # brew_cask "xquartz" --app-dir="/Applications"
 
 if brew cask list | grep "firefox" &> /dev/null
