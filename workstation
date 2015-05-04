@@ -21,6 +21,7 @@ then
 
   mkdir -p "$HOME/bin"
   cd "$HOME/${DOTFILES_HOME}" && \
+    #
     # hard link bin files
     git  ls-files bin | \
     ruby -rfileutils -e 'STDIN.readlines.each{|line| \
@@ -44,18 +45,33 @@ fi
 
 
 # http://brew.sh/ Homebrew
-if fn_exists "brew"
-then
-  echo "we have brew"
+# if fn_exists "brew"
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+
+    append_to_zshrc '# recommended by brew doctor'
+
+    # shellcheck disable=SC2016
+    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+
+    export PATH="/usr/local/bin:$PATH"
 else
-  echo "installing brew"
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fancy_echo "Homebrew already installed. Skipping ..."
 fi
-if [ "$WORKSTATION_UPDATE" = "true" ] ; then brew update ; fi
+
+brew_tap 'thoughtbot/formulae'
+
+
+# if [ "$WORKSTATION_UPDATE" = "true" ] ; then brew update ; fi
+fancy_echo "Updating Homebrew formulas ..."
+brew update
 
 # XCode, installed from app store or
 #   \curl http://adcdownload.apple.com/Developer_Tools/xcode_5.0.2/xcode_5.0.2.dmg
 # then install command line tools
+# sudo xcodebuild -license
 if fn_exists "xcode-select" && ! fn_exists "clang"
 then
  `open /Applications/Xcode.app`
@@ -93,6 +109,7 @@ else
   #
   # zsh completion has been installed to:
   #   /usr/local/share/zsh/site-functions
+  # see https://github.com/thoughtbot/laptop/issues/360
   # ssh keys to github
   ssh git@github.com 2>&1| grep successfully
   if [ $? -eq 0 ]
@@ -117,6 +134,105 @@ else
 fi
 
 ## BREWS
+# Bundler for managing Ruby libraries
+# Exuberant Ctags for indexing files for vim tab completion
+# Foreman for managing web processes
+# hub for interacting with the GitHub API
+# Heroku Toolbelt for interacting with the Heroku API
+# Homebrew for managing operating system libraries
+# ImageMagick for cropping and resizing images
+# Node.js and NPM, for running apps and installing JavaScript packages
+# Postgres for storing relational data
+# Qt for headless JavaScript testing via Capybara Webkit
+# Rbenv for managing versions of Ruby
+# RCM for managing company and personal dotfiles
+# Redis for storing key-value data
+# Ruby Build for installing Rubies
+# Ruby stable for writing general-purpose code
+# The Silver Searcher for finding things in files
+# Tmux for saving project state and switching between projects
+# Zsh as your shell
+
+# brew_install_or_upgrade 'git'
+# brew_install_or_upgrade 'postgres'
+
+# brew_launchctl_restart 'postgresql'
+# brew_install_or_upgrade 'redis'
+# brew_launchctl_restart 'redis'
+# brew_install_or_upgrade 'the_silver_searcher'
+# brew_install_or_upgrade 'vim'
+# brew_install_or_upgrade 'ctags'
+# brew_install_or_upgrade 'tmux'
+# brew_install_or_upgrade 'reattach-to-user-namespace'
+# brew_install_or_upgrade 'imagemagick'
+# brew_install_or_upgrade 'qt'
+# brew_install_or_upgrade 'hub'
+# brew_install_or_upgrade 'node'
+#
+# brew_install_or_upgrade 'rbenv'
+# brew_install_or_upgrade 'ruby-build'
+#
+# # shellcheck disable=SC2016
+# append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
+#
+# brew_install_or_upgrade 'openssl'
+# brew unlink openssl && brew link openssl --force
+# brew_install_or_upgrade 'libyaml'
+
+# ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+#
+# eval "$(rbenv init - zsh)"
+
+# if ! rbenv versions | grep -Fq "$ruby_version"; then
+#   rbenv install -s "$ruby_version"
+# fi
+#
+# rbenv global "$ruby_version"
+# rbenv shell "$ruby_version"
+#
+# gem update --system
+#
+# gem_install_or_update 'bundler'
+
+# fancy_echo "Configuring Bundler ..."
+#   number_of_cores=$(sysctl -n hw.ncpu)
+#   bundle config --global jobs $((number_of_cores - 1))
+
+# brew_install_or_upgrade 'heroku-toolbelt'
+
+
+# skip with parity
+# if ! command -v rcup >/dev/null; then
+#   brew_tap 'thoughtbot/formulae'
+#   brew_install_or_upgrade 'rcm'
+# fi
+#
+# if [ -f "$HOME/.laptop.local" ]; then
+#   . "$HOME/.laptop.local"
+
+# brew_tap 'caskroom/cask'
+# brew_install_or_upgrade 'brew-cask'
+#
+# brew cask install dropbox
+# brew cask install google-chrome
+# brew cask install rdio
+#
+# gem_install_or_update 'parity'
+#
+# brew_install_or_upgrade 'tree'
+# brew_install_or_upgrade 'watch'
+
+# Follow shell style guidelines by using ShellCheck and Syntastic.
+# http://www.shellcheck.net/about.html
+# https://github.com/scrooloose/syntastic
+# brew install shellcheck
+# fi
+# see https://github.com/thoughtbot/laptop/pull/372 re: gnupgp
+#  brew_install_or_upgrade 'gpg2'
+# see https://github.com/thoughtbot/laptop/pull/391
+#  brew_install_or_upgrade 'rbenv-gem-rehash'
+
+
 if cmd_success brew_install "hub"
 then
   echo "See https://github.com/github/hub for what hub adds to git"
