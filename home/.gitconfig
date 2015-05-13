@@ -95,6 +95,11 @@
 	human = name-rev --name-only --refs=refs/heads/*
 	humin = name-rev --refs=refs/heads/* --stdin
 	wdiff = diff
+  # https://gist.github.com/phinze/83387035c233db7c521e
+  # git timespan FROMREF TOREF [FORMAT]
+  #   uses `ddiff` from the `dateutils` package
+  #   available via: brew install dateutils, apt-get install dateutils, etc
+  timespan = "!f() { one=$(git log -n 1 --format=%ai $1); two=$(git log -n 1 --format=%ai $2); ddiff -f ${3:-%mm%dd} \"$one\" \"$two\"; }; f"
 [pull]
 	rebase = true
 [push]
