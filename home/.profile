@@ -72,7 +72,11 @@ source "$(brew --repository)/Library/Contributions/brew_$(echo $0 | cut -d- -f2)
 # if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # [[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
 # Node Version Manager
-# source $(brew --prefix nvm)/nvm.sh
+nvm_sh=$(brew --prefix nvm)/nvm.sh
+if [ -f $nvm_sh ]; then
+  export NVM_DIR=~/.nvm
+  source $nvm_sh
+fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
