@@ -4,12 +4,13 @@
 export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 [ -f "$HOME/$DOTFILES_HOME/.profile" ] && source "$HOME/$DOTFILES_HOME/.profile" # Load the default .profile
 
-for src in \
-  "$HOME/$DOTFILES_HOME/.shell_functions" \
-  "$HOME/$DOTFILES_HOME/.prompt_formatting" \
-  "$HOME/$DOTFILES_HOME/.shell_aliases"
-do
-  source "$src"
+# Load all files in ~/.shells
+for function in ~/.shells/*; do
+  source $function
+done
+# Load all files in ~/.zsh
+for function in ~/.zsh/*; do
+  source $function
 done
 
 # vim in shell
