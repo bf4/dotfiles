@@ -1,10 +1,48 @@
 [user]
 	name = Benjamin Fleischer
+[github]
+	user = bf4
+[color]
+  ui = true
+[format]
+  # pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
+  # pretty = "%C(yellow)%h%Creset - %s%nAuthored by %C(green)%an%Creset %ar%n"
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
-
-#[alias]
+  # whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  whitespace = trailing-space,space-before-tab
+# [advice]
+#   pushNonFastForward = false
+#   statusHints = false
+[commit]
+  template = ~/.gitmessage
+[fetch]
+  prune = true
+[push]
+  default = current
+[pull]
+  rebase = true
+[merge]
+  ff = only
+[rerere]
+	enabled = 1
+	autoupdate = 1
+[include]
+    path = ~/.gitconfig.user
+[credential]
+	helper = osxkeychain
+; [remote "origin"]
+; 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+[alias]
+	human = name-rev --name-only --refs=refs/heads/*
+	humin = name-rev --refs=refs/heads/* --stdin
+	wdiff = diff
+  # https://gist.github.com/phinze/83387035c233db7c521e
+  # git timespan FROMREF TOREF [FORMAT]
+  #   uses `ddiff` from the `dateutils` package
+  #   available via: brew install dateutils, apt-get install dateutils, etc
+  timespan = "!f() { one=$(git log -n 1 --format=%ai $1); two=$(git log -n 1 --format=%ai $2); ddiff -f ${3:-%mm%dd} \"$one\" \"$two\"; }; f"
 #  st = status
 #  ci = commit
 #  br = branch
@@ -14,43 +52,6 @@
 #  #lol = log --graph --decorate --pretty=oneline --abbrev-commit
 #  #lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 #  #prettygraph = log --pretty=format:'%h %s' --graph
-#
-#
-#[color "branch"]
-#  current = yellow reverse
-#  local = yellow
-#  remote = green
-#[color "diff"]
-#  meta = yellow bold
-#  frag = magenta bold
-#  old = red bold
-#  new = green bold
-#[color "status"]
-#  added = yellow
-#  changed = green
-#  untracked = cyan
-#
-#
-#[color]
-#  ui = true
-#[color "diff"]
-#  whitespace = red reverse
-#[core]
-#  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-#
-#
-## DO NOT EDIT BELOW THIS LINE
-#[push]
-#  default = tracking
-#[color]
-#	diff = auto
-#	status = auto
-#	branch = auto
-#[core]
-#	excludesfile = ~/.gitignore
-#[format]
-#  pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
-#[alias]
 #  c = commit -m
 #  a = add
 #  di = diff
@@ -69,12 +70,32 @@
 #  rbc = rebase --continue
 #  rbi = rebase -i
 #  mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
+#  a  = add
+#  aa = add --all
+#  ap = add -p
+#  ca = commit --amend -v
+#  c  = commit -v
+#  co = checkout
+#  cb = !sh -c 'git checkout -b $0 && git push -u origin $0'
+#  db = branch -d
+#  d  = diff
+#  ds = diff --staged
+#  db = !sh -c 'git push --delete origin $1 && git branch -D $1' -
+#  up = !git fetch origin && git rebase -i origin/master
+#  down = !git checkout master && git merge @{-1} && git push
+#  money = branch -dr @{-1}
+#  fuckit = !sh -c 'git add --all && git reset --hard'
+#  standup = log --since=yesterday --author=\"Blake Williams\"
+#  retro = log --since='7 days ago' --author=\"Blake Williams\"
+#  safe = !mkdir .git/safe
+#  pr = !hub pull-request --browse
+; [status]
+;   branch = 1
+;   short = 1
 [color]
 	diff = auto
 	status = auto
   branch = auto
-
-
 [color "branch"]
   current = yellow reverse
   local = yellow
@@ -84,39 +105,16 @@
   frag = magenta bold
   old = red bold
   new = cyan bold
+  #  whitespace = red reverse
 [color "status"]
   added = yellow
   changed = green
   untracked = cyan
-[rerere]
-	enabled = 1
-	autoupdate = 1
-[alias]
-	human = name-rev --name-only --refs=refs/heads/*
-	humin = name-rev --refs=refs/heads/* --stdin
-	wdiff = diff
-  # https://gist.github.com/phinze/83387035c233db7c521e
-  # git timespan FROMREF TOREF [FORMAT]
-  #   uses `ddiff` from the `dateutils` package
-  #   available via: brew install dateutils, apt-get install dateutils, etc
-  timespan = "!f() { one=$(git log -n 1 --format=%ai $1); two=$(git log -n 1 --format=%ai $2); ddiff -f ${3:-%mm%dd} \"$one\" \"$two\"; }; f"
-[pull]
-	rebase = true
-[push]
-	default = current
-[github]
-	user = bf4
-[ghi]
-	token = !security find-internet-password -a bf4 -s github.com -l 'ghi token' -w
-[include]
-    path = ~/.gitconfig.user
-[credential]
-	helper = osxkeychain
 [filter "media"]
 	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+[ghi]
+	token = !security find-internet-password -a bf4 -s github.com -l 'ghi token' -w
 [ghi "highlight"]
 	style = colorful
-; [remote "origin"]
-; 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
