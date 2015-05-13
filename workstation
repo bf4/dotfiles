@@ -225,7 +225,7 @@ fi
 # Follow shell style guidelines by using ShellCheck and Syntastic.
 # http://www.shellcheck.net/about.html
 # https://github.com/scrooloose/syntastic
-# brew install shellcheck
+brew_install shellcheck
 # fi
 # see https://github.com/thoughtbot/laptop/pull/372 re: gnupgp
 #  brew_install_or_upgrade 'gpg2'
@@ -383,30 +383,30 @@ brew_cask "nvalt" --app-dir="/Applications"
 # brew_cask "google-drive" --app-dir="/Applications"
 # brew_cask "hipchat" --app-dir="/Applications"
 # brew_cask "istat-menus" --app-dir="/Applications"
-# brew_cask "iterm2" --app-dir="/Applications"
+brew_cask "iterm2" --app-dir="/Applications"
 # brew_cask "java" --app-dir="/Applications"
-# brew_cask "keka" --app-dir="/Applications"
+brew_cask "keka" --app-dir="/Applications"
 # brew_cask "launchrocket" --app-dir="/Applications"
 # brew_cask "libreoffice" --app-dir="/Applications"
 # brew_cask "minecraft" --app-dir="/Applications"
 # brew_cask "netnewswire" --app-dir="/Applications"
 # brew_cask "onyx" --app-dir="/Applications"
 # brew_cask "osxfuse" --app-dir="/Applications"
-# brew_cask "pgadmin3" --app-dir="/Applications"
+brew_cask "pgadmin3" --app-dir="/Applications"
 # brew_cask "picasa" --app-dir="/Applications"
 # brew_cask "postgres" --app-dir="/Applications"
-# brew_cask "quiterss" --app-dir="/Applications"
-# brew_cask "racket" --app-dir="/Applications"
-# brew_cask "slack" --app-dir="/Applications"
-# brew_cask "sqlitebrowser" --app-dir="/Applications"
+brew_cask "quiterss" --app-dir="/Applications"
+brew_cask "racket" --app-dir="/Applications"
+brew_cask "slack" --app-dir="/Applications"
+brew_cask "sqlitebrowser" --app-dir="/Applications"
 # brew_cask "sublime-text" --app-dir="/Applications"
 # brew_cask "tcpblock" --app-dir="/Applications"
 # brew_cask "tunnelblick" --app-dir="/Applications"
-# brew_cask "vagrant" --app-dir="/Applications"
-# brew_cask "virtualbox" --app-dir="/Applications"
+brew_cask "vagrant" --app-dir="/Applications"
+brew_cask "virtualbox" --app-dir="/Applications"
 # brew_cask "vmware-fusion" --app-dir="/Applications"
 # brew_cask "wireshark" --app-dir="/Applications"
-# brew_cask "xquartz" --app-dir="/Applications"
+brew_cask "xquartz" --app-dir="/Applications"
 
 if brew cask list | grep "firefox" &> /dev/null
 then
