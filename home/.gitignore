@@ -62,7 +62,6 @@
 .tor/
 .trc
 .vagrant.d/
-.vim*
 .xinitrc.d/
 ActiveGSLocalData/
 Application Data/

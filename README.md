@@ -13,6 +13,8 @@ homeshick cd dotfiles &&
 cd -
 ```
 
+optionally also set `HACK_MY_OSX=true`
+
 ## With Ruby
 
 https://github.com/technicalpickles/homesick
@@ -29,3 +31,11 @@ Optionally configure `MY_EMAIL`
 
 ```sh
 echo \nexport MY_EMAIL="somthing@something.com"' >> "$HOME/.homesick/repos/dotfiles/.profile
+
+## Vim only
+
+```sh
+homeshick cd dotfiles &&
+  ./setup_vim.sh
+cd -
+```

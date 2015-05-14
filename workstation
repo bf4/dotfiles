@@ -20,7 +20,7 @@ then
   #   while read "x" ; do cp "$x" "${DOTFILES_HOME}/$x" ; done
 
   mkdir -p "$HOME/bin"
-  cd "$HOME/${DOTFILES_HOME}" && \
+  cd "$HOME/${DOTFILES_HOME}/.." && \
     #
     # hard link bin files
     git  ls-files bin | \
@@ -36,11 +36,8 @@ then
     # :verbose => true, :force => true) \
     # if line =~ /^\.[a-z_-]+/  \
     # }'
-  if not_file_exists "$HOME/vimfiles"
-  then
-    cd ~ &&
-      git clone https://github.com/bf4/vimfiles.git vimfiles
-  fi
+  echo "setuping up vim" &&
+    sh setup_vim.sh
 fi
 
 

@@ -1,0 +1,128 @@
+" source $HOME/.dotfiles/vimfiles/vimrc
+"
+"necessary on some Linux distros for pathogen to properly load bundles
+filetype on
+filetype off
+
+"load ftplugins and indent files
+filetype plugin on
+filetype indent on
+
+" I hate you MacVim
+set go+=c
+
+"turn on syntax highlighting
+syntax on
+
+"Show line numbers
+set number
+
+"hide buffers when not displayed
+set hidden
+set nocompatible
+
+set tabstop=2
+
+" Vundle setup
+set runtimepath+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+Bundle 'The-NERD-tree'
+Bundle 'jistr/vim-nerdtree-tabs'
+Bundle 'Command-T'
+Bundle 'ervandew/supertab'
+Bundle 'ack.vim'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-haml'
+Bundle 'tpope/vim-endwise'
+Bundle 'majutsushi/tagbar'
+Bundle 'IndexedSearch'
+Bundle 'bufexplorer.zip'
+Bundle 'Lokaltog/vim-easymotion'
+
+" Color schemes
+Bundle 'altercation/vim-colors-solarized'
+
+" Mappings for plugins
+silent! nnoremap <silent> <Leader>p :NERDTreeMirrorToggle<CR>
+silent! nnoremap <silent> <Leader>t :CommandT<CR>
+silent! nnoremap <silent> <Leader>e :TagbarToggle<CR>
+silent! nnoremap <silent> <Leader>l :set list!<CR>
+silent! nnoremap <silent> <Leader>a :Ack <cword><CR>
+silent! nnoremap <silent> <Leader>g :GitGrep <cword><CR>
+silent! nnoremap <silent> <esc><esc> :noh<return><esc>
+
+silent! nmap <silent> <C-s> :w<CR>
+
+" Tab navigation
+silent! nnoremap <C-Left> :tabprevious<CR>
+silent! nnoremap <C-Right> :tabnext<CR>
+
+"key mapping for window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+
+" Indent settings
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set autoindent
+
+" Setup searching
+set incsearch
+set hlsearch
+
+" Load tags from current or any parent path
+set tags=tags;/
+
+" Pretty characters
+set listchars=tab:▸\ ,eol:¬
+set showbreak=…
+
+" I miss type these all the time
+command! W w
+command! Q q
+
+" Set tab completion properly
+set wildmode=longest,list,full
+set wildmenu
+
+set guioptions-=T
+set guifont=Menlo:h16,Monospace\ Bold\ 12
+set foldmethod=syntax
+set foldlevelstart=20
+
+set background=dark
+colorscheme solarized
+
+if !has("gui_running")
+
+  " Fallback for non-256 color terminals
+  if !(&t_Co==256)
+    " let g:solarized_termcolors=256
+
+    " Forget it, desert looks better on 8 bit colors
+    colorscheme desert
+  endif
+
+  "setup the mouse for terminal use
+  set ttymouse=xterm2
+  set mouse=a
+endif
+
+if has("autocmd")
+  autocmd BufReadPost fugitive://* set bufhidden=delete
+endif
+
+" Move all the swp files to use /tmp
+set dir=/private/tmp
+
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P

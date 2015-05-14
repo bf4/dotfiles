@@ -1,0 +1,83 @@
+reload vimrc
+:source $MYVIMRC
+or 
+:so %
+http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+http://mislav.uniqpath.com/2011/12/vim-revisited/
+http://items.sjbach.com/319/configuring-vim-right
+http://yanpritzker.com/2011/12/16/learn-to-speak-vim-verbs-nouns-and-modifiers/
+http://blog.danielfischer.com/2010/11/19/a-starting-guide-to-vim-from-textmate/
+http://www.jackkinsella.ie/2011/09/05/textmate-to-vim.html
+
+http://henrik.nyh.se/2011/01/textmate-to-vim-with-training-wheels
+http://www.viemu.com/a-why-vi-vim.html
+http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118
+http://aymanh.com/a-collection-of-vim-tips
+http://blog.clifreeder.com/blog/2012/07/08/leaving-janus-for-vim/
+http://blog.path11.com/post/31975273572/switching-to-vim
+http://blog.sanctum.geek.nz/vim-anti-patterns/
+http://blog.superuser.com/2012/03/06/understanding-the-improved-in-vim/
+
+http://robots.thoughtbot.com/post/13164810557/the-vim-learning-curve-is-a-myth
+http://robots.thoughtbot.com/post/159805638/integrating-vim-into-your-life
+http://robots.thoughtbot.com/post/27041742805/vim-you-complete-me
+http://www.tuxfiles.org/linuxhelp/vimcheat.html
+http://www.zzapper.co.uk/vimtips.html
+
+
+http://www.charlietanksley.net/philtex/my-vimrc-file/  http://www.charlietanksley.net/philtex/a-word-on-updating-vim/ http://www.charlietanksley.net/philtex/sane-vim-plugin-management/
+http://yehudakatz.com/2010/07/29/everyone-who-tried-to-convince-me-to-use-vim-was-wrong/
+http://www.zinkwazi.com/unix/notes/vimtips.html
+http://code.alexreisner.com/articles/vim-heresy.html
+http://invisibletheory.com/2011/01/27/one-with-vim/
+http://paintincode.blogspot.com/2011/04/mac-vim-setup-for-python-programming.html
+
+http://durgaprasad.wordpress.com/2007/09/25/find-replace-non-printable-characters-in-vim/
+
+http://stackoverflow.com/questions/3997078/how-to-paste-text-into-vim-command-line/3997110#3997110
+
+
+
+sample configs
+https://github.com/smith/vim-config/blob/master/vimrc
+https://github.com/tpope/tpope
+http://blog.interlinked.org/static/files/vimrc
+https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
+
+
+
+http://stackoverflow.com/questions/164847/what-is-in-your-vimrc
+vim in chrome: http://vimium.github.com/
+vim with irb: http://vimcasts.org/episodes/running-vim-within-irb
+
+plugins to investigate
+http://kien.github.com/ctrlp.vim/
+https://github.com/tpope/vim-surround
+https://github.com/tpope/vim-cucumber
+https://github.com/tpope/vim-endwise
+https://github.com/tpope/vim-unimpaired
+https://github.com/tpope/vim-bundler
+https://github.com/tpope/gem-ctags
+command-t plugin, require ruby http://www.vim.org/scripts/script.php?script_id=3025
+
+colorscheme design
+http://bytefluent.com/vivify/
+https://github.com/flazz/vim-colorschemes
+
+
+misc
+http://vim-adventures.com/
+http://vim.1045645.n5.nabble.com/macvim-attention-message-td2634996.html
+http://vim.runpaint.org/basics/configuring-vim/
+http://vim.wikia.com/wiki/Find_in_files_within_Vim
+http://vim.wikia.com/wiki/Folding
+
+http://vim.wikia.com/wiki/Keep_your_cursor_centered_vertically_on_the_screen
+http://vim.wikia.com/wiki/Search_for_non-ASCII_characters
+http://vim.wikia.com/wiki/Use_folds_in_your_program
+http://vimcasts.org/blog/2012/08/on-sharpening-the-saw/
+
+http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff
+http://vimdoc.sourceforge.net/htmldoc/recover.html
+http://vimgolf.com
+http://www.catonmat.net/blog/why-vim-uses-hjkl-as-arrow-keys/
