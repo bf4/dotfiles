@@ -99,3 +99,8 @@ rubies/
 scripts/
 tmp/
 workspace/
+.*.sw[a-z]
+bundle/*
+.netrwhist
+undodir
+.vim/vimrc.local.vim
