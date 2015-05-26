@@ -35,63 +35,78 @@
 ; [remote "origin"]
 ; 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [alias]
-	human = name-rev --name-only --refs=refs/heads/*
-	humin = name-rev --refs=refs/heads/* --stdin
-	wdiff = diff
-  # https://gist.github.com/phinze/83387035c233db7c521e
-  # git timespan FROMREF TOREF [FORMAT]
-  #   uses `ddiff` from the `dateutils` package
-  #   available via: brew install dateutils, apt-get install dateutils, etc
-  timespan = "!f() { one=$(git log -n 1 --format=%ai $1); two=$(git log -n 1 --format=%ai $2); ddiff -f ${3:-%mm%dd} \"$one\" \"$two\"; }; f"
-#  st = status
-#  ci = commit
-#  br = branch
-#  co = checkout
-#  df = diff
-#  lg = log -p
-#  #lol = log --graph --decorate --pretty=oneline --abbrev-commit
-#  #lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-#  #prettygraph = log --pretty=format:'%h %s' --graph
-#  c = commit -m
-#  a = add
-#  di = diff
-#  dic = diff --cached
-#  pl = pull
-#  ps = push
-#  plre = pull --rebase
-#  st = status
-#  out = log origin..HEAD
-#  qpl = log --pretty=\"%Cblue%h%Creset %Cgreen[%cr]%Creset %s\" origin/production..origin/master
-#  graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-#  ci = commit
-#  ca = commit --amend
-#  pr = remote prune origin
-#  up = !git fetch origin && git rebase origin/master
-#  rbc = rebase --continue
-#  rbi = rebase -i
-#  mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
-#  a  = add
-#  aa = add --all
-#  ap = add -p
-#  ca = commit --amend -v
-#  c  = commit -v
-#  co = checkout
-#  cb = !sh -c 'git checkout -b $0 && git push -u origin $0'
-#  db = branch -d
-#  d  = diff
-#  ds = diff --staged
-#  db = !sh -c 'git push --delete origin $1 && git branch -D $1' -
-#  up = !git fetch origin && git rebase -i origin/master
-#  down = !git checkout master && git merge @{-1} && git push
-#  money = branch -dr @{-1}
-#  fuckit = !sh -c 'git add --all && git reset --hard'
-#  standup = log --since=yesterday --author=\"Blake Williams\"
-#  retro = log --since='7 days ago' --author=\"Blake Williams\"
-#  safe = !mkdir .git/safe
-#  pr = !hub pull-request --browse
-; [status]
-;   branch = 1
-;   short = 1
+  # a = add
+  # aa = add --all
+  # ap = add -p
+  # br = branch
+  # c = commit -v
+  # ca = commit --amend -v
+  # cb = !sh -c 'git checkout -b $0 && git push -u origin $0'
+  # ci = commit
+  # co = checkout
+  # d  = diff
+  # db = !sh -c 'git push --delete origin $1 && git branch -D $1' -
+  # db = branch -d
+  # df = diff
+  # di = diff
+  # dic = diff --cached
+  # down = !git checkout master && git merge @{-1} && git push
+  # ds = diff --staged
+  # fuckit = !sh -c 'git add --all && git reset --hard'
+	# human = name-rev --name-only --refs=refs/heads/*
+	# humin = name-rev --refs=refs/heads/* --stdin
+  # mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
+  # money = branch -dr @{-1}
+  # pl = pull
+  # plre = pull --rebase
+  # pr = !hub pull-request --browse
+  # pr = remote prune origin
+  # ps = push
+  # rbc = rebase --continue
+  # rbi = rebase -i
+  # safe = !mkdir .git/safe
+  # st = status
+  # up = !git fetch origin && git rebase -i origin/master
+	# wdiff = diff
+
+  # TIMESPAN: https://gist.github.com/phinze/83387035c233db7c521e
+  #  git timespan FROMREF TOREF [FORMAT]
+  #  uses `ddiff` from the `dateutils` package
+  #  available via: brew install dateutils, apt-get install dateutils, etc
+  # timespan = "!f() { one=$(git log -n 1 --format=%ai $1); two=$(git log -n 1 --format=%ai $2); ddiff -f ${3:-%mm%dd} \"$one\" \"$two\"; }; f"
+
+  # LOG!!!!
+  # lg = log -p
+  # lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  # lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  # out = log origin..HEAD
+  # qpl = log --pretty=\"%Cblue%h%Creset %Cgreen[%cr]%Creset %s\" origin/production..origin/master
+  standup = log --since=yesterday --author=\"Benjamin Fleischer\"
+  retro = log --since='7 days ago' --author=\"Benjamin Fleischer\"
+  # PLOG (pretty log) options
+  # git plog --graph
+  # git plog --graph --decorate
+  # git plog --all
+  # git plog --boundary
+  # git plog --author=benjamin
+  # git plog --abbrev-commit
+  # git plog --since'7 days ago'
+  # git plog --after=YYYY-MM-DD
+  # PLOG (pretty log) formatting
+  # %h commmit
+  # %ad date (formatted by --date={iso,short})
+  # %cr relative date
+  # %d heads
+  # %s message
+  # %an author name
+  plog = log --pretty=format:'%C(red)%h%C(reset) | %C(green)%ad%Creset | %C(yellow)%d%C(reset) %s %C(bold blue)[%an]%Creset | (%cr)'  --date=short
+  logall = log --pretty=format:'%h %ad | %s%d [%an]' --date=iso --author=benjamin --all
+  logprettyall = log --pretty=format:'%h %Cgreen%ad%Creset | %s%Cred%d%Creset [%an]'  --date=iso --author=benjamin --all
+  # prettygraph = log --pretty=format:'%h %s' --graph
+  # graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  # graphall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  # # log --graph --decorate --pretty=oneline --abbrev-commit --all --author=benjamin
+  # # log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all
 [color]
 	diff = auto
 	status = auto
@@ -110,6 +125,9 @@
   added = yellow
   changed = green
   untracked = cyan
+; [status]
+;   branch = 1
+;   short = 1
 [filter "media"]
 	required = true
 	clean = git media clean %f
