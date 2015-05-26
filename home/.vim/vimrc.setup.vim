@@ -1,8 +1,13 @@
+" ~/.vimrc
+
 " let vim edit a crontab successfully, no error
 " crontab: temp file must be edited in place
 " via comment on  http://drawohara.com/post/6344279/crontab-temp-file-must-be-edited-in-place
 au FileType crontab set nobackup nowritebackup
 
+" Section: Options {{{1
+" " ---------------------
+"
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -117,3 +122,5 @@ set showtabline=2
 set winwidth=79
 " This makes RVM work inside Vim. I have no idea why.
 set shell=bash
+
+" }}}2
