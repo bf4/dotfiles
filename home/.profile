@@ -9,6 +9,8 @@ export MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PAGER=less
+export LESS=' -R '
+export LESSCHARSET=utf-8 # don't print out unicode as e.g. <E2><80><99>
 export PROJECTS_DIR="$HOME/projects"
 export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 # User Scripts

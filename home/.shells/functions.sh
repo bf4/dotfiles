@@ -33,3 +33,18 @@ findsize() {
    # print out stars and the length of the stars show the usage of each folder / file from smallest to largest on the box:
    # du -k | sort -n | perl -ne 'if ( /^(\d+)\s+(.*$)/){$l=log($1+.1);$m=int($l/log(1024)); printf  ("%6.1f\t%s\t%25s  %s\n",($1/(2**(10*$m))),(("K","M","G","T","P")[$m]),"*"x (1.5*$l),$2);}'
 }
+
+gitreset() {
+  git fetch origin
+  git reset --hard origin/$(git branch | grep '*' | cut -d' ' -f2)
+}
+# parse_git_branch() {
+#   cat .git/HEAD | sed -e 's/^.*refs\/heads\///'
+#   # git branch --no-color 2> /dev/null | sed -e '/^[^\*]/d' -e 's/^\*\ \(.*\)/(\1) /'
+# }
+# gitpullr() {
+#   git pull --rebase origin $(git branch | grep '*' | cut -d' ' -f2)
+# }
+git_last_tag() {
+  git for-each-ref --sort='*authordate' --format='%(tag)' refs/tags | egrep "^${branch}\.[0-9]+$" | tail -n1
+}
