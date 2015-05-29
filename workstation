@@ -6,18 +6,41 @@
 MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
 export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 
-# set -e
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+
 
 source "$HOME/${DOTFILES_HOME}/../functions.bash"
 
+
+# case "$SHELL" in
+#   */zsh) : ;;
+#   *)
+#     fancy_echo "Changing your shell to zsh ..."
+#       chsh -s "$(which zsh)"
+#     ;;
+# esac
+
+# http://brew.sh/ Homebrew
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+
+    append_to_rc '# recommended by brew doctor'
+
+    # shellcheck disable=SC2016
+    append_to_rc 'export PATH="/usr/local/bin:$PATH"' 1
+
+    export PATH="/usr/local/bin:$PATH"
+else
+  fancy_echo "Homebrew already installed. Skipping ..."
+fi
+
+
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
-  # copy existing files over from home
-  # cd ~ && \
-  # ls -al | awk '{ print $9 }' | ruby -e 'STDIN.readlines.each{|line| puts(line) \
-  #   if line =~ /^\.[a-z_-]+/  \
-  #   && File.file?(File.join(File.expand_path("~"),line.chomp)) }' | \
-  #   while read "x" ; do cp "$x" "${DOTFILES_HOME}/$x" ; done
 
   mkdir -p "$HOME/bin"
   cd "$HOME/${DOTFILES_HOME}/.." && \
@@ -28,42 +51,18 @@ then
     FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
     :verbose => true, :force => true) }'  &&
 
-    # hard link dotfiles
-    # prefer homesick
-    # git ls-files | \
-    # ruby -rfileutils -e 'STDIN.readlines.each{|line| \
-    # FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
-    # :verbose => true, :force => true) \
-    # if line =~ /^\.[a-z_-]+/  \
-    # }'
-  echo "setuping up vim" &&
+  fancy_echo "setuping up vim" &&
     sh setup_vim.sh
+
+  fancy_echo "Updating Homebrew formulas ..."
+    brew update &&
+    brew upgrade brew-cask &&
+    brew cleanup &&
+    brew cask cleanup
 fi
 
-
-# http://brew.sh/ Homebrew
-# if fn_exists "brew"
-# if ! command -v brew >/dev/null; then
-#   fancy_echo "Installing Homebrew ..."
-#     curl -fsS \
-#       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-#
-#     append_to_zshrc '# recommended by brew doctor'
-#
-#     # shellcheck disable=SC2016
-#     append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
-#
-#     export PATH="/usr/local/bin:$PATH"
-# else
-#   fancy_echo "Homebrew already installed. Skipping ..."
-# fi
-#
 # brew_tap 'thoughtbot/formulae'
 
-
-# if [ "$WORKSTATION_UPDATE" = "true" ] ; then brew update ; fi
-fancy_echo "Updating Homebrew formulas ..."
-brew update
 
 # XCode, installed from app store or
 #   \curl http://adcdownload.apple.com/Developer_Tools/xcode_5.0.2/xcode_5.0.2.dmg
@@ -83,8 +82,8 @@ install_rvm stable --autolibs=homebrew
 
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
-  echo "updating rvm"
-  rvm get stable --auto-dotfiles &> /dev/null || echo $!
+  fancy_echo "updating rvm"
+  rvm get stable --auto-dotfiles &> /dev/null || fancy_echo $!
   install_ruby 2.2 bundler foreman
   rvm use 2.2 --default
 fi
@@ -92,7 +91,7 @@ fi
 ## Git
 if fn_exists "git"
 then
-  echo "we have git"
+  fancy_echo "we have git"
 else
   brew_install "git"
   # The OS X keychain credential helper has been installed to:
@@ -121,10 +120,12 @@ else
       # start ssh agent
       eval "$(ssh-agent -s)"
       ssh-add ~/.ssh/id_rsa
+      echo -e "\033[32m" # ansi green
       echo "Copy your SSH keys to github if you have not already"
       echo "See http://help.github.com/mac-set-up-git/"
       echo "Or just:"
       echo "cat ~/.ssh/id_rsa.pub | pbcopy"
+      echo -e "\033[0m"
     fi
   fi
   ssh -T git@github.com
@@ -170,7 +171,7 @@ fi
 # brew_install_or_upgrade 'ruby-build'
 #
 # # shellcheck disable=SC2016
-# append_to_zshrc 'eval "$(rbenv init - zsh --no-rehash)"' 1
+# append_to_rc 'eval "$(rbenv init - $SHELL --no-rehash)"' 1
 #
 # brew_install_or_upgrade 'openssl'
 # brew unlink openssl && brew link openssl --force
@@ -178,7 +179,7 @@ fi
 
 # ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 #
-# eval "$(rbenv init - zsh)"
+# eval "$(echo $SHELL | rbenv init -)"
 
 # if ! rbenv versions | grep -Fq "$ruby_version"; then
 #   rbenv install -s "$ruby_version"
@@ -232,23 +233,23 @@ brew_install shellcheck
 
 if cmd_success brew_install "hub"
 then
-  echo "See https://github.com/github/hub for what hub adds to git"
+  fancy_echo "See https://github.com/github/hub for what hub adds to git"
 fi
 
 # get the nice vim that macvim comes with
-echo "This may fail if you haven't installed the full XCode."
+fancy_echo "This may fail if you haven't installed the full XCode."
 brew_install macvim
 
 brew_install ctags
 brew_install tmux
 
-brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl && echo "Run tmux kill-server"
+brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl && fancy_echo "Run tmux kill-server"
 brew_install the_platinum_searcher # aka 'pt'
 
 brew_install "tree" --app-dir="/Applications"
 brew_install "trash" --app-dir="/Applications"
 
-brew_install bash_completion
+brew_install bash-completion
 # cabextract
 # cmake
 # elasticsearch
@@ -358,8 +359,8 @@ brew_install pyenv # PythonBrew replacement
 # yasm
 
 ## Homebrew Cask (for binaries)
-brew_tap caskroom/cask
-brew_install "brew-cask"
+# brew_tap caskroom/cask
+brew_install "caskroom/cask/brew-cask"
 
 brew_cask "google-chrome" --appdir="/Applications"
 # brew_cask sequel-pro --app-dir="/Applications"
@@ -403,23 +404,23 @@ brew_cask "sqlitebrowser" --app-dir="/Applications"
 # brew_cask "tcpblock" --app-dir="/Applications"
 # brew_cask "tunnelblick" --app-dir="/Applications"
 brew_cask "vagrant" --app-dir="/Applications"
-brew_cask "virtualbox" --app-dir="/Applications"
+# brew_cask "virtualbox" --app-dir="/Applications" # doesn't install through script
 # brew_cask "vmware-fusion" --app-dir="/Applications"
 # brew_cask "wireshark" --app-dir="/Applications"
-brew_cask "xquartz" --app-dir="/Applications"
+# brew_cask "xquartz" --app-dir="/Applications" # doesn't install through script
 
 if brew cask list | grep "firefox" &> /dev/null
 then
   echo "Firefox is already installed by brew cask"
   echo "  If you have trouble running selenium,"
   echo "  brew cask uninstall firefox && workstation setup"
-  false
+  true
 elif app_exists $(echo "Firefox" | cut -d- -f2)
 then
   echo "Firefox is installed, but not by brew cask"
   echo "  If you have trouble running selenium, uninstall"
   echo "  and re-run workstation setup"
-  false
+  true
 else
   echo "Installing FireFox"
   # need specific firefox version for selenium tests
@@ -435,7 +436,7 @@ fi
 
 
 brew_cask "alfred" --app-dir="/Applications"
-echo "open alfred from '/opt/hombrew-cask/Caskroom'"
+fancy_echo "open alfred from '/opt/hombrew-cask/Caskroom'"
 if cmd_success
 then
   # ==> Symlinking App 'Alfred 2.app' to '$HOME/Applications/Alfred
@@ -451,9 +452,9 @@ fi
 ## Repos Directory
 if file_exists $HOME/projects
 then
-  echo "$HOME/projects exists"
+  fancy_echo "$HOME/projects exists"
 else
-  echo "Creating $HOME/projects"
+  fancy_echo "Creating $HOME/projects"
   mkdir -p $HOME/projects
 fi
 
@@ -621,3 +622,4 @@ then
     # done
     # echo "Done. Note that some of these changes require a logout/restart to take effect."
 fi
+fancy_echo "all done setting up workstation!"
