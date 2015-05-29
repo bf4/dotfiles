@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-source "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
+. "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 
 __my_rvm_prompt() {
   eval ~/.rvm/bin/rvm-prompt
@@ -16,28 +16,39 @@ GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 build_git_prompt(){
   find_git_status
-  if [ -n $git_status ]; then
+  if [ -n "$git_status" ]; then
     find_git_dirty
     find_git_branch
     local git_status_color
-    case "$git_status" in
-      ahead_nothing_to_commit)
-      git_status_color=$bldylw
-      ;;
-      nothing_to_commit)
-      git_status_color=$txtcyn
-      ;;
-      untracked_files_nothing_to_commit)
-      git_status_color=$txtred:$bakwht
-      ;;
-      tracked_changes)
-      git_status_color=$txtylw
-      ;;
-      *)
-      git_status_color=$txtylw
-      ;;
-    esac
-    git_prompt="${txtcyn}${git_status_color}${git_branch}${txtred}${git_dirty}${txtrst}"
+    local prompt_status
+    git_dirty_details=""
+    for each_status in $git_status; do
+      # echo "Trying '${each_status}'"
+      case "$each_status" in
+        ahead)
+        git_status_color=$bldylw
+        ;;
+        no_tracked_changes)
+        git_status_color=""
+        ;;
+        tracked_changes)
+        git_status_color=$txtcyn
+        git_dirty_details="${git_dirty_details}${txtblu}*${txtrst}"
+        ;;
+        staged_changes)
+        git_status_color=$txtcyn
+        git_dirty_details="${git_dirty_details}${txtcyn}+${txtrst}"
+        ;;
+        untracked_files)
+        git_dirty_details="${git_dirty_details}_"
+        ;;
+        *)
+        echo "prompt.sh doesn't know what '${each_status}' is"
+        git_status_color=$txtred:$bakwht
+        ;;
+      esac
+    done
+    git_prompt="${git_status_color}(${git_branch}${txtred}${git_dirty}${txtrst})${git_dirty_details}"
   else
     git_prompt=""
   fi
@@ -48,40 +59,46 @@ find_git_branch() {
   # if [[ "$git_status" =~ On\ branch\ ([^[:space:]]+) ]]; then
   #   branch=${BASH_REMATCH[1]}
   # else
-  #   # branch="(`git describe --all --contains --abbrev=4 HEAD 2> /dev/null || echo HEAD`)"
+  #   # branch="($(git describe --all --contains --abbrev=4 HEAD 2> /dev/null || echo HEAD))"
   # fi
   # Based on: http://stackoverflow.com/a/13003854/170413
   if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
-    if [[ "$branch" == "HEAD" ]]; then
+    if [ "$branch" = "HEAD" ]; then
       branch='detached*'
     fi
-    git_branch="($branch)"
+    git_branch="$branch"
   else
     git_branch=""
   fi
 }
 
 find_git_status() {
-  git_status="`git status -unormal 2>&1`"
-  if ! [[ "$git_status" =~ Not\ a\ git\ repo ]]; then
-    if [[ "$git_status" =~ nothing\ to\ commit ]]; then
-      if [[ "$git_status" =~ Your\ branch\ is\ ahead ]]; then
-        git_status="ahead_nothing_to_commit"
-      else
-        git_status="nothing_to_commit"
-      fi
-    elif [[ "$git_status" =~ nothing\ added\ to\ commit\ but\ untracked\ files\ present ]]; then
-      git_status="untracked_files_nothing_to_commit"
-    else
-      git_status="tracked_changes"
-    fi
-  else
-    git_status="" # not a repo
+  git_status="" # not a repo
+  local current_status
+  current_status="$(git status -unormal 2>&1)"
+
+  # http://stackoverflow.com/a/19897118/879854
+  case "$current_status" in
+    *Not\ a\ git\ repo*) current_status="not_repo";;
+  esac
+  if [ "$current_status" != "not_repo" ]; then
+    case "$current_status" in
+      *Your\ branch\ is\ ahead*)                     git_status="ahead";;
+    esac
+    case "$current_status" in
+      *Changes\ not\ staged*)                        git_status="$git_status tracked_changes";;
+    esac
+    case "$current_status" in
+      *Changes\ to\ be\ committed*)                  git_status="$git_status staged_changes";;
+    esac
+    case "$current_status" in
+      *ntracked\ files*)                             git_status="$git_status untracked_files";;
+    esac
   fi
 }
 
 find_git_dirty() {
-  if [[ $(git status --porcelain 2> /dev/null) != "" ]]; then
+  if [ "$(git status --porcelain 2> /dev/null)" != "" ]; then
     git_dirty='!'
   else
     git_dirty=''
