@@ -107,6 +107,8 @@
   # graphall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   # # log --graph --decorate --pretty=oneline --abbrev-commit --all --author=benjamin
   # # log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all
+  # alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
+  # alias gitwork="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all"
 [color]
 	diff = auto
 	status = auto

@@ -26,12 +26,3 @@ fi
 # fi
 # brew install grc
 [ -s "`brew --prefix grc`/etc/grc.bashrc" ] && source "`brew --prefix grc`/etc/grc.bashrc"
-
-# Set git autocompletion and PS1 integration for showing git info in terminal
-# https://github.com/iambowen/dotfiles/blob/master/bash_profile
-# https://gist.github.com/ryknow/3303462/raw/2e2f9dd271f3caa83a435965664e59f0dd4626dc/.bashrc
-
-ps1_set() {
-  export PS1="\$(__my_rvm_prompt)\[\e[36m\]$(__my_git_prompt)\[\e[0m\]\w\n📝 $ "
-}
-export PROMPT_COMMAND='ps1_set;ensure_update_terminal_cwd;'
