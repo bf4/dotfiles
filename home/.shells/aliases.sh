@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-source ~/.shells/colors.sh
+source "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 # alias ls='ls --color=auto'
 # Like less but outputs colors instead of raw ansi escape codes
 # brew install source-highlight

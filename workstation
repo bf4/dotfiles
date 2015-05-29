@@ -12,6 +12,7 @@ set -e
 
 
 source "$HOME/${DOTFILES_HOME}/../functions.bash"
+source "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 
 
 # case "$SHELL" in
@@ -120,12 +121,12 @@ else
       # start ssh agent
       eval "$(ssh-agent -s)"
       ssh-add ~/.ssh/id_rsa
-      echo -e "\033[32m" # ansi green
+      echo -e "$txtgrn"
       echo "Copy your SSH keys to github if you have not already"
       echo "See http://help.github.com/mac-set-up-git/"
       echo "Or just:"
       echo "cat ~/.ssh/id_rsa.pub | pbcopy"
-      echo -e "\033[0m"
+      echo -e "$txtrst"
     fi
   fi
   ssh -T git@github.com
@@ -237,8 +238,7 @@ then
 fi
 
 # get the nice vim that macvim comes with
-fancy_echo "This may fail if you haven't installed the full XCode."
-brew_install macvim
+brew_install macvim || fancy_echo "Installing macvim may have failed because you haven't installed the full XCode."
 
 brew_install ctags
 brew_install tmux
@@ -246,13 +246,25 @@ brew_install tmux
 brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl && fancy_echo "Run tmux kill-server"
 brew_install the_platinum_searcher # aka 'pt'
 
-brew_install "tree" --app-dir="/Applications"
-brew_install "trash" --app-dir="/Applications"
+brew_install "tree"
+brew_install "trash"
 
 brew_install bash-completion
 # cabextract
 # cmake
+
 # elasticsearch
+# echo -e "$txtgrn"
+# echo -e 'elastic search needs java'
+# echo -e "$txtrst"
+# brew_cask java
+# echo -e "$txtred"
+# echo -e 'If elasticsearch service fails to start, and you are in tmux/screen, try in a new tab:'
+# echo -e 'launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist'
+# echo -e "$txtrst"
+# brew_cask java
+# brew_install_service elasticsearch
+
 # erlang
 # exercism
 # ghi
@@ -267,9 +279,53 @@ brew_install grc
 # ossp-uuid
 # pcre
 # pkg-config
+
 # postgresql
+# which pg_ctl &> /dev/null
+# if [ $? -ne 0 ] ; then
+#   if brew cask list &> /dev/null ; then
+#     if brew cask list postgres &> /dev/null; then
+#       echo -e "$txtgrn"
+#       echo -e "postgres.app cask installed"
+#       echo -e "$txtrst"
+#     else
+#       echo -e "$txtgrn"
+#       echo -e "add postgres.app to your path per http://postgresapp.com/documentation/cli-tools.html"
+#       echo -e "$txtrst"
+#       export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+#       brew cask install postgresql --appdir=/Applications
+#     fi
+#   else
+#     brew_install_service postgresql || exit 1
+#   fi
+#   ARCHFLAGS="-arch x86_64" gem install pg
+# fi
+
 # readline
+
 # redis
+# echo "Checking for redis-cli..."
+# if which redis-cli &> /dev/null; then
+#   if redis-cli ping &> /dev/null; then
+#     echo -e "$txtgrn"
+#     echo -e "redis is running"
+#     echo -e "$txtrst"
+#   else
+#     echo -e "$txtred"
+#     echo -e "Redis was not running."
+#     echo -e "You should start it via your daemon system or in another terminal."
+#     echo -e "If you're using homebrew, run 'brew uninstall redis; bin/boostrap'"
+#     echo -e "I'm going to try to start it for you"
+#     echo -e "$txtrst"
+#     /usr/local/opt/redis/bin/redis-server /usr/local/etc/redis.conf || exit 1
+#   fi
+# else
+#   echo -e "$txtgrn"
+#   echo -e "Installing redis via brew..."
+#   echo -e "$txtrst"
+#   brew_install_service redis
+# fi
+
 # scala
 brew_install terminal-notifier
 # the_silver_searcher
