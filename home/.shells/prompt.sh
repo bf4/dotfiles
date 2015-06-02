@@ -17,7 +17,6 @@ GIT_PS1_SHOWUNTRACKEDFILES=true
 build_git_prompt(){
   find_git_status
   if [ -n "$git_status" ]; then
-    find_git_dirty
     find_git_branch
     local git_status_color
     local prompt_status
@@ -74,9 +73,9 @@ find_git_branch() {
 
 find_git_status() {
   git_status="" # not a repo
+  git_dirty="" # default isn't dirty
   local current_status
   current_status="$(git status -unormal 2>&1)"
-
   # http://stackoverflow.com/a/19897118/879854
   case "$current_status" in
     *Not\ a\ git\ repo*) current_status="not_repo";;
@@ -86,22 +85,14 @@ find_git_status() {
       *Your\ branch\ is\ ahead*)                     git_status="ahead";;
     esac
     case "$current_status" in
-      *Changes\ not\ staged*)                        git_status="$git_status tracked_changes";;
+      *Changes\ not\ staged*)                        git_status="$git_status tracked_changes"; git_dirty="!";;
     esac
     case "$current_status" in
-      *Changes\ to\ be\ committed*)                  git_status="$git_status staged_changes";;
+      *Changes\ to\ be\ committed*)                  git_status="$git_status staged_changes"; git_dirty="!";;
     esac
     case "$current_status" in
       *ntracked\ files*)                             git_status="$git_status untracked_files";;
     esac
-  fi
-}
-
-find_git_dirty() {
-  if [ "$(git status --porcelain 2> /dev/null)" != "" ]; then
-    git_dirty='!'
-  else
-    git_dirty=''
   fi
 }
 
@@ -111,7 +102,7 @@ if ! $(echo $PROMPT_COMMAND | grep -q build_git_prompt); then
 fi
 
 # Default Git enabled prompt with dirty state
-export PS1="\$(__my_rvm_prompt)\$git_prompt\w\n📝 $ "
+export PS1="\$(__my_rvm_prompt)\$git_prompt \w\n📝 $ "
 
 # Default Git enabled root prompt (for use with "sudo -s")
 # doesn't require txtuid
