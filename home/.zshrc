@@ -4,10 +4,13 @@
 export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 [ -f "$HOME/$DOTFILES_HOME/.profile" ] && source "$HOME/$DOTFILES_HOME/.profile" # Load the default .profile
 
+setopt shwordsplit
 # Load all files in ~/.shells
 for function in ~/.shells/*; do
   source $function
 done
+unsetopt shwordsplit
+
 # Load all files in ~/.zsh
 for function in ~/.zsh/*; do
   source $function
