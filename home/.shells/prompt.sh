@@ -27,9 +27,6 @@ build_git_prompt(){
         ahead)
         git_status_color=$bldylw
         ;;
-        no_tracked_changes)
-        git_status_color=""
-        ;;
         tracked_changes)
         git_status_color=$txtcyn
         git_dirty_details="${git_dirty_details}${txtblu}*${txtrst}"
@@ -40,6 +37,9 @@ build_git_prompt(){
         ;;
         untracked_files)
         git_dirty_details="${git_dirty_details}_"
+        ;;
+        clean)
+        git_status_color=""
         ;;
         *)
         echo "prompt.sh doesn't know what '${each_status}' is"
@@ -83,15 +83,11 @@ find_git_status() {
   if [ "$current_status" != "not_repo" ]; then
     case "$current_status" in
       *Your\ branch\ is\ ahead*)                     git_status="ahead";;
-    esac
-    case "$current_status" in
       *Changes\ not\ staged*)                        git_status="$git_status tracked_changes"; git_dirty="!";;
-    esac
-    case "$current_status" in
-      *Changes\ to\ be\ committed*)                  git_status="$git_status staged_changes"; git_dirty="!";;
-    esac
-    case "$current_status" in
+      *Changes\ to\ be\ committed*)                  git_status="$git_status staged_changes";  git_dirty="!";;
       *ntracked\ files*)                             git_status="$git_status untracked_files";;
+      *working\ directory\ clean*)                   git_status="$git_status clean";;
+      *nothing\ to\ commit*)                         git_status="$git_status clean";;
     esac
   fi
 }
