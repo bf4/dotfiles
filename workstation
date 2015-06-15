@@ -36,7 +36,7 @@ if ! command -v brew >/dev/null; then
 
     export PATH="/usr/local/bin:$PATH"
 else
-  fancy_echo "Homebrew already installed. Skipping ..."
+  fancy_debug "Homebrew already installed. Skipping ..."
 fi
 
 
@@ -92,7 +92,7 @@ fi
 ## Git
 if fn_exists "git"
 then
-  fancy_echo "we have git"
+  fancy_debug "we have git"
 else
   brew_install "git"
   # The OS X keychain credential helper has been installed to:
@@ -232,8 +232,8 @@ brew_install shellcheck
 #  brew_install_or_upgrade 'rbenv-gem-rehash'
 
 
-if cmd_success brew_install "hub"
-then
+brew_install "hub"
+if [ $last_command_new_install ]; then
   fancy_echo "See https://github.com/github/hub for what hub adds to git"
 fi
 
@@ -243,7 +243,10 @@ brew_install macvim || fancy_echo "Installing macvim may have failed because you
 brew_install ctags
 brew_install tmux
 
-brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl && fancy_echo "Run tmux kill-server"
+brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl
+if [ $last_command_new_install ]; then
+  fancy_echo "Run tmux kill-server"
+fi
 brew_install the_platinum_searcher # aka 'pt'
 
 brew_install "tree"
@@ -418,92 +421,83 @@ brew_install pyenv # PythonBrew replacement
 # brew_tap caskroom/cask
 brew_install "caskroom/cask/brew-cask"
 
-brew_cask "google-chrome" --appdir="/Applications"
-# brew_cask sequel-pro --app-dir="/Applications"
-# lunchy-go
-brew_cask lunchy
-
-brew_cask "caffeine" --app-dir="/Applications"
-# TODO: add to login items
-
-brew_cask "cd-to" --app-dir="/Applications"
-# TODO: add instructions for dragging link to finder
-brew_cask "nvalt" --app-dir="/Applications"
-# brew_cask "adium"" --app-dir="/Applications"
-# brew_cask "atom" --app-dir="/Applications"
-# brew_cask "audacity" --app-dir="/Applications"
-# brew_cask "boot2docker" --app-dir="/Applications"
-# brew_cask "calibre" --app-dir="/Applications"
-# brew_cask "cyberduck" --app-dir="/Applications"
-# brew_cask "fluid" --app-dir="/Applications"
-# brew_cask "github" --app-dir="/Applications"
-# brew_cask "google-drive" --app-dir="/Applications"
-# brew_cask "hipchat" --app-dir="/Applications"
-# brew_cask "istat-menus" --app-dir="/Applications"
-brew_cask "iterm2" --app-dir="/Applications"
-# brew_cask "java" --app-dir="/Applications"
-brew_cask "keka" --app-dir="/Applications"
-# brew_cask "launchrocket" --app-dir="/Applications"
-# brew_cask "libreoffice" --app-dir="/Applications"
-# brew_cask "minecraft" --app-dir="/Applications"
-# brew_cask "netnewswire" --app-dir="/Applications"
-# brew_cask "onyx" --app-dir="/Applications"
-# brew_cask "osxfuse" --app-dir="/Applications"
-brew_cask "pgadmin3" --app-dir="/Applications"
-# brew_cask "picasa" --app-dir="/Applications"
-# brew_cask "postgres" --app-dir="/Applications"
-brew_cask "quiterss" --app-dir="/Applications"
-brew_cask "racket" --app-dir="/Applications"
-brew_cask "slack" --app-dir="/Applications"
-brew_cask "sqlitebrowser" --app-dir="/Applications"
-# brew_cask "sublime-text" --app-dir="/Applications"
-# brew_cask "tcpblock" --app-dir="/Applications"
-# brew_cask "tunnelblick" --app-dir="/Applications"
-brew_cask "vagrant" --app-dir="/Applications"
-# brew_cask "virtualbox" --app-dir="/Applications" # doesn't install through script
-# brew_cask "vmware-fusion" --app-dir="/Applications"
-# brew_cask "wireshark" --app-dir="/Applications"
-# brew_cask "xquartz" --app-dir="/Applications" # doesn't install through script
-
-if brew cask list | grep "firefox" &> /dev/null
-then
-  echo "Firefox is already installed by brew cask"
-  echo "  If you have trouble running selenium,"
-  echo "  brew cask uninstall firefox && workstation setup"
-  true
-elif app_exists $(echo "Firefox" | cut -d- -f2)
-then
-  echo "Firefox is installed, but not by brew cask"
-  echo "  If you have trouble running selenium, uninstall"
-  echo "  and re-run workstation setup"
-  true
-else
-  echo "Installing FireFox"
-  # need specific firefox version for selenium tests
-  # and need the appdir to be /Applications
-  brew cask install ~/${DOTFILES_HOME}/../brews/firefox.rb --appdir="/Applications"
-  echo "------"
-  echo "------ Selenium Compatible FIREFOX INSTALLED"
-  echo "------ Automatic updates are disabled."
-  echo "------ You may manually update FireFox if you wish"
-  echo "------ Although this may break Capybara tests"
-  echo "------"
-fi
-
-
-brew_cask "alfred" --app-dir="/Applications"
-fancy_echo "open alfred from '/opt/hombrew-cask/Caskroom'"
-if cmd_success
-then
+brew_cask "alfred" --appdir="/Applications"
+if [ $last_command_new_install ]; then
+  fancy_echo "open alfred from '/opt/hombrew-cask/Caskroom'"
   # ==> Symlinking App 'Alfred 2.app' to '$HOME/Applications/Alfred
   # 2.app'
   # ==> Symlinking App 'Alfred Preferences.app' to
   # '$HOME/Applications/Alfred Preferences.app'
   # tell alfred find homebrew_casked items
   brew_cask "alfred link"
-  # TODO: add to login items
 fi
 
+brew_cask "caffeine" --appdir="/Applications" # TODO: add to login items
+brew_cask "cd-to" --appdir="/Applications"
+# TODO: add instructions for dragging link to finder
+brew_cask "nvalt" --appdir="/Applications"
+# brew_cask "adium"" --appdir="/Applications"
+# brew_cask "atom" --appdir="/Applications"
+# brew_cask "audacity" --appdir="/Applications"
+# brew_cask "boot2docker" --appdir="/Applications"
+# brew_cask "calibre" --appdir="/Applications"
+# brew_cask "cyberduck" --appdir="/Applications"
+# brew_cask "fluid" --appdir="/Applications"
+if brew cask list | grep "firefox" &> /dev/null
+then
+  fancy_debug "Firefox is already installed by brew cask"
+  fancy_debug "  If you have trouble running selenium,"
+  fancy_debug "  brew cask uninstall firefox && workstation setup"
+  true
+elif app_exists $(echo "Firefox" | cut -d- -f2)
+then
+  fancy_debug "Firefox is installed, but not by brew cask"
+  fancy_debug "  If you have trouble running selenium, uninstall"
+  fancy_debug "  and re-run workstation setup"
+  true
+else
+  echo "Installing FireFox"
+  # need specific firefox version for selenium tests
+  # and need the appdir to be /Applications
+  brew cask install ~/${DOTFILES_HOME}/../brews/firefox.rb --appdir="/Applications"
+  fancy_debug "------"
+  fancy_debug "------ Selenium Compatible FIREFOX INSTALLED"
+  fancy_debug "------ Automatic updates are disabled."
+  fancy_debug "------ You may manually update FireFox if you wish"
+  fancy_debug "------ Although this may break Capybara tests"
+  fancy_debug "------"
+fi
+brew_cask "github" --appdir="/Applications"
+brew_cask "google-chrome" --appdir="/Applications"
+# brew_cask "google-drive" --appdir="/Applications"
+# brew_cask "hipchat" --appdir="/Applications"
+brew_cask "istat-menus" --appdir="/Applications"
+brew_cask "iterm2" --appdir="/Applications"
+# brew_cask "java" --appdir="/Applications"
+brew_cask "keka" --appdir="/Applications"
+# brew_cask "launchrocket" --appdir="/Applications"
+brew_cask lunchy # lunchy-go
+# brew_cask "libreoffice" --appdir="/Applications"
+# brew_cask "minecraft" --appdir="/Applications"
+brew_cask "netnewswire" --appdir="/Applications"
+# brew_cask "onyx" --appdir="/Applications"
+# brew_cask "osxfuse" --appdir="/Applications"
+brew_cask "pgadmin3" --appdir="/Applications"
+# brew_cask "picasa" --appdir="/Applications"
+# brew_cask "postgres" --appdir="/Applications"
+# brew_cask "quiterss" --appdir="/Applications"
+brew_cask "racket" --appdir="/Applications"
+brew_cask "slack" --appdir="/Applications"
+# brew_cask sequel-pro --appdir="/Applications"
+brew_cask "sqlitebrowser" --appdir="/Applications"
+# brew_cask "sublime-text" --appdir="/Applications"
+# brew_cask "tcpblock" --appdir="/Applications"
+# brew_cask "tunnelblick" --appdir="/Applications"
+brew_cask "vagrant" --appdir="/Applications"
+# brew_cask "virtualbox" --appdir="/Applications" # doesn't install through script
+# brew_cask "vmware-fusion" --appdir="/Applications"
+# brew_cask "wireshark" --appdir="/Applications"
+# brew_cask "xquartz" --appdir="/Applications" # doesn't install through script
 
 ## Repos Directory
 if file_exists $HOME/projects

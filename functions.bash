@@ -7,6 +7,12 @@ fancy_echo() {
   printf "\n$fmt\n" "$@"
 }
 
+fancy_debug() {
+  if [ "$VERBOSE" = "true" ]; then
+    fancy_echo "$@"
+  fi
+}
+
 # see http://www.aboutlinux.info/2005/10/10-seconds-guide-to-bash-shell.html
 function fn_exists {
   # ! command -v $1 >/dev/null
@@ -35,11 +41,13 @@ function not_file_exists {
 function brew_install {
   if brew list $1 &> /dev/null
   then
-    fancy_echo "already installed $1"
+    fancy_debug "already installed $1"
+    last_command_new_install=false
     true
   else
-    fancy_echo "installing $@"
+    fancy_debug "installing $@"
     brew install "$@"
+    last_command_new_install=$?
   fi
 }
 
@@ -49,7 +57,7 @@ function brew_install {
 #       fancy_echo "Upgrading %s ..." "$1"
 #       brew upgrade "$@"
 #     else
-#       fancy_echo "Already using the latest version of %s. Skipping ..." "$1"
+#       fancy_debug "Already using the latest version of %s. Skipping ..." "$1"
 #     fi
 #   else
 #     fancy_echo "Installing %s ..." "$1"
@@ -85,7 +93,7 @@ function brew_install_service {
 #   local domain="homebrew.mxcl.$name"
 #   local plist="$domain.plist"
 #
-#   fancy_echo "Restarting %s ..." "$1"
+#   fancy_debug "Restarting %s ..." "$1"
 #   mkdir -p "$HOME/Library/LaunchAgents"
 #   ln -sfv "/usr/local/opt/$name/$plist" "$HOME/Library/LaunchAgents"
 #
@@ -98,16 +106,19 @@ function brew_install_service {
 function brew_cask {
   if brew cask list $1 &> /dev/null
   then
-    fancy_echo "cask already installed $1"
+    fancy_debug "cask already installed $1"
+    last_command_new_install=false
     true
     # use cut to support e.g. google-chrome to match com.google.chrome
-  elif app_exists $(fancy_echo "$1" | cut -d- -f2)
+  elif app_exists $(echo "$1" | cut -d- -f2)
   then
-    fancy_echo "OMG, the app exists for $1"
+    fancy_debug "OMG, the app exists for $1"
+    last_command_new_install=false
     true
   else
     fancy_echo "installing $@"
     brew cask install "$@"
+    last_command_new_install=$?
   fi
 }
 
@@ -117,7 +128,7 @@ brew_tap() {
 # function brew_tap {
 #   if brew tap | grep $1 &> /dev/null
 #   then
-#     fancy_echo "already tapped $1"
+#     fancy_debug "already tapped $1"
 #     true
 #   else
 #     fancy_echo "tapping $@"
@@ -139,7 +150,7 @@ function app_cmd {
 function install_rvm {
   if fn_exists "rvm"
   then
-    fancy_echo "we have rvm; you are using $(ruby --version) from $(which ruby)"
+    fancy_debug "we have rvm; you are using $(ruby --version) from $(which ruby)"
   else
     fancy_echo "we don't have rvm installing"
     \curl -sSL https://get.rvm.io | bash -s $@ --auto-dotfiles
@@ -166,7 +177,7 @@ function install_ruby {
 
 # gem_install_or_update() {
 #   if gem list "$1" --installed > /dev/null; then
-#     fancy_echo "Updating %s ..." "$1"
+#     fancy_debug "Updating %s ..." "$1"
 #     gem update "$@"
 #   else
 #     fancy_echo "Installing %s ..." "$1"
