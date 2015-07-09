@@ -53,6 +53,8 @@ map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Load tags from current or any parent path
 set tags=tags;/
+" Index ctags from any project, including those outside Rails
+map <Leader>ct :!ctags<CR>
 
 " ================ Cleaning up ============================
 " see http://vim.wikia.com/wiki/Highlight_unwanted_spaces
