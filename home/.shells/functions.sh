@@ -24,7 +24,7 @@ alias f='open -a Finder ./'
 # ls -lSr | tail -10 # find smallest files
 findgt() {
   sizeinkb="$1"
-  find . -type f -size "+${sizeinkb}k" | xargs du -sh
+  find . -type f -size "+${sizeinkb}k" -print0 | xargs -0 du -sh
   # find . -type f -size +50000k -exec ls -lh {} \; | awk '{ print $9 ": " $5
 }
 # http://www.cyberciti.biz/faq/find-large-files-linux/
