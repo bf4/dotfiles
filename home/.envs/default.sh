@@ -1,6 +1,7 @@
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PAGER=less
+# shift+r
 export LESS=' -R '
 export LESSCHARSET=utf-8 # don't print out unicode as e.g. <E2><80><99>
 export PROJECTS_DIR="$HOME/projects"
