@@ -13,8 +13,6 @@ homeshick cd dotfiles &&
 cd -
 ```
 
-optionally also set `HACK_MY_OSX=true`
-
 ## With Ruby
 
 https://github.com/technicalpickles/homesick

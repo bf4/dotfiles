@@ -43,5 +43,6 @@ cmds = Hash.new do |h,cmd|
   puts "I only know about:\n\t#{cmds.keys.join("\n\t")}"
 end
 cmds["setup"] = ->{ workstation_cmd("./workstation") }
+cmds["hack_osx"] = ->{ workstation_cmd("bash .osx") }
 cmds["update"] = ->{ workstation_cmd("git pull --rebase origin master") }
 cmds.fetch(args.shift) { cmds.default_proc }.call
