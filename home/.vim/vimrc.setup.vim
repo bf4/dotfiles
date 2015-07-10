@@ -15,6 +15,7 @@ set nocompatible
 " BASIC EDITING CONFIGURATION
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set number                      "Show line numbers
+set numberwidth=5
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
@@ -31,9 +32,13 @@ set autoread                    "Reload files changed outside vim
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
 " ================ Turn Off Swap Files ==============
 
-set noswapfile
+set noswapfile " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 set nobackup
 set nowb
 
@@ -117,7 +122,6 @@ set smartcase                   " ... unless they contain at least one capital l
 set cursorline
 set cmdheight=2
 set switchbuf=useopen
-set numberwidth=5
 set showtabline=2
 set winwidth=79
 " This makes RVM work inside Vim. I have no idea why.
