@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # options
-# WORKSTATION_UPDATE=true
-# HACK_MY_OSX=true
+#   WORKSTATION_UPDATE=true
+#   HACK_MY_OSX=true
+#   MY_EMAIL=
+#   DOTFILES_HOME=
 # http://stackoverflow.com/questions/2013547/assigning-default-values-to-shell-variables-with-a-single-command-in-bash
 MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
 export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
@@ -10,20 +12,25 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-
 source "$HOME/${DOTFILES_HOME}/../functions.bash"
 source "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 
+# SHELL-CONFIG #
+################
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    # Zsh as your shell
+    # fancy_echo "Changing your shell to zsh ..."
+    # chsh -s "$(which zsh)"
+    echo "Current shell is ${SHELL}"
+    ;;
+esac
 
-# case "$SHELL" in
-#   */zsh) : ;;
-#   *)
-#     fancy_echo "Changing your shell to zsh ..."
-#       chsh -s "$(which zsh)"
-#     ;;
-# esac
-
-# http://brew.sh/ Homebrew
+# Homebrew Installation #
+# http://brew.sh/       #
+# Homebrew for managing operating system libraries
+#########################
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -38,8 +45,17 @@ if ! command -v brew >/dev/null; then
 else
   fancy_debug "Homebrew already installed. Skipping ..."
 fi
+# Homebrew Cask (for binaries)
+# brew_tap caskroom/cask
+brew_install "caskroom/cask/brew-cask"
+# brew_tap 'thoughtbot/formulae'
 
-
+# Workstation Update      #
+# WORKSTATION_UPDATE=true #
+# - link bin files        #
+# - setup vim             #
+# - update homebrew/cask  #
+###########################
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
 
@@ -62,51 +78,71 @@ then
     brew cask cleanup
 fi
 
-# brew_tap 'thoughtbot/formulae'
-
-
 # XCode, installed from app store or
 #   \curl http://adcdownload.apple.com/Developer_Tools/xcode_5.0.2/xcode_5.0.2.dmg
 # then install command line tools
 # sudo xcodebuild -license
+###################################
 if fn_exists "xcode-select" && ! fn_exists "clang"
 then
  `open /Applications/Xcode.app`
   xcode-select --install
 fi
 
+# Ruby
+# brew_install_or_upgrade 'rbenv'
+# brew_install_or_upgrade 'ruby-build'
+#
+# # shellcheck disable=SC2016
+# append_to_rc 'eval "$(rbenv init - $SHELL --no-rehash)"' 1
+#
+# brew_install_or_upgrade 'openssl'
+# brew unlink openssl && brew link openssl --force
+# brew_install_or_upgrade 'libyaml'
+
+# Ruby stable for writing general-purpose code
+# ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+#
+# eval "$(echo $SHELL | rbenv init -)"
+
+# if ! rbenv versions | grep -Fq "$ruby_version"; then
+#   rbenv install -s "$ruby_version"
+# fi
+#
+# rbenv global "$ruby_version"
+# rbenv shell "$ruby_version"
+#
+# gem update --system
+#
+# Bundler for managing Ruby libraries
+# gem_install_or_update 'bundler'
+
+# fancy_echo "Configuring Bundler ..."
+#   number_of_cores=$(sysctl -n hw.ncpu)
+#   bundle config --global jobs $((number_of_cores - 1))
 ## RVM
 ## http://rvm.io/
 # # work around missing libgmp bug in binary ruby
 # brew rm cloog; brew install cloog
+#########################################
 install_rvm stable --autolibs=homebrew
 
+# Workstation Update      #
+# WORKSTATION_UPDATE=true #
+# - update rvm / ruby     #
+###########################
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
   fancy_echo "updating rvm"
   rvm get stable --auto-dotfiles &> /dev/null || fancy_echo $!
+  # Foreman for managing web processes
   install_ruby 2.2 bundler foreman
   rvm use 2.2 --default
 fi
 
-## Git
-if fn_exists "git"
-then
-  fancy_debug "we have git"
-else
-  brew_install "git"
-  # The OS X keychain credential helper has been installed to:
-  #   /usr/local/bin/git-credential-osxkeychain
-  #
-  # The 'contrib' directory has been installed to:
-  #   /usr/local/share/git-core/contrib
-  #
-  # Bash completion has been installed to:
-  #   /usr/local/etc/bash_completion.d
-  #
-  # zsh completion has been installed to:
-  #   /usr/local/share/zsh/site-functions
-  # see https://github.com/thoughtbot/laptop/issues/360
+## GIT
+# brew_install_or_upgrade 'git'
+_ensure_github_ssh_configured() {
   # ssh keys to github
   ssh git@github.com 2>&1| grep successfully
   if [ $? -eq 0 ]
@@ -130,77 +166,36 @@ else
     fi
   fi
   ssh -T git@github.com
+}
+if fn_exists "git"
+then
+  fancy_debug "we have git"
+else
+  brew_install "git"
+  # The OS X keychain credential helper has been installed to:
+  #   /usr/local/bin/git-credential-osxkeychain
+  #
+  # The 'contrib' directory has been installed to:
+  #   /usr/local/share/git-core/contrib
+  #
+  # Bash completion has been installed to:
+  #   /usr/local/etc/bash_completion.d
+  #
+  # zsh completion has been installed to:
+  #   /usr/local/share/zsh/site-functions
+  # see https://github.com/thoughtbot/laptop/issues/360
+  _ensure_github_ssh_configured
 fi
 
-## BREWS
-# Bundler for managing Ruby libraries
-# Exuberant Ctags for indexing files for vim tab completion
-# Foreman for managing web processes
-# hub for interacting with the GitHub API
+## LIBRARIES INSTALL/UPGRADE
+
+
 # Heroku Toolbelt for interacting with the Heroku API
-# Homebrew for managing operating system libraries
-# ImageMagick for cropping and resizing images
-# Node.js and NPM, for running apps and installing JavaScript packages
-# Postgres for storing relational data
-# Qt for headless JavaScript testing via Capybara Webkit
-# Rbenv for managing versions of Ruby
-# RCM for managing company and personal dotfiles
-# Redis for storing key-value data
-# Ruby Build for installing Rubies
-# Ruby stable for writing general-purpose code
-# The Silver Searcher for finding things in files
-# Tmux for saving project state and switching between projects
-# Zsh as your shell
-
-# brew_install_or_upgrade 'git'
-# brew_install_or_upgrade 'postgres'
-
-# brew_launchctl_restart 'postgresql'
-# brew_install_or_upgrade 'redis'
-# brew_launchctl_restart 'redis'
-# brew_install_or_upgrade 'the_silver_searcher'
-# brew_install_or_upgrade 'vim'
-# brew_install_or_upgrade 'ctags'
-# brew_install_or_upgrade 'tmux'
-# brew_install_or_upgrade 'reattach-to-user-namespace'
-# brew_install_or_upgrade 'imagemagick'
-# brew_install_or_upgrade 'qt'
-# brew_install_or_upgrade 'hub'
-# brew_install_or_upgrade 'node'
-#
-# brew_install_or_upgrade 'rbenv'
-# brew_install_or_upgrade 'ruby-build'
-#
-# # shellcheck disable=SC2016
-# append_to_rc 'eval "$(rbenv init - $SHELL --no-rehash)"' 1
-#
-# brew_install_or_upgrade 'openssl'
-# brew unlink openssl && brew link openssl --force
-# brew_install_or_upgrade 'libyaml'
-
-# ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
-#
-# eval "$(echo $SHELL | rbenv init -)"
-
-# if ! rbenv versions | grep -Fq "$ruby_version"; then
-#   rbenv install -s "$ruby_version"
-# fi
-#
-# rbenv global "$ruby_version"
-# rbenv shell "$ruby_version"
-#
-# gem update --system
-#
-# gem_install_or_update 'bundler'
-
-# fancy_echo "Configuring Bundler ..."
-#   number_of_cores=$(sysctl -n hw.ncpu)
-#   bundle config --global jobs $((number_of_cores - 1))
-
 # brew_install_or_upgrade 'heroku-toolbelt'
 
 
 # skip with parity
+# RCM for managing company and personal dotfiles
 # if ! command -v rcup >/dev/null; then
 #   brew_tap 'thoughtbot/formulae'
 #   brew_install_or_upgrade 'rcm'
@@ -232,18 +227,26 @@ brew_install shellcheck
 #  brew_install_or_upgrade 'rbenv-gem-rehash'
 
 
+# hub for interacting with the GitHub API
+# brew_install_or_upgrade 'hub'
 brew_install "hub"
 if [ $last_command_new_install ]; then
   fancy_echo "See https://github.com/github/hub for what hub adds to git"
 fi
 
 # get the nice vim that macvim comes with
-brew_install macvim || fancy_echo "Installing macvim may have failed because you haven't installed the full XCode."
+# brew_install_or_upgrade 'vim'
+brew_install macvim || fancy_echo "Installing macvim may have failed because you haven't installed the full XCode.\n$!"
 
+# Exuberant Ctags for indexing files for vim tab completion
+# brew_install_or_upgrade 'ctags'
 brew_install ctags
+# Tmux for saving project state and switching between projects
+# brew_install_or_upgrade 'tmux'
 brew_install tmux
 
 brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl
+# brew_install_or_upgrade 'reattach-to-user-namespace'
 if [ $last_command_new_install ]; then
   fancy_echo "Run tmux kill-server"
 fi
@@ -273,17 +276,23 @@ brew_install bash-completion
 # ghi
 # graphviz
 brew_install grc
+# ImageMagick for cropping and resizing images
+# brew_install_or_upgrade 'imagemagick'
 # imagemagick
 # libevent
 # libgit2
 # maven
+# Node.js and NPM, for running apps and installing JavaScript packages
+# brew_install_or_upgrade 'node'
 # node
 # openssl
 # ossp-uuid
 # pcre
 # pkg-config
 
-# postgresql
+# Postgresql for storing relational data
+# brew_install_or_upgrade 'postgres'
+# brew_launchctl_restart 'postgresql'
 # which pg_ctl &> /dev/null
 # if [ $? -ne 0 ] ; then
 #   if brew cask list &> /dev/null ; then
@@ -306,7 +315,9 @@ brew_install grc
 
 # readline
 
-# redis
+# Redis for storing key-value data
+# brew_install_or_upgrade 'redis'
+# brew_launchctl_restart 'redis'
 # echo "Checking for redis-cli..."
 # if which redis-cli &> /dev/null; then
 #   if redis-cli ping &> /dev/null; then
@@ -331,6 +342,8 @@ brew_install grc
 
 # scala
 brew_install terminal-notifier
+# The Silver Searcher for finding things in files
+# brew_install_or_upgrade 'the_silver_searcher'
 # the_silver_searcher
 # wget
 # wine
@@ -399,9 +412,13 @@ brew_install terminal-notifier
 # python
 # python3
 brew_install pyenv # PythonBrew replacement
+# Qt for headless JavaScript testing via Capybara Webkit
+# brew_install_or_upgrade 'qt'
 # qt
+# Rbenv for managing versions of Ruby
 # rbenv
 # rtmpdump
+# Ruby Build for installing Rubies
 # ruby-build
 # source-highlight
 # sqlite
@@ -418,8 +435,6 @@ brew_install pyenv # PythonBrew replacement
 # yasm
 
 ## Homebrew Cask (for binaries)
-# brew_tap caskroom/cask
-brew_install "caskroom/cask/brew-cask"
 
 brew_cask "alfred" --appdir="/Applications"
 if [ $last_command_new_install ]; then
