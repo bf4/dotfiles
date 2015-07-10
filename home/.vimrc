@@ -2,6 +2,11 @@
 " see notes.txt for resources
 " vim:set ts=2 sts=2 sw=2 expandtab:
 "
+" https://github.com/thoughtbot/dotfiles/pull/382
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
 " Use local vimrcs if available {
     source ~/.vim/vimrc.setup.vim
     source ~/.vim/vimrc.syntax.vim

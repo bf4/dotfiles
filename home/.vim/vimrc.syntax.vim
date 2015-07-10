@@ -1,22 +1,21 @@
-"" . folding {{{
+" . folding {{{
 "
 " Space to toggle folds.
 nnoremap <Enter> za
 vnoremap <Enter> za
 "
-" " Make zO recursively open whatever top level fold we're in, no matter where
-" the
-" " cursor happens to be.
+" Make zO recursively open whatever top level fold we're in, no matter where
+" the cursor happens to be.
 nnoremap zO zCzO
 "
-" " Use ,z to "focus" the current fold.
+" Use ,z to "focus" the current fold.
 nnoremap <leader>z zMzvzz
+" }}}
 "
 "turn on syntax highlighting
 syntax on
 
 set encoding=utf-8
-
 
 " ================ Indentation ======================
 
