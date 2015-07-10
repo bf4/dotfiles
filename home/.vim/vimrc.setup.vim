@@ -25,6 +25,7 @@ set gcr=a:blinkon0              "Disable cursor blink
 " set gcr=a:blinkwait0,a:block-cursor
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
+set autowrite                   "Automatically :write before running commands
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
