@@ -192,7 +192,7 @@ bash ~/${DOTFILES_HOME}/../brew.sh
 ## Repos Directory
 if file_exists $HOME/projects
 then
-  fancy_echo "$HOME/projects exists"
+  fancy_debug "$HOME/projects exists"
 else
   fancy_echo "Creating $HOME/projects"
   mkdir -p $HOME/projects
