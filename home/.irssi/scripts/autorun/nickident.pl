@@ -1,0 +1,1 @@
+/Users/benjamin/.homesick/repos/dotfiles/home/.irssi/scripts/autorun/nickident.pl

@@ -10,23 +10,8 @@ servers = (
 );
 
 chatnets = {
-  freenode = {
-    type = "IRC";
-    nick = "itsmynick";
-    autosendcmd = "quote nickserv identify itsmynick s3cret";
-  };
+  freenode = { type = "IRC"; nick = "bf4"; autosendcmd = "/^nickident"; };
 };
-
-channels = (
-  { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
-  { name = "silc"; chatnet = "silc"; autojoin = "No"; },
-  { name = "#ruby-lang"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#rails-contrib"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#rom-rb"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#jruby"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#yaml"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#railsrumble"; chatnet = "freenode"; }
-);
 
 aliases = {
   J = "join";
@@ -193,25 +178,15 @@ statusbar = {
 };
 settings = {
   core = {
-    real_name = "First Last";
-    user_name = "mememe";
-    nick = "mememe";
+    real_name = "Benjamin Fleischer";
+    user_name = "bf4";
+    nick = "bf4";
   };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = { autolog = "yes"; };
 };
 windows = {
   1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
-  2 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#ruby-lang";
-        tag = "freenode";
-      }
-    );
-  };
 };
 mainwindows = { 1 = { first_line = "1"; lines = "57"; }; };
 logs = { };
@@ -222,3 +197,5 @@ ignores = (
     level = "CRAP NOTICES SNOTES CTCPS JOINS PARTS QUITS KICKS MODES TOPICS WALLOPS NICKS DCC DCCMSGS CLIENTNOTICES CLIENTCRAP CLIENTERRORS";
   }
 );
+
+hilights = ( { text = "bf4"; color = "%M"; nick = "yes"; word = "yes"; } );
