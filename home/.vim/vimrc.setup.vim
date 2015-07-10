@@ -46,11 +46,17 @@ set nowb
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
 " Only works all the time.
-if has('persistent_undo')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
-  set undodir=~/.vim/backups
-  set undofile
+" See
+" https://github.com/christoomey/dotfiles/blob/8b7818a8029dbf6adba8abca3f31a1599de43a9f/vim/rcfiles/general
+let undodir = expand('~/.vim/undodir')
+if !isdirectory(undodir)
+  call mkdir(undodir)
+  " silent !mkdir ~/.vim/backups > /dev/null 2>&1
 endif
+" if has('persistent_undo')
+set undodir=~/.vim/undodir
+set undofile " Create FILE.un~ files for persistent undo
+" endif
 
 " ================ Backup ==================
 " " Store temporary files in a central spot
@@ -88,7 +94,7 @@ set wildmode=longest,list
 " make tab completion for files/buffers act like bash
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
-set wildignore+=*vim/backups*
+set wildignore+=*vim/undodir*
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
 set wildignore+=vendor/rails/**
