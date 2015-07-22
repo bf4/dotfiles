@@ -158,6 +158,11 @@ let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 Plug 'vim-coffee-script'
 Plug 'tpope/vim-rails'
 
+Plug 'elzr/vim-json'
+"  If you just don't care for concealing you can easily disable it adding let
+"  g:vim_json_syntax_conceal = 0
+"  All warnings can be turned off with a let g:vim_json_warnings=0
+"  g:vim_json_syntax_concealcursor
 Plug 'plasticboy/vim-markdown'
 " The following work on normal and visual modes:
 " ]]: go to next header.
