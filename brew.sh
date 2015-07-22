@@ -265,7 +265,7 @@ if [ $last_command_new_install ]; then
   # ==> Symlinking App 'Alfred Preferences.app' to
   # '$HOME/Applications/Alfred Preferences.app'
   # tell alfred find homebrew_casked items
-  brew_cask "alfred link"
+  # brew_cask "alfred link"
 fi
 
 brew_cask "caffeine" --appdir="/Applications" # TODO: add to login items

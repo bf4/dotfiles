@@ -2,7 +2,7 @@
 . "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 
 __my_rvm_prompt() {
-  eval ~/.rvm/bin/rvm-prompt
+  [ -f ~/.rvm/bin/rvm-prompt ] && eval ~/.rvm/bin/rvm-prompt
 }
 
 # TODO: remove [[ ]] bashism

@@ -7,7 +7,7 @@
 MY_EMAIL=${MY_EMAIL:-github@benjaminfleischer.com}
 export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+# trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
@@ -55,9 +55,6 @@ brew_install "caskroom/cask/brew-cask"
 # - setup vim             #
 # - update homebrew/cask  #
 ###########################
-if [ "$WORKSTATION_UPDATE" = "true" ]
-then
-
   mkdir -p "$HOME/bin"
   cd "$HOME/${DOTFILES_HOME}/.." && \
     #
@@ -65,8 +62,9 @@ then
     git  ls-files bin | \
     ruby -rfileutils -e 'STDIN.readlines.each{|line| \
     FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
-    :verbose => true, :force => true) }'  &&
-
+    :verbose => true, :force => true) }' || echo $!
+if [ "$WORKSTATION_UPDATE" = "true" ]
+then
   fancy_echo "setuping up vim" &&
     sh setup_vim.sh
 
@@ -124,29 +122,29 @@ fi
 # # work around missing libgmp bug in binary ruby
 # brew rm cloog; brew install cloog
 #########################################
-install_rvm stable --autolibs=homebrew
+# install_rvm stable --autolibs=homebrew
 
 # Workstation Update      #
 # WORKSTATION_UPDATE=true #
 # - update rvm / ruby     #
 ###########################
-if [ "$WORKSTATION_UPDATE" = "true" ]
-then
-  fancy_echo "updating rvm"
-  rvm get stable --auto-dotfiles &> /dev/null || fancy_echo $!
-  # Foreman for managing web processes
-  install_ruby 2.2 bundler foreman
-  rvm use 2.2 --default
-fi
+# if [ "$WORKSTATION_UPDATE" = "true" ]
+# then
+#   fancy_echo "updating rvm"
+#   rvm get stable --auto-dotfiles &> /dev/null || fancy_echo $!
+#   # Foreman for managing web processes
+#   install_ruby 2.2 bundler foreman
+#   rvm use 2.2 --default
+# fi
 
 ## GIT
 # brew_install_or_upgrade 'git'
 _ensure_github_ssh_configured() {
   # ssh keys to github
-  ssh git@github.com 2>&1| grep successfully
+  ssh git@github.com 2>&1 | grep -q successfully
   if [ $? -eq 0 ]
   then
-    "You are authenticated with github"
+    fancy_echo "You are authenticated with github"
   else
     if not_file_exists $HOME/.ssh/id_rsa.pub
     then
@@ -166,6 +164,7 @@ _ensure_github_ssh_configured() {
   fi
   ssh -T git@github.com
 }
+_ensure_github_ssh_configured
 if fn_exists "git"
 then
   fancy_debug "we have git"

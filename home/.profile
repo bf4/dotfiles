@@ -42,6 +42,8 @@ if which go > /dev/null; then export GOPATH=${GOPATH:-$HOME/gocode}; fi
 # source /usr/local/opt/chruby/share/chruby/auto.sh
 # rbenv init
 # if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+#  Load RVM into a shell session *as a function*
+# [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 # NODE
 [ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 # Node Version Manager
