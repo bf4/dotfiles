@@ -109,7 +109,7 @@ Plug 'tpope/vim-fireplace'
 "
 " Any failed evaluation loads the stack trace into the location list, which
 " can be easily accessed with :lopen.
-Plug 'tpope/vim-leiningen'
+Plug 'tpope/vim-salve'
 " :Console command to start a REPL or focus an existing instance if already
 " running using dispatch.vim.
 " Autoconnect fireplace.vim to the REPL, or autostart it with :Console.
