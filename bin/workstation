@@ -34,15 +34,18 @@ def run(cmd)
   end
   result
 end
+def repo_root
+  "$HOME/${DOTFILES_HOME:-.homesick/repos/dotfiles/home}/..".freeze
+end
 def workstation_cmd(cmd)
   puts "Running workstation: #{cmd}"
-  run %{cd "$HOME/${DOTFILES_HOME:-.homesick/repos/dotfiles/home}/.." && #{cmd}; cd -}
+  run %{cd #{repo_root} && #{cmd}; cd -}
 end
 cmds = Hash.new do |h,cmd|
   puts "I am a workstation tool. I don't know about #{cmd.inspect}"
   puts "I only know about:\n\t#{cmds.keys.join("\n\t")}"
 end
 cmds["setup"] = ->{ workstation_cmd("./workstation") }
-cmds["hack_osx"] = ->{ workstation_cmd("bash .osx") }
+cmds["hack_osx"] = ->{ exec "#{repo_root}/.osx" }
 cmds["update"] = ->{ workstation_cmd("git pull --rebase origin master") }
 cmds.fetch(args.shift) { cmds.default_proc }.call
