@@ -75,13 +75,11 @@ then
     brew cask cleanup
 fi
 
-# XCode, installed from app store or
-#   \curl http://adcdownload.apple.com/Developer_Tools/xcode_5.0.2/xcode_5.0.2.dmg
-# then install command line tools
-# sudo xcodebuild -license
+# XCode (installed from app store or the below)
 ###################################
 if fn_exists "xcode-select" && ! fn_exists "clang"
 then
+  sudo xcodebuild -license # offers option to install only Commandline tools
  `open /Applications/Xcode.app`
   xcode-select --install
 fi
