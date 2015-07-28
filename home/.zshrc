@@ -32,3 +32,6 @@ done
 export PATH="$HOME/.bin:$PATH"
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+
+# added by travis gem
+[ -f /Users/bfleischer/.travis/travis.sh ] && source /Users/bfleischer/.travis/travis.sh

@@ -7,3 +7,6 @@
 [[ -s "$HOME/.rvm/bin" ]] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+
+# added by travis gem
+[ -f /Users/bfleischer/.travis/travis.sh ] && source /Users/bfleischer/.travis/travis.sh
