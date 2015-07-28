@@ -205,7 +205,7 @@ brew_install terminal-notifier
 # glib
 # gnupg
 # gnutls
-# go
+brew_install go
 # gobject-introspection
 # gource
 # gtk+
