@@ -82,6 +82,10 @@ then
   sudo xcodebuild -license # offers option to install only Commandline tools
  `open /Applications/Xcode.app`
   xcode-select --install
+# else
+# Install from app store
+# https://developer.apple.com/xcode/downloads/
+# https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12
 fi
 
 # Ruby
