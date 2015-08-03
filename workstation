@@ -68,6 +68,9 @@ then
   fancy_echo "setuping up vim" &&
     sh setup_vim.sh
 
+  fancy_echo "setuping up tmux" &&
+    sh setup_tmux.sh
+
   fancy_echo "Updating Homebrew formulas ..."
     brew update &&
     brew upgrade brew-cask &&

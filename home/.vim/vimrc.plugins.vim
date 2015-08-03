@@ -54,6 +54,9 @@ call plug#begin('~/.vim/bundle')
 " Plug 'tpope/vim-rails'
 " Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-surround'
+" vim-obsession works with tmux-resurrect
+" https://github.com/tmux-plugins/tmux-resurrect#restoring-vim-and-neovim-sessions
+Plug 'tpope/vim-obsession'
 " Plug 'vim-ruby/vim-ruby'
 " Plug 'vim-scripts/ctags.vim'
 " Plug 'vim-scripts/matchit.zip'

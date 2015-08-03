@@ -28,7 +28,7 @@ alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.lo
 
 # alias ctags="`brew --prefix`/bin/ctags"
 
-tmux () {
+ttmux () {
   local t=$(which tmux)
   local cmd=""
   # if tmux is running && there's a shared session
