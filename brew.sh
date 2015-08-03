@@ -260,12 +260,6 @@ brew_install pyenv # PythonBrew replacement
 brew_cask "alfred" --appdir="/Applications"
 if [ $last_command_new_install ]; then
   fancy_echo "open alfred from '/opt/hombrew-cask/Caskroom'"
-  # ==> Symlinking App 'Alfred 2.app' to '$HOME/Applications/Alfred
-  # 2.app'
-  # ==> Symlinking App 'Alfred Preferences.app' to
-  # '$HOME/Applications/Alfred Preferences.app'
-  # tell alfred find homebrew_casked items
-  # brew_cask "alfred link"
 fi
 
 brew_cask "caffeine" --appdir="/Applications" # TODO: add to login items
@@ -295,11 +289,11 @@ brew_cask lunchy # lunchy-go
 brew_cask "netnewswire" --appdir="/Applications"
 # brew_cask "onyx" --appdir="/Applications"
 # brew_cask "osxfuse" --appdir="/Applications"
-brew_cask "pgadmin3" --appdir="/Applications"
+# brew_cask "pgadmin3" --appdir="/Applications"
 # brew_cask "picasa" --appdir="/Applications"
 # brew_cask "postgres" --appdir="/Applications"
 # brew_cask "quiterss" --appdir="/Applications"
-brew_cask "racket" --appdir="/Applications"
+# brew_cask "racket" --appdir="/Applications"
 brew_cask "slack" --appdir="/Applications"
 # brew_cask sequel-pro --appdir="/Applications"
 brew_cask "sqlitebrowser" --appdir="/Applications"
@@ -308,6 +302,7 @@ brew_cask "sqlitebrowser" --appdir="/Applications"
 # brew_cask "tunnelblick" --appdir="/Applications"
 brew_cask "vagrant" --appdir="/Applications"
 # brew_cask "virtualbox" --appdir="/Applications" # doesn't install through script
+brew_cask "vlc" --appdir="/Applications"
 # brew_cask "vmware-fusion" --appdir="/Applications"
 # brew_cask "wireshark" --appdir="/Applications"
 # brew_cask "xquartz" --appdir="/Applications" # doesn't install through script
