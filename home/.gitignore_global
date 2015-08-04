@@ -22,6 +22,10 @@
 .idea
 .secret
 
+### CTags ***
+tags
+!tags/
+
 ### vim ###
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
@@ -105,6 +109,8 @@ pickle-email-*.html
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 .ruby-gemset
+tmp/**/*
+!tmp/cache/.keep
 
 ## Specific to RubyMotion:
 .dat*

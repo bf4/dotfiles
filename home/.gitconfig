@@ -1,17 +1,22 @@
 [user]
-	name = Benjamin Fleischer
+  name = Benjamin Fleischer
 [github]
-	user = bf4
+  user = bf4
 [color]
   ui = true
+[init]
+  templatedir = ~/.git_template
+# [http]
+#   postBuffer = 524288000
 [format]
   # pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
   # pretty = "%C(yellow)%h%Creset - %s%nAuthored by %C(green)%an%Creset %ar%n"
 [core]
-	editor = vim
-	excludesfile = ~/.gitignore_global
+  editor = vim
+  excludesfile = ~/.gitignore_global
   # whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   whitespace = trailing-space,space-before-tab
+  # autocrlf = input
 # [advice]
 #   pushNonFastForward = false
 #   statusHints = false
@@ -28,37 +33,48 @@
 [merge]
   ff = only
 [rerere]
-	enabled = 1
-	autoupdate = 1
+  enabled = 1
+  autoupdate = 1
 [include]
-    path = ~/.gitconfig.user
+  path = ~/.gitconfig.local
 [credential]
-	helper = osxkeychain
-; [remote "origin"]
-; 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+  helper = osxkeychain
+# [remote "origin"]
+#   fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [alias]
   # a = add
   # aa = add --all
+  # amend = commit --amend --no-edit
+  # ancestor = merge-base master HEAD
   # ap = add -p
   # br = branch
+  # branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
   # c = commit -v
   # ca = commit --amend -v
   # cb = !sh -c 'git checkout -b $0 && git push -u origin $0'
-  # ci = commit
+  # ci = commit -v
   # co = checkout
-  # d  = diff
+  # copy = clone --depth 1
+  # d = diff --name-status
   # db = !sh -c 'git push --delete origin $1 && git branch -D $1' -
   # db = branch -d
   # df = diff
   # di = diff
   # dic = diff --cached
+  # diff-ancestor = "!git difftool $(git ancestor)"
   # down = !git checkout master && git merge @{-1} && git push
   # ds = diff --staged
+  # ed = "!vim $(git status  | grep modified | awk '{ print $2 }')"
+  # edl = "!vim $(git last | awk '{ print $2 }')"
   # fuckit = !sh -c 'git add --all && git reset --hard'
-	# human = name-rev --name-only --refs=refs/heads/*
-	# humin = name-rev --refs=refs/heads/* --stdin
+  # human = name-rev --name-only --refs=refs/heads/*
+  # humin = name-rev --refs=refs/heads/* --stdin
+  # l = "!. ~/.githelpers && pretty_git_log"
+  # last = diff HEAD^ --name-status
+  # lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
   # mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
   # money = branch -dr @{-1}
+  # open = browse
   # pl = pull
   # plre = pull --rebase
   # pr = !hub pull-request --browse
@@ -67,9 +83,12 @@
   # rbc = rebase --continue
   # rbi = rebase -i
   # safe = !mkdir .git/safe
+  # sha = rev-parse HEAD
   # st = status
+  # switch = checkout -
+  # unstage = reset HEAD
   # up = !git fetch origin && git rebase -i origin/master
-	# wdiff = diff
+  # wdiff = diff
 
   # TIMESPAN: https://gist.github.com/phinze/83387035c233db7c521e
   #  git timespan FROMREF TOREF [FORMAT]
@@ -112,8 +131,8 @@
   # alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
   # alias gitwork="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all"
 [color]
-	diff = auto
-	status = auto
+  diff = auto
+  status = auto
   branch = auto
 [color "branch"]
   current = yellow reverse
@@ -129,18 +148,18 @@
   added = yellow
   changed = green
   untracked = cyan
-; [status]
-;   branch = 1
-;   short = 1
+# [status]
+#   branch = 1
+#   short = 1
 [filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
 [ghi]
-	token = !security find-internet-password -a bf4 -s github.com -l 'ghi token' -w
+  token = !security find-internet-password -a bf4 -s github.com -l 'ghi token' -w
 [ghi "highlight"]
-	style = colorful
+  style = colorful
 [filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-	required = true
+  clean = git lfs clean %f
+  smudge = git lfs smudge %f
+  required = true
