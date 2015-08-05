@@ -92,6 +92,13 @@ then
 fi
 
 # Ruby
+## RVM
+## http://rvm.io/
+# # work around missing libgmp bug in binary ruby
+# brew rm cloog; brew install cloog
+#########################################
+install_rvm stable --autolibs=homebrew
+## RBenv
 # brew_install_or_upgrade 'rbenv'
 # brew_install_or_upgrade 'ruby-build'
 #
@@ -114,6 +121,33 @@ fi
 # rbenv global "$ruby_version"
 # rbenv shell "$ruby_version"
 #
+## chruby
+# brew install chruby
+# append_to_rc 'source /usr/local/opt/chruby/share/chruby/chruby.sh'
+#
+# optionally with RVM
+#   curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+#   append_to_rc 'source ~/.rvm/scripts/extras/chruby.sh'
+#   mrvm install ruby-2.2.2
+# else with ruby-install
+#   https://gistlog.co/daqo/db4de42c9dea0a7d2a03
+#   brew install ruby-install -HEAD # ruby-install is needed to facilitate installing additional version of Rubies.
+#
+#   # check installed
+#   ruby-install -V # ruby-install: 0.5.1
+#
+#   # see versions
+#   ruby-install
+#
+#   # install into ~/.rubies  (or /opt/rubies if root)
+#   ruby-install ruby 2.2.2
+#   # auto-switching
+#   append_to_rc 'source /usr/local/share/chruby/auto.sh'
+#
+# # chruby ruby-2.2.2
+# ruby -v
+
+### MISC
 # gem update --system
 #
 # Bundler for managing Ruby libraries
@@ -122,12 +156,6 @@ fi
 # fancy_echo "Configuring Bundler ..."
 #   number_of_cores=$(sysctl -n hw.ncpu)
 #   bundle config --global jobs $((number_of_cores - 1))
-## RVM
-## http://rvm.io/
-# # work around missing libgmp bug in binary ruby
-# brew rm cloog; brew install cloog
-#########################################
-# install_rvm stable --autolibs=homebrew
 
 # Workstation Update      #
 # WORKSTATION_UPDATE=true #
