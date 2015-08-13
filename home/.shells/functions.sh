@@ -48,3 +48,16 @@ gitreset() {
 git_last_tag() {
   git for-each-ref --sort='*authordate' --format='%(tag)' refs/tags | egrep "^${branch}\.[0-9]+$" | tail -n1
 }
+
+fetch_remotes() {
+  local pwd=$(pwd)
+  find . -depth 1 -type d | while read dir ; do
+    cd $dir
+    echo "$(pwd)"
+    for remote in $(git remote | xargs) ; do
+      echo "  ${remote}"
+      git fetch $remote
+    done
+    cd "$pwd"
+  done
+}
