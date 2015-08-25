@@ -1,3 +1,6 @@
+# https://git-scm.com/docs/git-config
+# http://mislav.uniqpath.com/2010/07/git-tips/
+# http://stackoverflow.com/a/1371215
 [user]
   name = Benjamin Fleischer
 [github]
@@ -17,9 +20,12 @@
   # whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   whitespace = trailing-space,space-before-tab
   # autocrlf = input
-# [advice]
-#   pushNonFastForward = false
-#   statusHints = false
+[advice]
+  # pushNonFastForward = false
+  # statusHints = false
+  statusUoption = true
+[branch]
+  autoSetupRebase = always
 [commit]
   template = ~/.gitmessage
 [fetch]
