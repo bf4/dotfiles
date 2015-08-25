@@ -35,8 +35,13 @@ findsize() {
 }
 
 gitreset() {
-  git fetch origin
-  git reset --hard origin/$(git branch | grep '*' | cut -d' ' -f2)
+  local branch_name="$(git name-rev --name-only HEAD)"
+  local remote_name="$(git config branch.${branch_name}.remote)"
+  remote_name="${remote_name:-origin}"
+  local ref="${remote_name}/${branch_name}"
+  echo "Fetching and resetting ${ref}"
+  git fetch "$remote_name"
+  git reset --hard "${ref}"
 }
 # parse_git_branch() {
 #   cat .git/HEAD | sed -e 's/^.*refs\/heads\///'
@@ -49,15 +54,17 @@ git_last_tag() {
   git for-each-ref --sort='*authordate' --format='%(tag)' refs/tags | egrep "^${branch}\.[0-9]+$" | tail -n1
 }
 
+# http://stackoverflow.com/a/1371215
 fetch_remotes() {
   local pwd=$(pwd)
   find . -depth 1 -type d | while read dir ; do
     cd $dir
     echo "$(pwd)"
-    for remote in $(git remote | xargs) ; do
-      echo "  ${remote}"
-      git fetch $remote
-    done
+    if [ -f ".git/config" ]; then
+      git remote update
+    else
+      echo "not a git remote"
+    fi
     cd "$pwd"
   done
 }
