@@ -92,7 +92,20 @@ find_git_status() {
   fi
 }
 
+# eval "__orig__$(declare -f build_git_prompt)" &&
+#  build_git_prompt() {
+#   (
+#     git() {
+#       timeout 3 /usr/bin/git "$@";
+#     }
+#   timeout 3 __orig__build_git_prompt "$@"
+#   )
+# }
+timeout_build_git_prompt() {
+  build_git_prompt
+  # timeout -t 10 build_git_prompt
+}
 
-if ! $(echo $PROMPT_COMMAND | grep -q build_git_prompt); then
-  PROMPT_COMMAND="build_git_prompt; $PROMPT_COMMAND"
+if ! $(echo $PROMPT_COMMAND | grep -q timeout_build_git_prompt); then
+  PROMPT_COMMAND="timeout_build_git_prompt; $PROMPT_COMMAND"
 fi
