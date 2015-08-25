@@ -1,5 +1,6 @@
 # https://github.com/jruby/jruby/wiki/ConfiguringJRuby
-compat.version=2.0
+# https://github.com/rvm/rvm/issues/3290#issuecomment-76538084
+# compat.version=2.0
 # errno.backtrace=true
 # server
 # compile.invokedynamic=true
