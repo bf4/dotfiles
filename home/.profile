@@ -16,7 +16,7 @@ export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 [ -s /opt/bin       ] && PATH="/opt/bin:$PATH"
 [ -s /opt/local/bin ] && PATH="/opt/local/bin:$PATH"
 # SSH
-[ -s "$HOME/${DOTFILES_HOME}/ssh_agent.bash" ] && source "$HOME/${DOTFILES_HOME}/ssh_agent.bash"
+[ -s "$HOME/.ssh_agent.bash" ] && source "$HOME/.ssh_agent.bash"
 # GIT
 # EMAIL is the fallback email address in case the user.email configuration value isn’t set.
 # If this isn’t set, Git falls back to the system user and host names.
