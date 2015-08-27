@@ -29,7 +29,20 @@ export EMAIL=${EMAIL:-$MY_EMAIL}
 # PostgreSQL
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 # GO
-if which go > /dev/null; then export GOPATH=${GOPATH:-$HOME/gocode}; fi
+if which go > /dev/null; then
+  unset GOROOT
+  export GOPATH=${GOPATH:-$HOME/go}
+  export PATH=$PATH:$GOPATH/bin
+  # go env
+  # go get github.com/tools/godep
+  # e.g. build
+  #   mkdir -p  $GOPATH/src/github.com/deis
+  #   cd $GOPATH/src/github.com/deis
+  #   git clone deis/deis
+  #   export DEIS=$GOPATH/src/github.com/deis/deis
+  #   cd $DEIS
+  #   git remote add upstream https://github.com/deis/deis.git
+fi
 # HASKELL
 [ -s $HOME/.cabal   ] && PATH="$HOME/.cabal/bin:$PATH"
 # PYTHON
