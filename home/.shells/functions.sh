@@ -58,13 +58,13 @@ git_last_tag() {
 fetch_remotes() {
   local pwd=$(pwd)
   find . -depth 1 -type d | while read dir ; do
-    cd $dir
+    cd $(echo "$dir" | sed 's/ /\\ /')
     echo "$(pwd)"
     if [ -f ".git/config" ]; then
       git remote update
     else
       echo "not a git remote"
     fi
-    cd "$pwd"
+    cd $(echo "$pwd" | sed 's/ /\\ /')
   done
 }
