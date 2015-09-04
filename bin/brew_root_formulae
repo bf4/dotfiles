@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo $'\n===Installed brews===\n'
+
 brew deps --installed | \
     awk -F'[: ]+' \
     '{
@@ -12,3 +14,6 @@ brew deps --installed | \
             if (!(package in dependencies))
                 print package
     }'
+
+echo $'\n===Installed casks===\n'
+brew cask list | cat

@@ -48,4 +48,9 @@ end
 cmds["setup"] = ->{ workstation_cmd("./workstation") }
 cmds["hack_osx"] = ->{ exec "#{repo_root}/.osx" }
 cmds["update"] = ->{ workstation_cmd("git pull --rebase origin master") }
+cmds["brew"] = ->{ exec "bash #{repo_root}/brew.sh" }
+cmds["brew_group"] = ->{ exec "bash #{repo_root}/brew_group.sh" }
+cmds["brew_list"] = ->{ exec "brew_root_formulae" }
+cmds["setup_vim"] = ->{ exec "bash #{repo_root}/setup_vim.sh" }
+cmds["setup_tmux"] = ->{ exec "bash #{repo_root}/setup_tmux.sh" }
 cmds.fetch(args.shift) { cmds.default_proc }.call
