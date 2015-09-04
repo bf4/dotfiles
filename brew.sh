@@ -2,8 +2,9 @@
 
 # Install command-line tools using Homebrew.
 
-source "$HOME/${DOTFILES_HOME}/../functions.bash"
-source "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
+. "$HOME/${DOTFILES_HOME}/../functions.bash"
+. "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
+[ -f "$HOME/.brew_local.sh" ] && . "$HOME/.brew_local.sh"
 
 # TODO: consider https://github.com/Homebrew/homebrew-bundle
 # with a Brewfile and/or Caskfile
@@ -50,14 +51,16 @@ brew_install shellcheck
 
 # hub for interacting with the GitHub API
 # brew_install_or_upgrade 'hub'
+already_installed=$(fn_exists hub)
 brew_install "hub"
-if [ $last_command_new_install ]; then
+if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
+  echo "already_installed '${already_installed}'"
   fancy_echo "See https://github.com/github/hub for what hub adds to git"
 fi
 
 # get the nice vim that macvim comes with
 # brew_install_or_upgrade 'vim'
-brew_install macvim || fancy_echo "Installing macvim may have failed because you haven't installed the full XCode.\n$!"
+brew_install macvim | grep -q XCode && fancy_echo "Installing macvim may have failed because you haven't installed the full XCode.\n$!"
 
 # Exuberant Ctags for indexing files for vim tab completion
 # brew_install_or_upgrade 'ctags'
@@ -66,13 +69,13 @@ brew_install ctags
 # brew_install_or_upgrade 'tmux'
 brew_install tmux
 
+already_installed=$(fn_exists tmux)
 brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl
 # brew_install_or_upgrade 'reattach-to-user-namespace'
-if [ $last_command_new_install ]; then
+if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
+  echo "already_installed '${already_installed}'"
   fancy_echo "Run tmux kill-server"
 fi
-brew_install the_platinum_searcher # aka 'pt'
-
 brew_install "tree"
 brew_install "trash"
 
@@ -175,7 +178,6 @@ brew_install terminal-notifier
 # apple-gcc42
 # bazaar
 # beanstalk
-# brew-cask
 # cabal-install
 # chruby
 # cscope
@@ -222,6 +224,7 @@ brew_install go
 # libevent
 # libffi
 # lynx
+# x11/meld
 # nettle
 # nginx
 # nvm
@@ -244,7 +247,7 @@ brew_install pyenv # PythonBrew replacement
 # source-highlight
 # sqlite
 # texi2html
-# the_platinum_searcher
+brew_install the_platinum_searcher # aka 'pt'
 # tmate
 # tor
 # unixodbc
@@ -257,8 +260,10 @@ brew_install pyenv # PythonBrew replacement
 
 ## Homebrew Cask (for binaries)
 
+already_installed=$(app_exists Alfred)
 brew_cask "alfred" --appdir="/Applications"
-if [ $last_command_new_install ]; then
+if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
+  echo "already_installed '${already_installed}'"
   fancy_echo "open alfred from '/opt/hombrew-cask/Caskroom'"
 fi
 
@@ -286,7 +291,7 @@ brew_cask "keka" --appdir="/Applications"
 brew_cask lunchy # lunchy-go
 # brew_cask "libreoffice" --appdir="/Applications"
 # brew_cask "minecraft" --appdir="/Applications"
-brew_cask "netnewswire" --appdir="/Applications"
+# brew_cask "netnewswire" --appdir="/Applications"
 # brew_cask "onyx" --appdir="/Applications"
 # brew_cask "osxfuse" --appdir="/Applications"
 # brew_cask "pgadmin3" --appdir="/Applications"
@@ -296,7 +301,7 @@ brew_cask "netnewswire" --appdir="/Applications"
 # brew_cask "racket" --appdir="/Applications"
 brew_cask "slack" --appdir="/Applications"
 # brew_cask sequel-pro --appdir="/Applications"
-brew_cask "sqlitebrowser" --appdir="/Applications"
+# brew_cask "sqlitebrowser" --appdir="/Applications"
 # brew_cask "sublime-text" --appdir="/Applications"
 # brew_cask "tcpblock" --appdir="/Applications"
 # brew_cask "tunnelblick" --appdir="/Applications"
