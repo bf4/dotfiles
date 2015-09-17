@@ -69,6 +69,24 @@ fetch_remotes() {
   done
 }
 
+# pull_branch joaomdmoura active_model_serializers deserializer-implementation
+# pull_branch() {
+#   local handle="$1"
+#   local lib="$2"
+#   local branch="$3"
+#   git pull "https://github.com/${handle}/${lib}.git" "${branch}"
+# }
+
+# pull_branch joaomdmoura:deserializer-implementation
+pull_branch() {
+  local args="$*"
+  ruby -e "
+  handle, branch = '${args}'.strip.split(':');
+  lib = File.basename(Dir.pwd);
+  %x(git pull https://github.com/#{handle}/#{lib}.git #{branch})
+  "
+}
+
 validate_yaml() {
  local filename="$1"
  ruby -ryaml -e "puts YAML.load_file('${filename}')"
