@@ -48,6 +48,9 @@
 # [remote "origin"]
 #   fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [alias]
+  # prune-merged-local = "!$(git branch --merged | while read branch ; do echo $branch ; done)"
+  prune-merged-local = "!git branch --merged | while read branch ; do git branch -D $branch 2>/dev/null ; done"
+  #
   # a = add
   # aa = add --all
   # amend = commit --amend --no-edit
