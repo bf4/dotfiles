@@ -68,3 +68,8 @@ fetch_remotes() {
     cd $(echo "$pwd" | sed 's/ /\\ /')
   done
 }
+
+validate_yaml() {
+ local filename="$1"
+ ruby -ryaml -e "puts YAML.load_file('${filename}')"
+}
