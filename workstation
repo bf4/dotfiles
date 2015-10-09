@@ -14,6 +14,17 @@ set -e
 source "$HOME/${DOTFILES_HOME}/../functions.bash"
 source "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 
+################
+#   CRONTAB    #
+################
+
+crontab -l | grep --quiet 'stretch'
+if [ $? -ne 0 ]; then
+  fancy_echo "Installing crontab"
+  crontab crontab.tab
+fi
+
+################
 # SHELL-CONFIG #
 ################
 case "$SHELL" in
