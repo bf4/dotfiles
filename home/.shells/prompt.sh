@@ -93,6 +93,7 @@ find_git_status() {
 }
 
 
+# http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
 if ! $(echo $PROMPT_COMMAND | grep -q build_git_prompt); then
   PROMPT_COMMAND="build_git_prompt; $PROMPT_COMMAND"
 fi

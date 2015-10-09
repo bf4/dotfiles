@@ -1,3 +1,4 @@
+# http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
 # Default Git enabled prompt with dirty state
 export PS1="\$(__my_rvm_prompt)\$git_prompt \w\n📝 $ "
 
