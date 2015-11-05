@@ -2,174 +2,174 @@
 # http://mislav.uniqpath.com/2010/07/git-tips/
 # http://stackoverflow.com/a/1371215
 [user]
-  name = Benjamin Fleischer
+	name = Benjamin Fleischer
 [github]
-  user = bf4
+	user = bf4
 [color]
-  ui = true
+	ui = true
 [init]
-  templatedir = ~/.git_template
+	templatedir = ~/.git_template
 # [http]
 #   postBuffer = 524288000
 [format]
-  # pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
-  # pretty = "%C(yellow)%h%Creset - %s%nAuthored by %C(green)%an%Creset %ar%n"
+	# pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
+	# pretty = "%C(yellow)%h%Creset - %s%nAuthored by %C(green)%an%Creset %ar%n"
 [core]
-  editor = vim
-  excludesfile = ~/.gitignore_global
-  # whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  whitespace = trailing-space,space-before-tab
-  # autocrlf = input
+	editor = vim
+	excludesfile = ~/.gitignore_global
+	# whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	whitespace = trailing-space,space-before-tab
+	# autocrlf = input
 [advice]
-  # pushNonFastForward = false
-  # statusHints = false
-  statusUoption = true
+	# pushNonFastForward = false
+	# statusHints = false
+	statusUoption = true
 [branch]
-  autoSetupRebase = always
+	autoSetupRebase = always
 [commit]
-  template = ~/.gitmessage
+	template = ~/.gitmessage
 [fetch]
-  prune = true
+	prune = true
 [push]
-  default = current
+	default = current
 [pull]
-  # see https://github.com/thoughtbot/dotfiles/pull/377
-  # autosquash = true
-  rebase = true
+	# see https://github.com/thoughtbot/dotfiles/pull/377
+	# autosquash = true
+	rebase = true
 [merge]
-  ff = only
+	ff = only
 [rerere]
-  enabled = 1
-  autoupdate = 1
+	enabled = 1
+	autoupdate = 1
 [include]
-  path = ~/.gitconfig.local
+	path = ~/.gitconfig.local
 [credential]
-  helper = osxkeychain
+	helper = osxkeychain
 # [remote "origin"]
 #   fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [alias]
 	extend = commit --amend -C HEAD
 	rbc = rebase --continue
-  # prune-merged-local = "!$(git branch --merged | while read branch ; do echo $branch ; done)"
-  prune-merged-local = "!git branch --merged | while read branch ; do git branch -D $branch 2>/dev/null ; done"
-  #
-  # a = add
-  # aa = add --all
-  # amend = commit --amend --no-edit
-  # ancestor = merge-base master HEAD
-  # ap = add -p
-  # br = branch
-  # branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
-  # c = commit -v
-  # ca = commit --amend -v
-  # cb = !sh -c 'git checkout -b $0 && git push -u origin $0'
-  # ci = commit -v
-  # co = checkout
-  # copy = clone --depth 1
-  # d = diff --name-status
-  # db = !sh -c 'git push --delete origin $1 && git branch -D $1' -
-  # db = branch -d
-  # df = diff
-  # di = diff
-  # dic = diff --cached
-  # diff-ancestor = "!git difftool $(git ancestor)"
-  # down = !git checkout master && git merge @{-1} && git push
-  # ds = diff --staged
-  # ed = "!vim $(git status  | grep modified | awk '{ print $2 }')"
-  # edl = "!vim $(git last | awk '{ print $2 }')"
-  # fuckit = !sh -c 'git add --all && git reset --hard'
-  # human = name-rev --name-only --refs=refs/heads/*
-  # humin = name-rev --refs=refs/heads/* --stdin
-  # l = "!. ~/.githelpers && pretty_git_log"
-  # last = diff HEAD^ --name-status
-  # lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
-  # mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
-  # money = branch -dr @{-1}
-  # open = browse
-  # pl = pull
-  # plre = pull --rebase
-  # pr = !hub pull-request --browse
-  # pr = remote prune origin
-  # ps = push
-  # rbi = rebase -i
-  # safe = !mkdir .git/safe
-  # sha = rev-parse HEAD
-  # st = status
-  # switch = checkout -
-  # unstage = reset HEAD
-  # up = !git fetch origin && git rebase -i origin/master
-  # wdiff = diff
+	# prune-merged-local = "!$(git branch --merged | while read branch ; do echo $branch ; done)"
+	prune-merged-local = "!git branch --merged | while read branch ; do git branch -D $branch 2>/dev/null ; done"
+	#
+	# a = add
+	# aa = add --all
+	# amend = commit --amend --no-edit
+	# ancestor = merge-base master HEAD
+	# ap = add -p
+	# br = branch
+	# branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+	# c = commit -v
+	# ca = commit --amend -v
+	# cb = !sh -c 'git checkout -b $0 && git push -u origin $0'
+	# ci = commit -v
+	# co = checkout
+	# copy = clone --depth 1
+	# d = diff --name-status
+	# db = !sh -c 'git push --delete origin $1 && git branch -D $1' -
+	# db = branch -d
+	# df = diff
+	# di = diff
+	# dic = diff --cached
+	# diff-ancestor = "!git difftool $(git ancestor)"
+	# down = !git checkout master && git merge @{-1} && git push
+	# ds = diff --staged
+	# ed = "!vim $(git status  | grep modified | awk '{ print $2 }')"
+	# edl = "!vim $(git last | awk '{ print $2 }')"
+	# fuckit = !sh -c 'git add --all && git reset --hard'
+	# human = name-rev --name-only --refs=refs/heads/*
+	# humin = name-rev --refs=refs/heads/* --stdin
+	# l = "!. ~/.githelpers && pretty_git_log"
+	# last = diff HEAD^ --name-status
+	# lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+	# mm = !test `git rev-parse master` = $(git merge-base HEAD master) && git checkout master && git merge HEAD@{1} || echo "Non-fastforward"
+	# money = branch -dr @{-1}
+	# open = browse
+	# pl = pull
+	# plre = pull --rebase
+	# pr = !hub pull-request --browse
+	# pr = remote prune origin
+	# ps = push
+	# rbi = rebase -i
+	# safe = !mkdir .git/safe
+	# sha = rev-parse HEAD
+	# st = status
+	# switch = checkout -
+	# unstage = reset HEAD
+	# up = !git fetch origin && git rebase -i origin/master
+	# wdiff = diff
 
-  # TIMESPAN: https://gist.github.com/phinze/83387035c233db7c521e
-  #  git timespan FROMREF TOREF [FORMAT]
-  #  uses `ddiff` from the `dateutils` package
-  #  available via: brew install dateutils, apt-get install dateutils, etc
-  # timespan = "!f() { one=$(git log -n 1 --format=%ai $1); two=$(git log -n 1 --format=%ai $2); ddiff -f ${3:-%mm%dd} \"$one\" \"$two\"; }; f"
+	# TIMESPAN: https://gist.github.com/phinze/83387035c233db7c521e
+	#  git timespan FROMREF TOREF [FORMAT]
+	#  uses `ddiff` from the `dateutils` package
+	#  available via: brew install dateutils, apt-get install dateutils, etc
+	# timespan = "!f() { one=$(git log -n 1 --format=%ai $1); two=$(git log -n 1 --format=%ai $2); ddiff -f ${3:-%mm%dd} \"$one\" \"$two\"; }; f"
 
-  # LOG!!!!
-  # lg = log -p
-  # lol = log --graph --decorate --pretty=oneline --abbrev-commit
-  # lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-  # out = log origin..HEAD
-  # qpl = log --pretty=\"%Cblue%h%Creset %Cgreen[%cr]%Creset %s\" origin/production..origin/master
-  standup = log --since=yesterday --author=\"Benjamin Fleischer\"
-  retro = log --since='7 days ago' --author=\"Benjamin Fleischer\"
-  # PLOG (pretty log) options
-  # git plog --graph
-  # git plog --graph --decorate
-  # git plog --all
-  # git plog --boundary
-  # git plog --author=benjamin
-  # git plog --abbrev-commit
-  # git plog --since'7 days ago'
-  # git plog --after=YYYY-MM-DD
-  # PLOG (pretty log) formatting
-  # %h commmit
-  # %ad date (formatted by --date={iso,short})
-  # %cr relative date
-  # %d heads
-  # %s message
-  # %an author name
-  plog = log --pretty=format:'%C(red)%h%C(reset) | %C(green)%ad%Creset | %C(yellow)%d%C(reset) %s %C(bold blue)[%an]%Creset | (%cr)'  --date=short
-  logall = log --pretty=format:'%h %ad | %s%d [%an]' --date=iso --author=benjamin --all
-  logprettyall = log --pretty=format:'%h %Cgreen%ad%Creset | %s%Cred%d%Creset [%an]'  --date=iso --author=benjamin --all
-  # prettygraph = log --pretty=format:'%h %s' --graph
-  # graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  # graphall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  # # log --graph --decorate --pretty=oneline --abbrev-commit --all --author=benjamin
-  # # log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all
-  # alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
-  # alias gitwork="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all"
+	# LOG!!!!
+	# lg = log -p
+	# lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	# lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	# out = log origin..HEAD
+	# qpl = log --pretty=\"%Cblue%h%Creset %Cgreen[%cr]%Creset %s\" origin/production..origin/master
+	standup = log --since=yesterday --author=\"Benjamin Fleischer\"
+	retro = log --since='7 days ago' --author=\"Benjamin Fleischer\"
+	# PLOG (pretty log) options
+	# git plog --graph
+	# git plog --graph --decorate
+	# git plog --all
+	# git plog --boundary
+	# git plog --author=benjamin
+	# git plog --abbrev-commit
+	# git plog --since'7 days ago'
+	# git plog --after=YYYY-MM-DD
+	# PLOG (pretty log) formatting
+	# %h commmit
+	# %ad date (formatted by --date={iso,short})
+	# %cr relative date
+	# %d heads
+	# %s message
+	# %an author name
+	plog = log --pretty=format:'%C(red)%h%C(reset) | %C(green)%ad%Creset | %C(yellow)%d%C(reset) %s %C(bold blue)[%an]%Creset | (%cr)'  --date=short
+	logall = log --pretty=format:'%h %ad | %s%d [%an]' --date=iso --author=benjamin --all
+	logprettyall = log --pretty=format:'%h %Cgreen%ad%Creset | %s%Cred%d%Creset [%an]'  --date=iso --author=benjamin --all
+	# prettygraph = log --pretty=format:'%h %s' --graph
+	# graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	# graphall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	# # log --graph --decorate --pretty=oneline --abbrev-commit --all --author=benjamin
+	# # log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all
+	# alias gitdiffgraph="git log --pretty=format:'%h %s' --graph"
+	# alias gitwork="git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short --author=benjamin --all"
 [color]
-  diff = auto
-  status = auto
-  branch = auto
+	diff = auto
+	status = auto
+	branch = auto
 [color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
+	current = yellow reverse
+	local = yellow
+	remote = green
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = cyan bold
-  #  whitespace = red reverse
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = cyan bold
+	#  whitespace = red reverse
 [color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 # [status]
 #   branch = 1
 #   short = 1
 [filter "media"]
-  required = true
-  clean = git media clean %f
-  smudge = git media smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
 [ghi]
-  token = !security find-internet-password -a bf4 -s github.com -l 'ghi token' -w
+	token = !security find-internet-password -a bf4 -s github.com -l 'ghi token' -w
 [ghi "highlight"]
-  style = colorful
+	style = colorful
 [filter "lfs"]
-  clean = git lfs clean %f
-  smudge = git lfs smudge %f
-  required = true
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
