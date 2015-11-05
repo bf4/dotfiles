@@ -1,0 +1,3 @@
+[submodule "ember-cli-vim-projections"]
+	path = ember-cli-vim-projections
+	url = https://gist.github.com/9947601.git

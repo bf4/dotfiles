@@ -159,7 +159,12 @@ Plug 'JazzCore/ctrlp-cmatcher'
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
 Plug 'vim-coffee-script'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rails'
+
+" hbs https://github.com/toranb/dotfiles/commit/ddb44736ab3400932649f9ee0e76302c73efffb1
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'isRuslan/vim-es6'
 
 Plug 'elzr/vim-json'
 "  If you just don't care for concealing you can easily disable it adding let
@@ -205,3 +210,94 @@ if filereadable(expand("~/.vimrc.bundles.local"))
 endif
 
 call plug#end()
+
+" [ ember-cli projection ] typing `:Ecomponent tab` will open a component tab
+" https://gist.github.com/chantastic/9947601
+" https://github.com/pjg/dotfiles/blob/1c7d343ff0ef8a68465efcd94c3fa5de963cc182/.vimrc#L419-L598
+let g:ember_cli_projections = {
+      \   "app/adapters/*.js": {
+      \     "command": "adapter",
+      \     "template": [
+      \       "// export default DS.{capitalize}Adapter.extend();"
+      \     ]
+      \   },
+      \
+      \   "app/components/*.js": {
+      \     "command": "component",
+      \     "template": [
+      \       "export default Ember.Component.extend({",
+      \       "",
+      \       "});"
+      \     ]
+      \   },
+      \
+      \   "app/controllers/*.js": {
+      \     "command": "controller",
+      \     "template": [
+      \       "export default Ember.Controller.extend({",
+      \       "",
+      \       "});"
+      \     ]
+      \   },
+      \
+      \   "app/helpers/*.js": {
+      \     "command": "helper",
+      \     "template": [
+      \       "// Please note that Handlebars helpers will only be found automatically by the",
+      \       "// resolver if their name contains a dash (reverse-word, translate-text, etc.)",
+      \       "// For more details: http://stefanpenner.github.io/ember-app-kit/guides/using-modules.html",
+      \       "",
+      \       "export default Ember.Handlebars.makeBoundHelper(function() {",
+      \       "",
+      \       "});"
+      \     ]
+      \   },
+      \
+      \   "app/models/*.js": {
+      \     "command": "model",
+      \     "template": [
+      \       "export default DS.Model.extend({",
+      \       "",
+      \       "});"
+      \     ]
+      \   },
+      \
+      \   "app/router.js": {
+      \     "command": "router"
+      \   },
+      \
+      \   "app/routes/*.js": {
+      \     "command": "route",
+      \     "template": [
+      \       "export default Ember.Route.extend({",
+      \       "",
+      \       "});"
+      \     ]
+      \
+      \   },
+      \
+      \   "app/styles/*.css": {
+      \     "command": "style",
+      \     "template": [
+      \       "/* {}.css */",
+      \       ""
+      \     ]
+      \   },
+      \
+      \   "app/templates/*.hbs": {
+      \     "command": "template"
+      \   },
+      \
+      \   "app/utils/*.js": {
+      \     "command": "util"
+      \   },
+      \
+      \   "app/views/*.js": {
+      \     "command": "view",
+      \     "template": [
+      \       "export default Ember.View.extend({",
+      \       "",
+      \       "});"
+      \     ]
+      \   }
+      \ }
