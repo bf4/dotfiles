@@ -1,1 +1,80 @@
+# http://stackoverflow.com/a/25821003
+# Basic options
 --recurse=yes
+# --tag-relative=yes
+--exclude=.git
+--exclude=log
+--exclude=bundle
+--exclude=.bundle
+--exclude=vendor
+--languages=-javascript,sql
+# --append
+# http://andrew.stwrt.ca/posts/vim-ctags/
+# :tag function_name
+# :ta function_name
+# These commands will also accept regular expressions, so, for example, :tag /^asserts_* would find
+# all tags that start with ‘asserts_‘. By default vim will jump to the first result, but a number of
+# commands can be used to sort through the list of tags:
+
+# :ts or :tselect shows the list
+# :tn or :tnext goes to the next tag in that list
+# :tp or :tprev goes to the previous tag in that list
+# :tf or :tfirst goes to the first tag of the list
+# :tl or :tlast goes to the last tag of the list
+
+# ctags --recurse . `bundle show --paths`
+
+# Now ctags can take quite a few options, but the most important I use are these:
+
+# --recurse to index everything in this directory and all directories below it;
+# --exclude= to skip certain directories from indexing, specifying it once for at least .git, tmp, doc
+# and log;
+# --append to have new definitions added to, rather than replacing the old, collection tags;
+# --languages=-javascript,sql to exclude certain file types from indexing – which naturally differs
+# per project.
+
+# ctags -R -f ./.git/tags .
+# nnoremap <leader>. :CtrlPTag<cr>
+
+# http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
+# git config --global init.templatedir '~/.git_template'
+# mkdir -p ~/.git_template/hooks
+#  Place in .git_template/hooks/ctags and mark as executable:
+#
+# #!/bin/sh
+# set -e
+# PATH="/usr/local/bin:$PATH"
+# dir="`git rev-parse --git-dir`"
+# trap 'rm -f "$dir/$$.tags"' EXIT
+# git ls-files | \
+#   ctags --tag-relative -L - -f"$dir/$$.tags" --languages=-javascript,sql
+#   mv "$dir/$$.tags" "$dir/tags"
+#
+# git config --global alias.ctags '!.git/hooks/ctags', then git ctags
+
+# I stick the tags file in .git because if fugitive.vim is installed, Vim will be configured to look
+# for it there automatically, regardless of your current working directory. Plus, you don’t need to
+# worry about adding it to .gitignore.
+
+# Here come the hooks. Mark all four of them executable and place them in .git_template/hooks. Use
+# this same content for the first three: post-commit, post-merge, and post-checkout (actually my
+# post-checkout hook includes hookup as well).
+
+#!/bin/sh
+# .git/hooks/ctags >/dev/null 2>&1 &
+# I’ve forked it into the background so that my Git workflow remains as latency-free as possible.
+#
+# One more hook that oftentimes gets overlooked: post-rewrite. This is fired after git commit --amend
+# and git rebase, but the former is already covered by post-commit. Here’s mine:
+#
+# #!/bin/sh
+# case "$1" in
+#   rebase) exec .git/hooks/post-merge ;;
+# esac
+#
+#  Once you get this all set up, you can use git init in existing repositories to copy these hooks
+#  in.
+#
+#  So what does this get you? Any new repositories you create or clone will be immediately indexed
+#  with Ctags and set up to re-index every time you check out, commit, merge, or rebase. Basically,
+#  you’ll never have to manually run Ctags on a Git repository again.
