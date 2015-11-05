@@ -64,7 +64,7 @@
 	# ca = commit --amend -v
 	# cb = !sh -c 'git checkout -b $0 && git push -u origin $0'
 	# ci = commit -v
-	# co = checkout
+	co = checkout
 	# copy = clone --depth 1
 	# d = diff --name-status
 	# db = !sh -c 'git push --delete origin $1 && git branch -D $1' -
