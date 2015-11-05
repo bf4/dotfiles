@@ -50,7 +50,10 @@ fi
 [ -s '/usr/local/bin/pyenv' ] && eval "$(pyenv init -)"
 # RUBY
 # chruby init
-# source /usr/local/opt/chruby/share/chruby/chruby.sh
+# if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+#   source /usr/local/share/chruby/chruby.sh
+#   chruby $(cat .ruby-version)
+# fi
 # autoswitching on .ruby-version
 # source /usr/local/opt/chruby/share/chruby/auto.sh
 # rbenv init
