@@ -41,8 +41,6 @@ call plug#begin('~/.vim/bundle')
 
 " Define bundles via Github repos
 " Plug 'christoomey/vim-run-interactive'
-" Plug 'kchmck/vim-coffee-script'
-" Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'pbrisbin/vim-mkdir'
 " Plug 'scrooloose/syntastic'
 " Plug 'slim-template/vim-slim'
@@ -138,12 +136,18 @@ Plug 'thoughtbot/vim-rspec'
 " let g:rspec_command = "!rspec --drb {spec}"
 " let g:rspec_command = "Dispatch zeus rspec {spec}"
 
+" [ctrlp.vim]
 Plug 'ctrlpvim/ctrlp.vim'
 " see https://github.com/kien/ctrlp.vim
 " see http://kien.github.io/ctrlp.vim/
 " Create a file called root.dir in the root of your project - to make CtrlP work really nicely
 " https://twitter.com/artemave/status/469204521219293185
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+let g:ctrlp_cache_dir = $HOME.'/.vim/tmp/.ctrlp_cache'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\/tmp',
+  \ 'file': '\/public/stylesheets/.*css$'
+  \ }
 " https://github.com/JazzCore/ctrlp-cmatcher
 " POSIX
 "   Linux
@@ -158,12 +162,19 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 Plug 'JazzCore/ctrlp-cmatcher'
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
+
+" syntax
 Plug 'vim-coffee-script'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rails'
-
+" Plug 'tpope/vim-haml'
+" Plug 'kien/rainbow_parentheses.vim'
 " hbs https://github.com/toranb/dotfiles/commit/ddb44736ab3400932649f9ee0e76302c73efffb1
 Plug 'mustache/vim-mustache-handlebars'
+" Plug 'mmalecki/vim-node.js'
+" Plug 'heartsentwined/vim-emblem'
+" Plug 'pangloss/vim-javascript'
+
 Plug 'isRuslan/vim-es6'
 
 Plug 'elzr/vim-json'
@@ -171,6 +182,7 @@ Plug 'elzr/vim-json'
 "  g:vim_json_syntax_conceal = 0
 "  All warnings can be turned off with a let g:vim_json_warnings=0
 "  g:vim_json_syntax_concealcursor
+" Plug 'tpope/vim-markdown'
 Plug 'plasticboy/vim-markdown'
 " The following work on normal and visual modes:
 " ]]: go to next header.
