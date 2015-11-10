@@ -33,9 +33,10 @@ set autowrite                   "Automatically :write before running commands
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 
-" Make it obvious where 100 characters is
-set textwidth=100
-set colorcolumn=+1
+if exists('+colorcolumn')
+    set colorcolumn=100 " color the 80th column differently as a wrapping guide
+    set textwidth=0     " no automatic text wrapping
+endif
 
 " ================ Turn Off Swap Files ==============
 
