@@ -40,6 +40,7 @@ call plug#begin('~/.vim/bundle')
 " call vundle#begin()
 
 " Define bundles via Github repos
+Plug 'editorconfig/editorconfig-vim'
 " Plug 'christoomey/vim-run-interactive'
 " Plug 'pbrisbin/vim-mkdir'
 " Plug 'scrooloose/syntastic'
