@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# from https://github.com/benjojo/-cmds/blob/0afdbe8d6aebbadca4a266567afb566d48a6ae49/%24
+# Ever pasted "$ somecommand" into the terminal and gotten this error?
+# -bash: $: command not found
+
+# Begone, silly errors! Lazy copy + paste forever!! ETCETERA!!!!
+
+echo 'Stop C&Ping stuff from the net'
+"$@"

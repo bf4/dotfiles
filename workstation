@@ -66,6 +66,7 @@ brew_install "caskroom/cask/brew-cask"
 # - setup vim             #
 # - update homebrew/cask  #
 ###########################
+link_bins() {
   mkdir -p "$HOME/bin"
   cd "$HOME/${DOTFILES_HOME}/.." && \
     #
@@ -73,7 +74,9 @@ brew_install "caskroom/cask/brew-cask"
     git  ls-files bin | \
     ruby -rfileutils -e 'STDIN.readlines.each{|line| \
     FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
-    :verbose => true, :force => true) }' || echo $!
+    :verbose => true, :force => true) }'
+}
+link_bins || $!
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
   fancy_echo "setuping up vim" &&
