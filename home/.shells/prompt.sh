@@ -11,9 +11,6 @@ __my_rvm_prompt() {
 # https://gist.github.com/ryknow/3303462/raw/2e2f9dd271f3caa83a435965664e59f0dd4626dc/.bashrc
 # https://github.com/jimeh/git-aware-prompt/blob/master/prompt.sh
 
-GIT_PS1_SHOWDIRTYSTAT=true
-GIT_PS1_SHOWSTASHSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
 build_git_prompt(){
   find_git_status
   if [ -n "$git_status" ]; then
@@ -93,7 +90,39 @@ find_git_status() {
 }
 
 
-# http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
-if ! $(echo $PROMPT_COMMAND | grep -q build_git_prompt); then
-  PROMPT_COMMAND="build_git_prompt; $PROMPT_COMMAND"
+# https://github.com/magicmonty/bash-git-prompt#prompt-structure
+# Set config variables first
+GIT_PS1_SHOWDIRTYSTAT=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PROMPT_START="\$(__my_rvm_prompt)"
+GIT_PROMPT_END="\w\n📝 $ "
+# GIT_PROMPT_ONLY_IN_REPO=1
+
+# GIT_PROMPT_FETCH_REMOTE_STATUS=0   # uncomment to avoid fetching remote status
+
+# GIT_PROMPT_SHOW_UPSTREAM=1 # uncomment to show upstream tracking branch
+
+# GIT_PROMPT_STATUS_COMMAND=gitstatus_pre-1.7.10.sh # uncomment to support Git older than 1.7.10
+
+# GIT_PROMPT_START=...    # uncomment for custom prompt start sequence
+# GIT_PROMPT_END=...      # uncomment for custom prompt end sequence
+
+# as last entry source the gitprompt script
+# GIT_PROMPT_THEME=Custom # use custom .git-prompt-colors.sh
+# GIT_PROMPT_THEME=Solarized # use theme optimized for solarized color scheme
+# function prompt_callback {
+#     if [ `jobs | wc -l` -ne 0 ]; then
+#         echo -n " jobs:\j"
+#     fi
+# }
+if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+elif [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+  source "$HOME/.bash-git-prompt/gitprompt.sh"
+else
+  # http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
+  if ! $(echo $PROMPT_COMMAND | grep -q build_git_prompt); then
+    PROMPT_COMMAND="build_git_prompt; $PROMPT_COMMAND"
+  fi
 fi

@@ -1,3 +1,6 @@
 [submodule "ember-cli-vim-projections"]
 	path = ember-cli-vim-projections
 	url = https://gist.github.com/9947601.git
+[submodule "home/.bash-git-prompt"]
+	path = home/.bash-git-prompt
+	url = https://github.com/magicmonty/bash-git-prompt.git
