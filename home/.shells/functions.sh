@@ -4,6 +4,13 @@
 # with some modifications
 # and references to https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/osx/osx.plugin.zsh
 # and https://github.com/jbtule/cdto
+brewup() {
+    brew update &&
+    brew upgrade brew-cask &&
+    brew cleanup &&
+    brew cask cleanup
+}
+
 cdf() {
   target=`osascript -e \
     'tell application "Finder" \
