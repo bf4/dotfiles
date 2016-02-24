@@ -99,3 +99,21 @@ validate_yaml() {
  local filename="$1"
  ruby -ryaml -e "puts YAML.load_file('${filename}')"
 }
+
+
+# http://solidfoundationwebdev.com/blog/posts/create-an-bash-function-to-open-latest-active-record-migration
+last_migration(){
+  vim db/migrate/$(ls db/migrate/ | sort | tail -1)
+}
+
+# pgr() {
+#   for x in rails phantomjs zeus; do
+#     pgrep -fl $x;
+#   done
+# }
+#
+# pgk() {
+#   for x in rails phantomjs zeus; do
+#     pkill -fl $x;
+#   done
+# }
