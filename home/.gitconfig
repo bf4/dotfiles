@@ -74,7 +74,7 @@
 	# dic = diff --cached
 	# diff-ancestor = "!git difftool $(git ancestor)"
 	# down = !git checkout master && git merge @{-1} && git push
-	# ds = diff --staged
+	ds = diff --staged
 	# ed = "!vim $(git status  | grep modified | awk '{ print $2 }')"
 	# edl = "!vim $(git last | awk '{ print $2 }')"
 	# fuckit = !sh -c 'git add --all && git reset --hard'
@@ -94,7 +94,7 @@
 	# rbi = rebase -i
 	# safe = !mkdir .git/safe
 	# sha = rev-parse HEAD
-	# st = status
+	st = status
 	# switch = checkout -
 	# unstage = reset HEAD
 	# up = !git fetch origin && git rebase -i origin/master
