@@ -48,18 +48,6 @@ fi
 # PYTHON
 [ -s /usr/local/lib/python ] && export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
 [ -s '/usr/local/bin/pyenv' ] && eval "$(pyenv init -)"
-# RUBY
-# chruby init
-# if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-#   source /usr/local/share/chruby/chruby.sh
-#   chruby $(cat .ruby-version)
-# fi
-# autoswitching on .ruby-version
-# source /usr/local/opt/chruby/share/chruby/auto.sh
-# rbenv init
-# if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-#  Load RVM into a shell session *as a function*
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 # NODE
 [ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 # Node Version Manager
@@ -75,3 +63,17 @@ if [ -f $nvm_sh ]; then
   nvm use "$NODE_VERSION" 1> /dev/null
   nvm alias default "${NODE_VERSION}" 1> /dev/null
 fi
+# RUBY
+# chruby init
+# if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
+#   source /usr/local/share/chruby/chruby.sh
+#   chruby $(cat .ruby-version)
+# fi
+# autoswitching on .ruby-version
+# source /usr/local/opt/chruby/share/chruby/auto.sh
+# rbenv init
+# if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+#  Load RVM into a shell session *as a function*
+[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
