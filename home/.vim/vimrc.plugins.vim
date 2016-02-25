@@ -143,7 +143,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 " see http://kien.github.io/ctrlp.vim/
 " Create a file called root.dir in the root of your project - to make CtrlP work really nicely
 " https://twitter.com/artemave/status/469204521219293185
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 let g:ctrlp_cache_dir = $HOME.'/.vim/tmp/.ctrlp_cache'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\/tmp',
@@ -160,8 +160,8 @@ let g:ctrlp_custom_ignore = {
 "
 "   cd ~/.vim/bundle/ctrlp-cmatcher/
 "   ./install.sh
-Plug 'JazzCore/ctrlp-cmatcher'
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+" Plug 'JazzCore/ctrlp-cmatcher'
+" let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
 
 " syntax
