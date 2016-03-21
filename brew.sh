@@ -6,6 +6,12 @@
 . "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 [ -f "$HOME/.brew_local.sh" ] && . "$HOME/.brew_local.sh"
 
+# Make sure we’re using the latest Homebrew.
+brewup
+
+# Upgrade any already-installed formulae.
+brew upgrade --all
+
 # TODO: consider https://github.com/Homebrew/homebrew-bundle
 # with a Brewfile and/or Caskfile
 # cask() {
