@@ -27,23 +27,3 @@ alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.lo
 # [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
 # alias ctags="`brew --prefix`/bin/ctags"
-
-ttmux () {
-  local t=$(which tmux)
-  local cmd=""
-  # if tmux is running && there's a shared session
-  #  attach
-  # else
-  #  rm shared session file, if present
-  #  new
-  if $(ps cax | grep -q tmux) && [ -f /tmp/shareds ]; then
-    cmd="$t -S /tmp/shareds attach -t shared"
-    eval $cmd
-  else
-    rm -f /tmp/shareds
-    cmd="$t -S /tmp/shareds new -s shared"
-    eval $cmd
-    chgrp brew /tmp/shareds
-  fi
-  echo $cmd
-}

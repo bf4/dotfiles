@@ -1,9 +1,4 @@
 #!/usr/bin/env sh
-# http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
-# cd to the path of the front Finder window
-# with some modifications
-# and references to https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/osx/osx.plugin.zsh
-# and https://github.com/jbtule/cdto
 brewup() {
     brew update &&
     brew upgrade brew-cask &&
@@ -11,6 +6,29 @@ brewup() {
     brew cask cleanup
 }
 
+ttmux () {
+  local t=$(which tmux)
+  local cmd=""
+  # IF tmux is running && there's a shared session
+  if $(ps cax | grep -q tmux) && [ -e /tmp/shared ]; then
+    # THEN attach
+    cmd="$t -S /tmp/shared attach -t shared"
+  else
+    # ELSE rm shared session file, if present
+    # AND new
+    rm -f /tmp/shareds
+    cmd="$t -S /tmp/shared new -s shared"
+    chgrp brew /tmp/shared
+  fi
+  eval "$cmd"
+  echo $cmd
+}
+
+# http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
+# cd to the path of the front Finder window
+# with some modifications
+# and references to https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/osx/osx.plugin.zsh
+# and https://github.com/jbtule/cdto
 cdf() {
   target=`osascript -e \
     'tell application "Finder" \
