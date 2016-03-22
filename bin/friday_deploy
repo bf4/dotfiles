@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+motds = {
+    :base_jumper => %{
+┓┏┓┏┓┃
+┛┗┛┗┛┃⟍ ○⟋
+┓┏┓┏┓┃  ∕       Friday
+┛┗┛┗┛┃ノ)
+┓┏┓┏┓┃          deploy,
+┛┗┛┗┛┃
+┓┏┓┏┓┃          good
+┛┗┛┗┛┃
+┓┏┓┏┓┃          luck!
+┃┃┃┃┃┃
+┻┻┻┻┻┻
+}.strip!,
+    :flipping_table => %{
+(╯°□°）╯︵ ┻━┻    FRIDAY DEPLOY!
+}.strip!
+}
+
+puts motds if Time.now.friday?
