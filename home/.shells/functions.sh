@@ -95,6 +95,45 @@ fetch_remotes() {
   done
 }
 
+
+# Bash script to keep a git clone synced with a remote
+# Use the following under a process manager (such as runit)
+# to keep a local git clone in sync with a remote,
+# when a push based solution isn’t an option.
+# Most other versions either neglect to verify remote is correct,
+# or use git pull which can fail if someone has been monkeying with the local version.
+# http://rhnh.net/2014/04/26/bash-script-to-keep-a-git-clone-synced-with-a-remote
+#
+#   update_git_repo "/tmp/myrepo" "git://example.com/my/repo.git"
+#
+#   sleep 60 # No need for a tight loop
+function update_git_repo() {
+  GIT_DIR=$1
+  GIT_REMOTE=$2
+  GIT_BRANCH=${3:-master}
+
+  if [ ! -d $GIT_DIR ]; then
+    CURRENT_SHA=""
+    git clone --depth 1 $GIT_REMOTE $GIT_DIR -b $GIT_BRANCH
+  else
+    CURRENT_REMOTE=$(cd $GIT_DIR && git config --get remote.origin.url || true)
+
+    if [ "$GIT_REMOTE" == "$CURRENT_REMOTE" ]; then
+      CURRENT_SHA=$(cat $GIT_DIR/.git/refs/heads/$GIT_BRANCH)
+    else
+      rm -Rf $GIT_DIR
+      exit 0 # Process manager should restart this script
+    fi
+  fi
+
+  cd $GIT_DIR && \
+    git fetch && \
+    git reset --hard origin/$GIT_BRANCH
+
+  NEW_SHA=$(cat $GIT_DIR/.git/refs/heads/$GIT_BRANCH)
+}
+
+
 # pull_branch joaomdmoura active_model_serializers deserializer-implementation
 # pull_branch() {
 #   local handle="$1"
