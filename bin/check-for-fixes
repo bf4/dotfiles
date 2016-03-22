@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+
+# https://gist.github.com/xaviershay/e5c35612b2002a8a9787
+# Finds all github issue URLs in project comments and 
+# exits non-zero if any of them are no longer open.
+
+require 'tmpdir'
+require 'net/http'
+require 'openssl'
+require 'uri'
+require 'json'
+require 'date'
+
+def file_cache(key)
+  key = ($0 + key.to_s).gsub(/[^a-z0-9]/i, "-")
+  path = File.join(Dir.tmpdir, key)
+
+  begin
+    last_modified = File.mtime(path).to_date
+    if last_modified == Date.today
+      Marshal.load(File.read(path))
+    else
+      raise "File needs update"
+    end
+  rescue
+    ret = yield
+    File.write(path, Marshal.dump(ret))
+    ret
+  end
+end
+
+issues = `grep "FIX: " -R app spec config lib Gemfile*`.lines
+
+issues = issues.map do |line|
+  file = line.split(':')[0]
+  issue = line.match(%r{FIX: https://github.com(.*)})[1]
+
+  [file, issue]
+end
+
+widths = issues.transpose.map {|x| x.map(&:length).max }
+
+fixed = issues.any? do |file, issue|
+  url = URI("https://api.github.com/repos" + issue)
+  response = file_cache(url) do
+    Net::HTTP.get_response(url)
+  end
+
+  state = JSON.parse(response.body)['state']
+  puts "%-#{widths[0]}s\t%-#{widths[1]}s\t%s\t%s" % [
+    file,
+    issue,
+    state,
+    DateTime.parse(JSON.parse(response.body)['updated_at'])
+      .strftime("%Y-%m-%d")
+  ]
+  state != "open"
+end
+
+exit fixed ? 1 : 0
