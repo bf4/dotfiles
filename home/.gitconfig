@@ -35,7 +35,6 @@
 [pull]
 	# see https://github.com/thoughtbot/dotfiles/pull/377
 	# autosquash = true
-	rebase = true
 [merge]
 	ff = only
 [rerere]
