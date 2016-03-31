@@ -143,13 +143,18 @@ function update_git_repo() {
 # }
 
 # pull_branch joaomdmoura:deserializer-implementation
-pull_branch() {
-  local args="$*"
-  ruby -e "
-  handle, branch = '${args}'.strip.split(':');
-  lib = File.basename(Dir.pwd);
-  %x(git pull https://github.com/#{handle}/#{lib}.git #{branch})
-  "
+# pull_branch() {
+#   local args="$*"
+#   ruby -e "
+#   handle, branch = '${args}'.strip.split(':');
+#   lib = File.basename(Dir.pwd);
+#   %x(git pull https://github.com/#{handle}/#{lib}.git #{branch})
+#   "
+# }
+git-co-pr() {
+ local pr_number="$1"
+ git fetch -q origin "+refs/pull/${pr_number}/head"
+ git checkout -qf FETCH_HEAD
 }
 
 validate_yaml() {

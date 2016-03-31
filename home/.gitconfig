@@ -136,6 +136,8 @@
 	logall = log --pretty=format:'%h %ad | %s%d [%an]' --date=iso --author=benjamin --all
 	logprettyall = log --pretty=format:'%h %Cgreen%ad%Creset | %s%Cred%d%Creset [%an]'  --date=iso --author=benjamin --all
 	cpc = cherry-pick --continue
+	up = pull --rebase
+	cp = cherry-pick
 	# prettygraph = log --pretty=format:'%h %s' --graph
 	# graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	# graphall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
