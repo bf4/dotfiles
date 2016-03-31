@@ -55,6 +55,8 @@ map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 set tags=tags;/
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags<CR>
+map <Leader>rt :!ctags --tag-relative --extra=+f -Rf.git/tags --exclude=.git,pkg --languages=-sql,javascript<CR><CR>
+set tags+=.git/tags
 
 " ================ Cleaning up ============================
 " see http://vim.wikia.com/wiki/Highlight_unwanted_spaces
