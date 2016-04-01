@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+echo 'available commands'
+cmds() {
+  find "$_APP_ROOT/bin" -name 'ws-*' | cut -d- -f2
+}
+cmds | while read cmd; do
+  echo "ws $cmd"
+done
