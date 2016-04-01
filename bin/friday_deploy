@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 motds = {
-    :base_jumper => %{
+  base_jumper: <<-MOTD.strip!,
 ┓┏┓┏┓┃
 ┛┗┛┗┛┃⟍ ○⟋
 ┓┏┓┏┓┃  ∕       Friday
@@ -13,10 +13,15 @@ motds = {
 ┓┏┓┏┓┃          luck!
 ┃┃┃┃┃┃
 ┻┻┻┻┻┻
-}.strip!,
-    :flipping_table => %{
+MOTD
+
+flipping_table: <<-MOTD.strip!,
 (╯°□°）╯︵ ┻━┻    FRIDAY DEPLOY!
-}.strip!
+MOTD
 }
 
-puts motds if Time.now.friday?
+motds.values.each do |motd|
+  puts
+  puts motd
+  puts
+end if Time.now.friday?
