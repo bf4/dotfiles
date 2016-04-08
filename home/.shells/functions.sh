@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 brewup() {
     brew update &&
-    brew upgrade brew-cask &&
     brew cleanup &&
     brew cask cleanup
 }
