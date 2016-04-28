@@ -150,7 +150,7 @@ function update_git_repo() {
 #   %x(git pull https://github.com/#{handle}/#{lib}.git #{branch})
 #   "
 # }
-git-co-pr() {
+git_co_pr() {
  local pr_number="$1"
  git fetch -q origin "+refs/pull/${pr_number}/head"
  git checkout -qf FETCH_HEAD
