@@ -90,7 +90,7 @@ fetch_remotes() {
     else
       echo "not a git remote"
     fi
-    cd $(echo "$pwd" | sed 's/ /\\ /')
+    cd "$pwd"
   done
 }
 
