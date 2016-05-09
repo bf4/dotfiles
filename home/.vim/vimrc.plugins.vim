@@ -209,6 +209,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'bf4/vim-wombat256i'
 Plug 'molokai'
+Plug 'sickill/vim-monokai'
 Plug 'railscasts'
 Plug 'zeis/vim-kolor'
 " see https://github.com/chriskempson/base16-builder/blob/master/base16
