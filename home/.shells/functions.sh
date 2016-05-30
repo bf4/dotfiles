@@ -59,7 +59,7 @@ findsize() {
 }
 
 gitreset() {
-  local branch_name="$(cat .git/HEAD | cut -d/ -f3)"
+  local branch_name="$(cat .git/HEAD | cut -d/ -f3,4,5,6)"
   # local branch_name="$(git name-rev --name-only HEAD)"
   local remote_name="$(git config branch.${branch_name}.remote)"
   remote_name="${remote_name:-origin}"
