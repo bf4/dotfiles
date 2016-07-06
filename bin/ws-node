@@ -10,14 +10,14 @@ install_nvm() {
     trap 'cd "$cwd"' EXIT
     cd "$NVM_DIR" && \
       git init && \
-      git remote add origin https://github.com/creationix/nvm.git
+      git remote add origin https://github.com/creationix/nvm.git &&
+      git reset --hard origin/master
     cd "$cwd"
     trap - EXIT
     upgrade_nvm
   fi
 }
 upgrade_nvm() {
-echo 'hi'
   cwd="$(pwd)"
   trap 'cd "$cwd"' EXIT
   cd "$NVM_DIR" && \
@@ -41,6 +41,6 @@ case "$command" in
   upgrade_nvm
   ;;
 "" | "-h" | "--help" )
-  echo "Usage: ws node [instal|upgrade]"
+  echo "Usage: ws node [install|upgrade]"
   ;;
 esac
