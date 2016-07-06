@@ -17,7 +17,7 @@ if has("gui_running")
     " vmap <leader>y "*y
     noremap <leader>yy "*Y
     " Preserve indentation while pasting text from the OS X clipboard
-    noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
+    noremap <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
     " nmap <leader>p "*p
   endif
 endif
