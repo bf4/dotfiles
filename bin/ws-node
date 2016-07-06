@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# https://github.com/creationix/nvm#manual-install
+# to remove, delete, or uninstall nvm - just remove the `$NVM_DIR` folder (usually `~/.nvm`)
+
+install_nvm() {
+  mkdir -p "$NVM_DIR"
+  if [ ! -s "$NVM_DIR/.git" ]; then
+    cwd="$(pwd)"
+    trap 'cd "$cwd"' EXIT
+    cd "$NVM_DIR" && \
+      git init && \
+      git remote add origin https://github.com/creationix/nvm.git
+    cd "$cwd"
+    trap - EXIT
+    upgrade_nvm
+  fi
+}
+upgrade_nvm() {
+echo 'hi'
+  cwd="$(pwd)"
+  trap 'cd "$cwd"' EXIT
+  cd "$NVM_DIR" && \
+      git fetch origin &&
+      git checkout `git describe --abbrev=0 --tags`
+  cd "$cwd"
+  trap - EXIT
+  . "$NVM_DIR/nvm.sh" # This loads nvm
+  nvm install stable
+  # export NODE_VERSION=${NODE_VERSION:-0.12.4}
+  # nvm use "$NODE_VERSION" 1> /dev/null
+  # nvm alias default "${NODE_VERSION}" 1> /dev/null
+  command -v nvm | grep -q nvm || echo 'nvm not installed'
+}
+command="$1"
+case "$command" in
+"install" )
+  install_nvm
+  ;;
+"upgrade" )
+  upgrade_nvm
+  ;;
+"" | "-h" | "--help" )
+  echo "Usage: ws node [instal|upgrade]"
+  ;;
+esac

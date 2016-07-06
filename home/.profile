@@ -52,21 +52,13 @@ fi
 # PYTHON
 [ -s /usr/local/lib/python ] && export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
 [ -s '/usr/local/bin/pyenv' ] && eval "$(pyenv init -)"
+# mkdir -p /Users/bfleischer/.local/lib/python2.7/site-packages
+# echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >> /Users/bfleischer/.local/lib/python2.7/site-packages/homebrew.pth
 # NODE
 [ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
 # Node Version Manager
-# install: cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
-# to remove, delete, or uninstall nvm - just remove the `$NVM_DIR` folder (usually `~/.nvm`)
-# mkdir -p /Users/bfleischer/.local/lib/python2.7/site-packages
-# echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >> /Users/bfleischer/.local/lib/python2.7/site-packages/homebrew.pth
-nvm_sh=$(brew --prefix nvm)/nvm.sh
-if [ -f $nvm_sh ]; then
-  export NVM_DIR=~/.nvm
-  source $nvm_sh
-  export NODE_VERSION=${NODE_VERSION:-0.12.4}
-  nvm use "$NODE_VERSION" 1> /dev/null
-  nvm alias default "${NODE_VERSION}" 1> /dev/null
-fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 # RUBY
 # chruby init
 # if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
