@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+source "$HOME/${DOTFILES_HOME}/../functions.bash"
+
+################
+#   CRONTAB    #
+################
+crontab -l | grep --quiet 'stretch'
+if [ $? -ne 0 ]; then
+  fancy_echo "Installing crontab"
+  crontab -l
+  crontab "$HOME/${DOTFILES_HOME}/../crontab.tab"
+fi

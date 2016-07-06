@@ -34,3 +34,19 @@ fi
 _source_if_exists "$(brew --prefix grc)/etc/grc.bashrc"
 
 _source_if_exists "$(brew --prefix)/etc/bash_completion.d/go"
+
+# https://github.com/basecamp/sub/blob/bb93f151df9e4219ae4153c83aad63ee6494a5d8/completions/sub.bash
+_ws() {
+  COMPREPLY=()
+  local word="${COMP_WORDS[COMP_CWORD]}"
+
+  if [ "$COMP_CWORD" -eq 1 ]; then
+    COMPREPLY=( $(compgen -W "$(ws commands)" -- "$word") )
+  else
+    local command="${COMP_WORDS[1]}"
+    local completions="$(ws completions "$command")"
+    COMPREPLY=( $(compgen -W "$completions" -- "$word") )
+  fi
+}
+
+complete -F _ws ws

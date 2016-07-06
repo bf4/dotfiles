@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# https://github.com/basecamp/sub/blob/bb93f151df9e4219ae4153c83aad63ee6494a5d8/libexec/sub-sh-shell
+set -e
+
+echo $1

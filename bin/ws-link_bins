@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+link_bins() {
+  mkdir -p "$HOME/bin"
+  cd "$HOME/${DOTFILES_HOME}/.." && \
+    #
+    # hard link bin files
+    git  ls-files bin | \
+    ruby -rfileutils -e 'STDIN.readlines.each{|line| \
+    FileUtils.ln(File.join(Dir.pwd, line.chomp), File.join(File.expand_path("~"), line.chomp), \
+    :verbose => true, :force => true) }'
+}
+link_bins

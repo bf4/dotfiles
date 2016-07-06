@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# https://github.com/basecamp/sub/blob/bb93f151df9e4219ae4153c83aad63ee6494a5d8/libexec/sub-completions
+set -e
+
+COMMAND="$1"
+if [ -z "$COMMAND" ]; then
+  echo "usage: ws completions COMMAND [arg1 arg2...]" >&2
+  exit 1
+fi
+
+COMMAND_PATH="$(command -v "ws-$COMMAND")"
+if grep -i "^# provide ws completions" "$COMMAND_PATH" >/dev/null; then
+  shift
+  exec "$COMMAND_PATH" --complete "$@"
+fi

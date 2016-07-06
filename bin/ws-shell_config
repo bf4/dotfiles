@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+################
+# SHELL-CONFIG #
+################
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    # Zsh as your shell
+    # fancy_echo "Changing your shell to zsh ..."
+    # chsh -s "$(which zsh)"
+    echo "Current shell is ${SHELL}"
+    ;;
+esac
+

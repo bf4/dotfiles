@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+source "$HOME/${DOTFILES_HOME}/../functions.bash"
+
+## RVM
+## http://rvm.io/
+# # work around missing libgmp bug in binary ruby
+# brew rm cloog; brew install cloog
+#########################################
+install_rvm stable --autolibs=homebrew
+## RBenv
+# brew_install_or_upgrade 'rbenv'
+# brew_install_or_upgrade 'ruby-build'
+#
+# # shellcheck disable=SC2016
+# append_to_rc 'eval "$(rbenv init - $SHELL --no-rehash)"' 1
+#
+# brew_install_or_upgrade 'openssl'
+# brew unlink openssl && brew link openssl --force
+# brew_install_or_upgrade 'libyaml'
+
+# Ruby stable for writing general-purpose code
+# ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
+#
+# eval "$(echo $SHELL | rbenv init -)"
+
+# if ! rbenv versions | grep -Fq "$ruby_version"; then
+#   rbenv install -s "$ruby_version"
+# fi
+#
+# rbenv global "$ruby_version"
+# rbenv shell "$ruby_version"
+#
+## chruby
+# brew install chruby
+# append_to_rc 'source /usr/local/opt/chruby/share/chruby/chruby.sh'
+#
+# optionally with RVM
+#   curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+#   append_to_rc 'source ~/.rvm/scripts/extras/chruby.sh'
+#   mrvm install ruby-2.2.2
+# else with ruby-install
+#   https://gistlog.co/daqo/db4de42c9dea0a7d2a03
+#   brew install ruby-install -HEAD # ruby-install is needed to facilitate installing additional version of Rubies.
+#
+#   # check installed
+#   ruby-install -V # ruby-install: 0.5.1
+#
+#   # see versions
+#   ruby-install
+#
+#   # install into ~/.rubies  (or /opt/rubies if root)
+#   ruby-install ruby 2.2.2
+#   # auto-switching
+#   append_to_rc 'source /usr/local/share/chruby/auto.sh'
+#
+# # chruby ruby-2.2.2
+# ruby -v
+
+### MISC
+# gem update --system
+#
+# Bundler for managing Ruby libraries
+# gem_install_or_update 'bundler'
+
+# fancy_echo "Configuring Bundler ..."
+#   number_of_cores=$(sysctl -n hw.ncpu)
+#   bundle config --global jobs $((number_of_cores - 1))
+
+###########################
+# if [ "$WORKSTATION_UPDATE" = "true" ]
+# then
+#   fancy_echo "updating rvm"
+#   rvm get stable --auto-dotfiles &> /dev/null || fancy_echo $!
+#   # Foreman for managing web processes
+#   install_ruby 2.2 bundler foreman
+#   rvm use 2.2 --default
+# fi

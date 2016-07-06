@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+source "$HOME/${DOTFILES_HOME}/../functions.bash"
+
+if [ "$WORKSTATION_UPDATE" = "true" ]
+then
+  fancy_echo "setuping up tmux" &&
+    sh setup_tmux.sh
+fi

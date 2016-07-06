@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+source "$HOME/${DOTFILES_HOME}/../functions.bash"
+source "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
+
+# brew_install_or_upgrade 'git'
+_ensure_github_ssh_configured() {
+  # ssh keys to github
+  ssh git@github.com 2>&1 | grep -q successfully
+  if [ $? -eq 0 ]
+  then
+    fancy_echo "You are authenticated with github"
+  else
+    if not_file_exists $HOME/.ssh/id_rsa.pub
+    then
+      mkdir -p ~/.ssh
+      cd ~/.ssh
+      ssh-keygen -t rsa -C "${MY_EMAIL}"
+      # start ssh agent
+      eval "$(ssh-agent -s)"
+      ssh-add ~/.ssh/id_rsa
+      echo -e "$txtgrn"
+      echo "Copy your SSH keys to github if you have not already"
+      echo "See http://help.github.com/mac-set-up-git/"
+      echo "Or just:"
+      echo "cat ~/.ssh/id_rsa.pub | pbcopy"
+      echo -e "$txtrst"
+    fi
+  fi
+  ssh -T git@github.com
+}
+_ensure_github_ssh_configured
+if fn_exists "git"
+then
+  fancy_debug "we have git"
+else
+  brew_install "git"
+  # The OS X keychain credential helper has been installed to:
+  #   /usr/local/bin/git-credential-osxkeychain
+  #
+  # The 'contrib' directory has been installed to:
+  #   /usr/local/share/git-core/contrib
+  #
+  # Bash completion has been installed to:
+  #   /usr/local/etc/bash_completion.d
+  #
+  # zsh completion has been installed to:
+  #   /usr/local/share/zsh/site-functions
+  # see https://github.com/thoughtbot/laptop/issues/360
+  _ensure_github_ssh_configured
+fi

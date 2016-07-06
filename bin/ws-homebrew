@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+source "$HOME/${DOTFILES_HOME}/../functions.bash"
+
+# Homebrew Installation #
+# http://brew.sh/       #
+# Homebrew for managing operating system libraries
+#########################
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+
+    append_to_rc '# recommended by brew doctor'
+
+    # shellcheck disable=SC2016
+    append_to_rc 'export PATH="/usr/local/bin:$PATH"' 1
+
+    export PATH="/usr/local/bin:$PATH"
+else
+  fancy_debug "Homebrew already installed. Skipping ..."
+fi
+# Homebrew Cask (for binaries)
+brew_tap caskroom/cask
+# brew_tap 'thoughtbot/formulae'
+
+if [ "$WORKSTATION_UPDATE" = "true" ]
+then
+  fancy_echo "Updating Homebrew formulas ..."
+    brew update &&
+    brew upgrade brew-cask &&
+    brew cleanup &&
+    brew cask cleanup
+
+  ## LIBRARIES INSTALL/UPGRADE
+  bash ~/${DOTFILES_HOME}/../../brew.sh
+fi
