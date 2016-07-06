@@ -5,10 +5,24 @@ set -e
 PATH="/usr/local/bin:$PATH"
 
 dir="`git rev-parse --git-dir`"
-trap 'rm -f "$dir/tags.$$"' EXIT
+trap 'rm -f "$dir/$$.tags"' EXIT
 git ls-files | \
-    "${CTAGS:-ctags}" \
+    ctags \
     --tag-relative -L - -f"$dir/$$.tags" \
-    --languages=-javascript,sql
-# ctags --tag-relative -Rf.git/tags.$$ --exclude=.git --exclude=build --languages=sql
-mv "$dir/tags.$$" "$dir/tags"
+    --languages=-sql
+trap 'rm -f "$dir/$$.gems.tags"' EXIT
+ctags \
+  -R \
+  --languages=ruby \
+  --fields=+l \
+  -f"$dir/$$.gems.tags" \
+  --tag-relative=yes \
+  --exclude=.git \
+  --exclude=spec \
+  --exclude=test \
+  --exclude=vendor \
+  --exclude=log \
+  . \
+    $(bundle list --paths)
+cat "$dir/$$.gems.tags" >> "$dir/$$.tags"
+mv "$dir/$$.tags" "$dir/tags"

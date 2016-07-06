@@ -139,6 +139,7 @@
 	cpc = cherry-pick --continue
 	up = pull --rebase
 	cp = cherry-pick
+	ctags = !.git/hooks/ctags
 	# prettygraph = log --pretty=format:'%h %s' --graph
 	# graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	# graphall = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
