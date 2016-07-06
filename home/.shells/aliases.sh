@@ -27,3 +27,4 @@ alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.lo
 # [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
 # alias ctags="`brew --prefix`/bin/ctags"
+alias shrug='echo "¯\_(ツ)_/¯"'
