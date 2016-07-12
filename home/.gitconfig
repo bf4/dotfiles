@@ -52,6 +52,8 @@
 	# prune-merged-local = "!$(git branch --merged | while read branch ; do echo $branch ; done)"
 	prune-merged-local = "!git branch --merged | while read branch ; do git branch -D $branch 2>/dev/null ; done"
 	prune-merged-remote = "!git branch -r --merged | grep bf4 | grep -v master | cut -d/ -f2,3,4,5 | while read branch; do git push bf4 :${branch} --no-verify 2>/dev/null ; done"
+ 	prune-merged = "!git prune-merged-local && git prune-merged-remote"
+  branch-history = "!git reflog | grep 'checkout: moving' | head -20 | awk '{ print $6,\"\t\t\t\t\",$8 }'"
 
 	# see https://github.com/thoughtbot/dotfiles/commit/7733711c3b82d2ead7680c20b42d89dfcb2230bf
 	pf = push --force-with-lease
@@ -59,7 +61,7 @@
 	# a = add
 	# aa = add --all
 	# amend = commit --amend --no-edit
-	# ancestor = merge-base master HEAD
+	ancestor = merge-base master HEAD
 	# ap = add -p
 	# br = branch
 	# branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
