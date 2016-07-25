@@ -46,7 +46,7 @@ cmds = Hash.new do |h,cmd|
   puts "I only know about:\n\t#{cmds.keys.join("\n\t")}"
 end
 cmds["setup"] = ->{ workstation_cmd("./workstation") }
-cmds["hack_osx"] = ->{ exec "#{repo_root}/.osx" }
+cmds["hack_osx"] = ->{ exec "#{repo_root}/.macos" }
 cmds["update"] = ->{ workstation_cmd("git pull --rebase origin master") }
 cmds["brew"] = ->{ exec "bash #{repo_root}/brew.sh" }
 cmds["brew_group"] = ->{ exec "bash #{repo_root}/brew_group.sh" }
