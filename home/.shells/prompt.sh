@@ -116,13 +116,17 @@ GIT_PROMPT_END="\w\n📝 $ "
 #         echo -n " jobs:\j"
 #     fi
 # }
-if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
-  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-elif [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
-  source "$HOME/.bash-git-prompt/gitprompt.sh"
-else
-  # http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
-  if ! $(echo $PROMPT_COMMAND | grep -q build_git_prompt); then
-    PROMPT_COMMAND="build_git_prompt; $PROMPT_COMMAND"
+if [ -n "$BASH_VERSION" ]; then
+  if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+    source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+  elif [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+    source "$HOME/.bash-git-prompt/gitprompt.sh"
+  else
+    # http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
+    if ! $(echo $PROMPT_COMMAND | grep -q build_git_prompt); then
+      PROMPT_COMMAND="build_git_prompt; $PROMPT_COMMAND"
+    fi
   fi
+elif [ -n "$ZSH_VERSION" ]; then
+  echo 'zsh'
 fi
