@@ -19,3 +19,6 @@ export GIT_EDITOR=vim
 # )
 # Die spring die!
 export DISABLE_SPRING=1
+
+# https://github.com/caskroom/homebrew-cask/blob/master/USAGE.md
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
