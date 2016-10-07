@@ -65,6 +65,7 @@ gitreset() {
   remote_name="${remote_name:-origin}"
   local ref="${remote_name}/${branch_name}"
   echo "Fetching and resetting ${ref}"
+  git remote prune "$remote_name"
   git fetch "$remote_name"
   git reset --hard "${ref}"
 }

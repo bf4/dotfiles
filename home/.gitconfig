@@ -51,7 +51,7 @@
 	rbc = rebase --continue
 	# prune-merged-local = "!$(git branch --merged | while read branch ; do echo $branch ; done)"
 	prune-merged-local = "!git branch --merged | while read branch ; do git branch -D $branch 2>/dev/null ; done"
-	prune-merged-remote = "!git branch -r --merged | grep bf4 | grep -v master | cut -d/ -f2,3,4,5 | while read branch; do git push bf4 :${branch} --no-verify 2>/dev/null ; done"
+	prune-merged-remote = "!git remote prune bf4; git branch -r --merged | grep bf4 | grep -v master | cut -d/ -f2,3,4,5 | while read branch; do git push bf4 :${branch} --no-verify 2>/dev/null ; done"
  	prune-merged = "!git prune-merged-local && git prune-merged-remote"
   branch-history = "!git reflog | grep 'checkout: moving' | head -20 | awk '{ print $6,\"\t\t\t\t\",$8 }'"
 
