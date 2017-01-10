@@ -11,5 +11,7 @@ if grep -q /usr/local/bin/bash /private/etc/shells; then
   # [ -s /usr/local/sbin ] && PATH="/usr/local/sbin:$PATH"
 
   # turn on recursive globbing
+  # If set, the pattern "**" used in a pathname expansion context will
+  # match all files and zero or more directories and subdirectories.
   shopt -s globstar
 fi
