@@ -1,5 +1,7 @@
 if grep -q /usr/local/bin/bash /private/etc/shells; then
-  chsh -s "$(brew --prefix)/bin/bash"
+  if [[ /usr/local/bin/bash != $SHELL ]]; then
+    chsh -s "$(brew --prefix)/bin/bash"
+  fi
 
   # Also, make sure that /usr/local/bin and /usr/local/sbin
   # are in your $PATH variable before the regular /usr/bin and /usr/sbin.
