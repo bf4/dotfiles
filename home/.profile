@@ -31,12 +31,12 @@ export EMAIL=${EMAIL:-$MY_EMAIL}
 # do not check GHI_TOKEN into source control
 # export GHI_TOKEN="wouldntyouliketoknow"
 # PostgreSQL
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 # GO
 if which go > /dev/null; then
   unset GOROOT
   export GOPATH=${GOPATH:-$HOME/go}
-  export PATH=$PATH:$GOPATH/bin
+  PATH=$PATH:$GOPATH/bin
   # go env
   # go get github.com/tools/godep
   # e.g. build
@@ -55,7 +55,7 @@ fi
 # mkdir -p /Users/bfleischer/.local/lib/python2.7/site-packages
 # echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >> /Users/bfleischer/.local/lib/python2.7/site-packages/homebrew.pth
 # NODE
-[ -s "$HOME/.node/bin" ] && export PATH="$HOME/.node/bin:$PATH"
+[ -s "$HOME/.node/bin" ] && PATH="$HOME/.node/bin:$PATH"
 # Node Version Manager
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
