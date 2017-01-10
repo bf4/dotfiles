@@ -48,6 +48,7 @@ build_git_prompt(){
   else
     git_prompt=""
   fi
+  # see home/.bash/prompt.sh for PS1 config that uses $git_prompt
 }
 
 find_git_branch() {
