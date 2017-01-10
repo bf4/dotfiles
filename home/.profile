@@ -72,4 +72,7 @@ export NVM_DIR="$HOME/.nvm"
 #  Load RVM into a shell session *as a function*
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 
+# https://twitter.com/tpope/status/165631968996900865
+# tl;dr `mkdir .git/safe` to add `bin` to path, e.g. `bin/rails`
+PATH=".git/safe/../../bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
