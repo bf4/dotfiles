@@ -4,6 +4,12 @@ alias mkdir="mkdir -p"
 alias ber='bundle exec rake'
 alias bounce='touch tmp/restart.txt'
 alias be='bundle exec'
+
+# http://blog.tdg5.com/sixty-bash-tastic-git-aliases/
+# up: cd to root of git repo, home dir, then root
+# This shortcut is the creation of my former co-worker, Nicholas Ellis. It allows you to navigate toward the root of a file-system with stops at a few convenient paths. If you're in a git repo, the first call to up will cd you to the root of the git repo. From the root of a git repo, a call to up will take you to your home directory. Finally, from your home directory, a call to up will take you to the root of the file-system
+alias up='[ $(git rev-parse --show-toplevel 2>/dev/null || echo ~) = $(pwd) ] && cd $([ $(echo ~) = $(pwd) ] && echo / || echo) || cd $(git rev-parse --show-toplevel 2>/dev/null)'
+
 # https://twitter.com/rwjblue/status/536637409547808768
 # When running into issues with npm/bower it's a good idea to clear out
 # the cache. This is because pulled packages are still cached on the local
