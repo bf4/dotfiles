@@ -1,11 +1,7 @@
 #!/usr/bin/env sh
 alias mkdir="mkdir -p"
 
-alias b="bundle"
 alias ber='bundle exec rake'
-alias bes='bundle exec rspec -fs'
-alias bec='bundle exec cucumber -r features'
-alias bsc='bundle exec rails s'
 alias bounce='touch tmp/restart.txt'
 alias be='bundle exec'
 # https://twitter.com/rwjblue/status/536637409547808768
