@@ -23,6 +23,14 @@ ttmux () {
   echo $cmd
 }
 
+# https://youtu.be/8ZMOWypU34k?t=807
+# This command is credit Ben Orenstein. The command scans your bash history and generates a list of your most frequently used 1-2 word commands. The items high on this list are often good candidates for aliasing.
+# The top n commands in the history file
+topcmds() {
+  [ ! -z $1 ] && n="$1" || n="10"
+  history | awk '{a[$2 " " $3]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head -n $n
+}
+
 # http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
 # cd to the path of the front Finder window
 # with some modifications
