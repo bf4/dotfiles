@@ -31,7 +31,7 @@ export EMAIL=${EMAIL:-$MY_EMAIL}
 # do not check GHI_TOKEN into source control
 # export GHI_TOKEN="wouldntyouliketoknow"
 # PostgreSQL
-PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 # GO
 if which go > /dev/null; then
   unset GOROOT
