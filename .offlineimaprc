@@ -1,0 +1,47 @@
+# Usage:
+#  1. Copy this file into home/.offlineimaprc
+#  2. Customize it
+#  3. Link it to ~/.offlineimaprc
+#
+# References:
+# http://www.roguelazer.com/2015/05/how-do-i-email/
+# http://stevelosh.com/blog/2012/10/the-homely-mutt/#getting-email
+# https://github.com/anders-dc/dotfiles/blob/master/.offlineimaprc
+# https://gist.github.com/dabrahams/3029970 https://gist.github.com/dabrahams/3030332
+# https://bitbucket.org/snippets/oherrala/LAj4e/using-osx-keychain-with-offlineimap-and
+# https://github.com/OfflineIMAP/offlineimap/blob/master/offlineimap.conf
+[general]
+accounts = personal
+# ui = ttyui
+pythonfile = ~/.offlineimap.py
+
+[Account personal]
+localrepository = personal-local
+remoterepository = personal-remote
+status_backend = sqlite
+synclabels = yes
+labelsheader = X-Keywords
+
+[Repository personal-local]
+type = GmailMaildir
+# Map remote box names to simpler local ones and avoid spaces
+nametrans = lambda folder: {'archive': '[Gmail]/All Mail',
+                            'drafts': '[Gmail]/Drafts',
+                            }.get(folder, folder)
+# BEGIN Customize
+localfolders = ~/mail/personal
+# END Customize
+
+[Repository personal-remote]
+type = Gmail
+nametrans = lambda folder: {'[Gmail]/All Mail': 'archive',
+                            '[Gmail]/Drafts': 'drafts',
+                            }.get(folder, folder)
+folderfilter = lambda folder: folder == '[Gmail]/All Mail'
+# XOAUTH2 is more complicated to set up and LOGIN works
+auth_mechanisms = LOGIN
+# BEGIN Customize
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+remoteuser = example@gmail.com
+remotepasseval = get_keychain_pass(account="example@gmail.com", server="imap.gmail.com")
+# END Customize
