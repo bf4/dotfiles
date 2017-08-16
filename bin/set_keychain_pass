@@ -1,0 +1,59 @@
+#!/usr/bin/python
+
+# https://github.com/anders-dc/dotfiles
+# https://github.com/anders-dc/dotfiles/blob/f785be6fd66c5f6d3b6d6b8482a0cce2f240b595/.mutt/offlineimap.py
+# http://sirupsen.com/handle-passwords-with-keychain/
+# https://gist.github.com/acdha/1782978
+# https://github.com/zanshin/dotfiles/blob/master/mutt/offlineimaprc
+# http://stevelosh.com/blog/2012/10/the-homely-mutt/#getting-email
+# https://bitbucket.org/sjl/dotfiles/src/603bb1ae9da27c6e08ab115df1cb5d8f6a1442c3/offlineimaprc?at=default&fileviewer=file-view-default
+# https://gist.github.com/dabrahams/3029970
+# https://gist.github.com/dabrahams/3030332
+# http://www.roguelazer.com/2015/05/how-do-i-email/
+# https://bitbucket.org/snippets/oherrala/LAj4e/using-osx-keychain-with-offlineimap-and
+# http://zanshin.net/2015/01/19/teaching-a-homely-mutt-new-tricks/
+# https://blog.aedifice.org/2010/02/01/use-mac-os-xs-keychain-for-password-retrieval-in-offlineimap/
+# Usage:
+#   remotepasseval = get_keychain_pass(account="example@gmail.com", server="imap.gmail.com"")
+import re
+import subprocess
+import getpass
+import os
+import sys
+if sys.platform == 'linux2':
+    import gnomekeyring as gkey
+
+
+user = getpass.getuser()
+home = os.getenv('HOME')
+
+
+def set_keychain_pass(protocol, server, account, password):
+    if sys.platform == 'darwin':
+
+        command = ' /usr/bin/security add-internet-password -a ' + account +\
+            ' -s ' + server + ' -r ' + protocol + ' -w ' + pw
+
+        output = subprocess.check_output(command, shell=True,
+                                         stderr=subprocess.STDOUT)
+
+    elif sys.platform == 'linux2':
+        attrs = {'user': account,
+                 'server': server,
+                 'protocol': protocol}
+        name = 'offlineimap ' + server
+
+        gkey.item_create_sync(gkey.get_default_keyring_sync(),
+                              gkey.ITEM_NETWORK_PASSWORD,
+                              name, attrs, password, True)
+    else:
+        raise Exception('Only Linux is supported for setting passwords.')
+
+# Usage:
+#   set_keychain_pass "example@gmail.com" "imap.gmail.com"
+if __name__ == '__main__':
+    account = sys.argv[1]
+    server = sys.argv[2]
+    protocol = 'imap'
+    pw = getpass.getpass("Password for user %s at %s: " % (account, server))
+    set_keychain_pass(protocol=protocol, server=server, account=account, password=pw)
