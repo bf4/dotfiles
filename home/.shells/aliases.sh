@@ -29,4 +29,5 @@ alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.lo
 # [[ -s "/Applications/MacVim.app/Contents/MacOS/Vim" ]] && alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 
 # alias ctags="`brew --prefix`/bin/ctags"
-alias shrug='echo "¯\_(ツ)_/¯"'
+# Won't add newline when piped, e.g. shrug | pbcopy
+shrug() { printf "%s" '¯\_(ツ)_/¯'; if [ -t 1 ]; then printf "\n"; fi  }
