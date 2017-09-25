@@ -31,3 +31,6 @@ alias pg="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.lo
 # alias ctags="`brew --prefix`/bin/ctags"
 # Won't add newline when piped, e.g. shrug | pbcopy
 shrug() { printf "%s" '¯\_(ツ)_/¯'; if [ -t 1 ]; then printf "\n"; fi  }
+
+alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
+alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
