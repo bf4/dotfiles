@@ -20,13 +20,15 @@ install_nvm() {
 upgrade_nvm() {
   cwd="$(pwd)"
   trap 'cd "$cwd"' EXIT
+  # git fetch --tags
+  # TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
   cd "$NVM_DIR" && \
       git fetch origin &&
       git checkout `git describe --abbrev=0 --tags`
   cd "$cwd"
   trap - EXIT
   . "$NVM_DIR/nvm.sh" # This loads nvm
-  nvm install stable
+  nvm install "${NODE_VERSION:lts}"
   # export NODE_VERSION=${NODE_VERSION:-0.12.4}
   # nvm use "$NODE_VERSION" 1> /dev/null
   # nvm alias default "${NODE_VERSION}" 1> /dev/null
