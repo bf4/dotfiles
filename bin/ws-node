@@ -34,15 +34,25 @@ upgrade_nvm() {
   # nvm alias default "${NODE_VERSION}" 1> /dev/null
   command -v nvm | grep -q nvm || echo 'nvm not installed'
 }
+# https://yarnpkg.com/en/docs/install
+install_yarn() {
+  brew install yarn --without-node
+  # *nix
+  # curl -o- -L https://yarnpkg.com/install.sh | bash
+  # export PATH=$HOME/.yarn/bin:$PATH
+}
 command="$1"
 case "$command" in
-"install" )
-  install_nvm
-  ;;
-"upgrade" )
-  upgrade_nvm
-  ;;
-"" | "-h" | "--help" )
-  echo "Usage: ws node [install|upgrade]"
-  ;;
+  "install" )
+    install_nvm
+    ;;
+  "upgrade" )
+    upgrade_nvm
+    ;;
+  "yarn" )
+    install_yarn
+    ;;
+  "" | "-h" | "--help" )
+    echo "Usage: ws node [install|upgrade|yarn]"
+    ;;
 esac
