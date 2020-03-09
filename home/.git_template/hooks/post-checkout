@@ -1,6 +1,18 @@
 #!/bin/sh
 
-local_hook="$HOME"/.git_template.local/hooks/post-checkout
-[ -f "$local_hook" ] && . "$local_hook"
+DEBUG="${DEBUG:-false}"
+GIT_SKIP_CHECKOUT_HOOKS="${GIT_SKIP_CHECKOUT_HOOKS:-false}"
+debug()   { if [ "$DEBUG" = "true" ]; then echo "[DEBUG] $*" >&2 ; fi ; }
 
-.git/hooks/ctags >/dev/null 2>&1 &
+for hook in "$HOME"/.git_template.local/hooks/post-checkout .git_template.local/hooks/post-checkout; do
+  if [ -f "$hook" ]; then
+    if [ "${GIT_SKIP_CHECKOUT_HOOKS}" = "true" ]; then
+      debug "skipping $hook"
+    else
+      debug "$hook";
+      . "$hook"
+    fi
+  else
+    debug "no such hook ${hook}"
+  fi
+done

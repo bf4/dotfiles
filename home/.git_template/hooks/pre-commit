@@ -1,7 +1,13 @@
 #!/bin/sh
 
-local_hook="$HOME"/.git_template.local/hooks/pre-commit
+DEBUG="${DEBUG:-false}"
+debug()   { if [ "$DEBUG" = "true" ]; then echo "[DEBUG] $0 $*" >&2 ; fi ; }
 
-if [ -f "$local_hook" ]; then
-  . "$local_hook"
-fi
+for hook in "$HOME"/.git_template.local/hooks/pre-commit .git_template.local/hooks/pre-commit; do
+  if [ -f "$hook" ]; then
+    debug "$hook";
+    . "$hook"
+  else
+    debug "no such hook ${hook}"
+  fi
+done
