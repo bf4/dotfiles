@@ -3,6 +3,7 @@
 # https://github.com/creationix/nvm#manual-install
 # to remove, delete, or uninstall nvm - just remove the `$NVM_DIR` folder (usually `~/.nvm`)
 
+# TODO(BF): See https://github.com/tj/n
 install_nvm() {
   mkdir -p "$NVM_DIR"
   if [ ! -s "$NVM_DIR/.git" ]; then
@@ -28,7 +29,7 @@ upgrade_nvm() {
   cd "$cwd"
   trap - EXIT
   . "$NVM_DIR/nvm.sh" # This loads nvm
-  nvm install "${NODE_VERSION:lts}"
+  nvm install "${NODE_VERSION:6 --lts}"
   # export NODE_VERSION=${NODE_VERSION:-0.12.4}
   # nvm use "$NODE_VERSION" 1> /dev/null
   # nvm alias default "${NODE_VERSION}" 1> /dev/null
