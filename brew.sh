@@ -77,7 +77,7 @@ brew_install ctags
 brew_install tmux
 
 already_installed=$(fn_exists tmux)
-brew_install reattach-to-user-namespace --wrap-pbcopy-and-pbpaste --wrap-launchtl
+brew_install reattach-to-user-namespace
 # brew_install_or_upgrade 'reattach-to-user-namespace'
 if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
   echo "already_installed '${already_installed}'"
