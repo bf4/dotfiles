@@ -57,12 +57,12 @@ brew_install shellcheck
 
 # hub for interacting with the GitHub API
 # brew_install_or_upgrade 'hub'
-already_installed=$(fn_exists hub)
-brew_install "hub"
-if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
-  echo "already_installed '${already_installed}'"
-  fancy_echo "See https://github.com/github/hub for what hub adds to git"
-fi
+# already_installed=$(fn_exists hub)
+# brew_install "hub"
+# if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
+#   echo "already_installed '${already_installed}'"
+#   fancy_echo "See https://github.com/github/hub for what hub adds to git"
+# fi
 
 # get the nice vim that macvim comes with
 # brew_install_or_upgrade 'vim'
@@ -253,7 +253,7 @@ brew_install pyenv # PythonBrew replacement
 # source-highlight
 # sqlite
 # texi2html
-brew_install the_platinum_searcher # aka 'pt'
+# brew_install the_platinum_searcher # aka 'pt'
 # tmate
 # tor
 # unixodbc
@@ -266,12 +266,12 @@ brew_install the_platinum_searcher # aka 'pt'
 
 ## Homebrew Cask (for binaries)
 
-already_installed=$(app_exists Alfred)
-brew_cask "alfred" --appdir="/Applications"
-if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
-  echo "already_installed '${already_installed}'"
-  fancy_echo "open alfred from '/opt/hombrew-cask/Caskroom'"
-fi
+# already_installed=$(app_exists Alfred)
+# brew_cask "alfred" --appdir="/Applications"
+# if [[ $already_installed -eq 0 ]] && [[ $last_command_new_install ]]; then
+#   echo "already_installed '${already_installed}'"
+#   fancy_echo "open alfred from '/opt/hombrew-cask/Caskroom'"
+# fi
 
 brew_cask "caffeine" --appdir="/Applications" # TODO: add to login items
 brew_cask "cd-to" --appdir="/Applications"
@@ -289,12 +289,12 @@ brew_cask "github" --appdir="/Applications"
 brew_cask "google-chrome" --appdir="/Applications"
 brew_cask "google-drive" --appdir="/Applications"
 # brew_cask "hipchat" --appdir="/Applications"
-brew_cask "istat-menus" --appdir="/Applications"
+# brew_cask "istat-menus" --appdir="/Applications"
 brew_cask "iterm2" --appdir="/Applications"
 # brew_cask "java" --appdir="/Applications"
 brew_cask "keka" --appdir="/Applications"
 # brew_cask "launchrocket" --appdir="/Applications"
-brew_cask lunchy # lunchy-go
+# brew_cask lunchy # lunchy-go
 # brew_cask "libreoffice" --appdir="/Applications"
 # brew_cask "minecraft" --appdir="/Applications"
 # brew_cask "netnewswire" --appdir="/Applications"

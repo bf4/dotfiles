@@ -29,13 +29,6 @@ then
   echo 'Installing python-dev for Linux'
   apt-get install python-dev
 fi
-if [ $? -eq 0 ]
-then
-  echo 'compiling'
-  cd ~/.vim/bundle/ctrlp-cmatcher/
-  ./install.sh
-  cd -
-fi
 
 # install ctags
 # https://github.com/tpope/gem-ctags

@@ -21,17 +21,15 @@ else
   fancy_debug "Homebrew already installed. Skipping ..."
 fi
 # Homebrew Cask (for binaries)
-brew_tap caskroom/cask
+# brew_tap caskroom/cask
 # brew_tap 'thoughtbot/formulae'
 
 if [ "$WORKSTATION_UPDATE" = "true" ]
 then
   fancy_echo "Updating Homebrew formulas ..."
     brew update &&
-    brew upgrade brew-cask &&
-    brew cleanup &&
-    brew cask cleanup
+    brew cleanup
 
   ## LIBRARIES INSTALL/UPGRADE
-  bash ~/${DOTFILES_HOME}/../../brew.sh
+  bash ~/${DOTFILES_HOME}/../brew.sh
 fi
