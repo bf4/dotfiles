@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 brewup() {
     brew update &&
-    brew cleanup &&
-    brew cask cleanup
+    brew cleanup
 }
 
 ttmux () {
