@@ -16,3 +16,26 @@ git-unmerged-branch-history() {
     )
   )
 }
+
+# https://medium.com/opendoor-labs/cleaning-up-branches-with-githubs-squash-merge-43138cc7585e
+git-prune-merged-squashed() {
+  git checkout master &&
+    comm -12 <(
+      git branch | sed "s/ *//g"
+    ) <(
+      git remote prune origin | sed "s/^.*origin\///g"
+    ) |
+   xargs -L1 -J % git branch -D %
+}
+
+# https://github.com/not-an-aardvark/git-delete-squashed
+git-delete-squashed() {
+  local mergeBase
+  git checkout -q master &&
+    git for-each-ref refs/heads/ "--format=%(refname:short)" |
+    while read branch; do
+      mergeBase=$(git merge-base master $branch) &&
+        [[ $(git cherry master $(git commit-tree $(git rev-parse $branch\^{tree}) -p $mergeBase -m _)) == "-"* ]] &&
+        git branch -D $branch;
+    done
+}
