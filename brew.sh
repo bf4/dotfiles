@@ -3,6 +3,7 @@
 # Install command-line tools using Homebrew.
 
 . "$HOME/${DOTFILES_HOME}/../functions.bash"
+. "$HOME/${DOTFILES_HOME}/.shells/functions.sh"
 . "$HOME/${DOTFILES_HOME}/.shells/colors.sh"
 [ -f "$HOME/.brew_local.sh" ] && . "$HOME/.brew_local.sh"
 
@@ -10,7 +11,7 @@
 brewup
 
 # Upgrade any already-installed formulae.
-brew upgrade --all
+brew upgrade
 
 # TODO: consider https://github.com/Homebrew/homebrew-bundle
 # with a Brewfile and/or Caskfile
