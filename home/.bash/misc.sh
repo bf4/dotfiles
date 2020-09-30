@@ -8,9 +8,11 @@ alias peek='tee >(cat 1>&2)'
 #   git reflog | grep 'checkout: moving' | head -20 | awk '{ print $6,\"\t\t\t\t\",$8 }'
 # }
 git-unmerged-branch-history() {
+  local num_recent_branches
+  num_recent_branches="${1:-100}"
   comm -12 <(git branch | awk '{ print $1 }' | sort) <(
     comm -23 <(
-      git reflog | grep 'checkout: moving' | head -100 | awk '{ print $8 }' | sort -u | grep -v master
+      git reflog | grep 'checkout: moving' | head "-${num_recent_branches}" | awk '{ print $8 }' | sort -u | grep -v master
     ) <(
       git branch master --no-merged | sort
     )
