@@ -14,11 +14,11 @@ export DOTFILES_HOME=${DOTFILES_HOME:-.homesick/repos/dotfiles/home}
 # User Scripts
 [ -s "$HOME/bin"    ] && PATH="$HOME/bin:$PATH"
 # HOMEBREW
+[ -s /usr/local/opt/icu4c/bin ] && PATH="/usr/local/opt/icu4c/bin:$PATH"
+[ -s /usr/local/opt/icu4c/sbin ] && PATH="/usr/local/opt/icu4c/sbin:$PATH"
 [ -s /usr/local/bin ] && PATH="/usr/local/bin:$PATH"
 [ -s /usr/local/sbin ] && PATH="/usr/local/sbin:$PATH"
-# HOMEBREW CASK
-[ -s /opt/bin       ] && PATH="/opt/bin:$PATH"
-[ -s /opt/local/bin ] && PATH="/opt/local/bin:$PATH"
+
 # SSH
 [ -s "$HOME/.ssh_agent.bash" ] && source "$HOME/.ssh_agent.bash"
 # GIT
