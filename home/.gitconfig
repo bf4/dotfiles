@@ -12,7 +12,7 @@
 # [http]
 #   postBuffer = 524288000
 [format]
-	# pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
+	pretty = medium
 	# pretty = "%C(yellow)%h%Creset - %s%nAuthored by %C(green)%an%Creset %ar%n"
 [core]
 	editor = vim
