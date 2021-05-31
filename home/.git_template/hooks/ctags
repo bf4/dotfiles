@@ -3,26 +3,69 @@
 set -e
 
 PATH="/usr/local/bin:$PATH"
+readonly DIR="$(git rev-parse --git-dir)"
 
-dir="`git rev-parse --git-dir`"
-trap 'rm -f "$dir/$$.tags"' EXIT
-git ls-files | \
+# https://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
+# One more hook that oftentimes gets overlooked: post-rewrite.
+# This is fired after git commit --amend and git rebase,
+# but the former is already covered by post-commit. Here’s mine:
+# #!/bin/sh
+# case "$1" in
+#   rebase) exec .git/hooks/post-merge ;;
+# esac
+# https://thoughtbot.com/blog/use-git-hooks-to-automate-annoying-tasks
+
+main() {
+  trap 'rm -f "$DIR/$$.tags"' EXIT
+  git ls-files | \
     ctags \
-    --tag-relative -L - -f"$dir/$$.tags" \
+    --tag-relative -L - -f"$DIR/$$.tags" \
     --languages=-sql
-trap 'rm -f "$dir/$$.gems.tags"' EXIT
-ctags \
-  -R \
-  --languages=ruby \
-  --fields=+l \
-  -f"$dir/$$.gems.tags" \
-  --tag-relative=yes \
-  --exclude=.git \
-  --exclude=spec \
-  --exclude=test \
-  --exclude=vendor \
-  --exclude=log \
-  . \
-    $(bundle list --paths)
-cat "$dir/$$.gems.tags" >> "$dir/$$.tags"
-mv "$dir/$$.tags" "$dir/tags"
+
+  # trap 'rm -f "$DIR/$$.gems.tags"' EXIT
+  # ctags \
+  #   -R \
+  #   --languages=ruby \
+  #   --fields=+l \
+  #   -f"$DIR/$$.gems.tags" \
+  #   --tag-relative=yes \
+  #   --exclude=.git \
+  #   --exclude=spec \
+  #   --exclude=test \
+  #   --exclude=vendor \
+  #   --exclude=log \
+  #   . \
+  #   "$(bundle list --paths)"
+  #
+  # cat "$DIR/$$.gems.tags" >> "$DIR/$$.tags"
+  mv "$DIR/$$.tags" "$DIR/tags"
+}
+
+# https://gist.github.com/przemoc/571091
+LOCKFILE="${DIR}/ctags.lock"
+
+# PRIVATE
+_lock()             {
+  if [ -e "$LOCKFILE" ]; then
+    # echo "is locked"
+    false
+  else
+    # echo "not locked"
+    touch $LOCKFILE;
+    true
+  fi
+}
+_no_more_locking()  { rm -f $LOCKFILE; }
+
+# PUBLIC
+exlock_now()        { _lock; }
+
+if exlock_now; then
+  main
+  result=$?
+  _no_more_locking
+  exit $result
+else
+ echo "only one $0 can run at a time and this is not it"
+ exit 0
+fi
